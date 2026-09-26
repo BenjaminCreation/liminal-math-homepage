@@ -4,3 +4,4 @@ _ds/
 uploads/
 .thumbnail
 .image-slots.state.json
+.env*
