@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Liminal Math — App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Caveat:wght@400..700&amp;display=swap">
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+::selection{background:rgba(76,152,240,.3)}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+input::placeholder,textarea::placeholder{color:#6B7280}
+@keyframes lmDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</helmet>
+
+<sc-if value="{{ isAuth }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Auth" style="min-height:100vh;display:flex;flex-wrap:wrap;background:#FFFFFF">
+    <div style="position:relative;flex:1 1 520px;min-height:{{ authLeftH }};background:#000000;color:#ECE8DF;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,4vw,48px)">
+      <canvas ref="{{ meshRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.035) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,#000 0%,transparent 100%)"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 70% at 50% 42%,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 70%,#000000 100%)"></div>
+      <div style="position:relative;display:flex;align-items:center;gap:12px;pointer-events:none">
+        <svg viewBox="0 0 133 128" style="width:24px;height:23px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+        <span style="font-family:'CM Typewriter','Courier New',monospace;font-size:14px;letter-spacing:.32em;color:#ECE8DF">LIMINAL MATH</span>
+      </div>
+      <div data-mark-anchor="" aria-hidden="true" style="position:relative;align-self:center;width:{{ markW }};height:{{ markH }};pointer-events:none"></div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:16px;max-width:520px;pointer-events:none">
+        <sc-if value="{{ isSignin }}" hint-placeholder-val="{{ true }}">
+          <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(36px,4.2vw,56px);line-height:1;letter-spacing:-.03em;color:#ECE8DF">Welcome back to the <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">threshold.</em></h1>
+        </sc-if>
+        <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+          <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(36px,4.2vw,56px);line-height:1;letter-spacing:-.03em;color:#ECE8DF">Every mathematician starts at <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">zero.</em></h1>
+        </sc-if>
+        <p style="margin:0;font-family:'Figtree',sans-serif;font-weight:500;font-size:17px;line-height:1.55;color:#A7AAB2;max-width:44ch">Twelve new problems today, yesterday’s solutions unlocked, and a community arguing about the best approach.</p>
+        <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">SOLUTIONS UNLOCK IN {{ countdown }}</span>
+      </div>
+    </div>
+
+    <div style="flex:1 1 440px;min-height:{{ authRightH }};display:flex;align-items:center;justify-content:center;padding:clamp(32px,5vw,64px) clamp(20px,5vw,72px)">
+      <form onSubmit="{{ onAuthSubmit }}" novalidate="" style="width:100%;max-width:400px;display:flex;flex-direction:column;gap:22px">
+        <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">{{ authEyebrow }}</p>
+        <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:38px;line-height:1.05;letter-spacing:-.025em;color:#121418">{{ authTitle }}</h2>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:500;color:#4B4F58">Email</span>
+          <input type="email" value="{{ email }}" onChange="{{ onEmail }}" autocomplete="email" placeholder="you@school.edu" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid {{ emailBd }};background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:16px;color:#121418;outline:none;transition:border-color 200ms" style-focus="border-color:#0B5BC4">
+          <sc-if value="{{ emailErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#C23B56">{{ emailErr }}</span></sc-if>
+        </label>
+        <sc-if value="{{ notReset }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:8px">
+          <span style="display:flex;justify-content:space-between;font-size:14px;font-weight:500;color:#4B4F58">Password<sc-if value="{{ isSigninForm }}" hint-placeholder-val="{{ true }}"><a href="#" onClick="{{ goReset }}" style="font-weight:600;color:#0B5BC4">Forgot password?</a></sc-if></span>
+          <span style="position:relative;display:block">
+            <input type="{{ pwType }}" value="{{ password }}" onChange="{{ onPassword }}" autocomplete="current-password" placeholder="At least 8 characters" style="width:100%;height:48px;padding:0 64px 0 16px;border-radius:12px;border:1px solid {{ pwBd }};background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:16px;color:#121418;outline:none;transition:border-color 200ms" style-focus="border-color:#0B5BC4">
+            <button type="button" onClick="{{ togglePw }}" style="position:absolute;right:8px;top:8px;height:32px;padding:0 10px;border:0;border-radius:8px;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;color:#4B4F58;cursor:pointer" style-hover="background:#EEF1F4">{{ pwToggleLabel }}</button>
+          </span>
+          <sc-if value="{{ pwErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#C23B56">{{ pwErr }}</span></sc-if>
+        </label></sc-if>
+        <sc-if value="{{ authErr }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:12px 14px;border-radius:10px;background:#F6F7F9;border:1px solid #E2E5EA;font-size:14px;color:#121418">{{ authErr }}</div>
+        </sc-if>
+        <button type="submit" style="height:52px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1766D1" style-active="background:#0852B0">{{ authCta }}</button>
+        <sc-if value="{{ isSigninForm }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ fillDemo }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:10px;border:1px solid #E2E5EA;background:#FFFFFF;cursor:pointer;text-align:left" style-hover="background:#F6F7F9">
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#6B7280">DEMO ACCOUNT</span><span style="font-size:14px;color:#121418">student@liminal.math · proof1234</span></span>
+            <span style="font-size:13px;font-weight:600;color:#0B5BC4;white-space:nowrap">Use it →</span>
+          </button>
+        </sc-if>
+        <p style="margin:0;padding-top:18px;border-top:1px solid #E2E5EA;font-size:15px;color:#4B4F58">{{ switchText }} <a href="#" onClick="{{ switchMode }}" style="font-weight:600;color:#0B5BC4">{{ switchCta }}</a></p>
+      </form>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Onboarding" style="position:relative;min-height:100vh;background:#FFFFFF;display:flex;flex-direction:column">
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(#EAEEF3 1px,transparent 1px),linear-gradient(90deg,#EAEEF3 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 45%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 60% 70% at 50% 45%,#000 0%,transparent 100%)"></div>
+    <header style="position:relative;display:flex;align-items:center;gap:16px;padding:24px clamp(20px,5vw,56px)">
+      <svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+      <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:#121418">LIMINAL MATH</span>
+      <span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP {{ obNum }} / 03</span>
+    </header>
+    <div style="position:relative;height:2px;background:#E2E5EA;margin:0 clamp(20px,5vw,56px)"><i style="display:block;height:100%;width:{{ obPct }};background:#0B5BC4;transition:width 500ms cubic-bezier(.2,0,0,1)"></i></div>
+    <div style="position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(32px,6vw,72px) clamp(20px,5vw,56px)">
+      <form onSubmit="{{ obNext }}" novalidate="" style="width:100%;max-width:620px;display:flex;flex-direction:column;gap:28px">
+        <sc-if value="{{ ob0 }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:28px">
+            <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">01</span> — About you</p>
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(36px,5vw,56px);line-height:1;letter-spacing:-.03em;color:#121418">What should we <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">call</em> you?</h1>
+            <input value="{{ obName }}" onChange="{{ onObName }}" placeholder="Your name" autocomplete="name" style="height:64px;padding:0 20px;border-radius:12px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Instrument Sans',sans-serif;font-size:26px;letter-spacing:-.01em;color:#121418;outline:none" style-focus="border-color:#0B5BC4">
+          </div>
+        </sc-if>
+        <sc-if value="{{ ob1 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:28px">
+            <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">02</span> — Where you study</p>
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(36px,5vw,56px);line-height:1;letter-spacing:-.03em;color:#121418">Which class are you <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">in?</em></h1>
+            <div style="display:flex;flex-wrap:wrap;gap:10px">
+              <sc-for list="{{ gradeChips }}" as="c" hint-placeholder-count="6"><button type="button" onClick="{{ c.pick }}" style="height:44px;padding:0 18px;border-radius:999px;border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 120ms,border-color 120ms,color 120ms">{{ c.label }}</button></sc-for>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:14px;font-weight:500;color:#4B4F58">School</span>
+              <datalist id="lm-schools"><option value="Delhi Public School, R.K. Puram"></option><option value="Kendriya Vidyalaya, IIT Madras"></option><option value="DAV Public School, Pune"></option><option value="The Doon School, Dehradun"></option><option value="St. Xavier’s High School, Mumbai"></option><option value="National Public School, Bengaluru"></option></datalist>
+              <input list="lm-schools" value="{{ obSchool }}" onChange="{{ onObSchool }}" placeholder="Your school’s name" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:16px;color:#121418;outline:none" style-focus="border-color:#0B5BC4">
+            </label>
+          </div>
+        </sc-if>
+        <sc-if value="{{ ob2 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:28px">
+            <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">03</span> — Your goal</p>
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(36px,5vw,56px);line-height:1;letter-spacing:-.03em;color:#121418">What are you aiming <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">for?</em></h1>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+              <sc-for list="{{ targetChips }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:16px;border-radius:12px;border:1px solid {{ c.bd }};background:{{ c.bg }};cursor:pointer;text-align:left;transition:background 120ms,border-color 120ms"><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px;color:{{ c.fg }}">{{ c.label }}</span><span style="font-size:13px;color:#4B4F58">{{ c.sub }}</span></button></sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:14px;font-weight:500;color:#4B4F58">Favourite topic</span>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <sc-for list="{{ topicChips }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="height:44px;padding:0 16px 0 12px;border-radius:999px;border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};display:flex;align-items:center;gap:10px;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 120ms,border-color 120ms"><svg viewBox="0 0 133 128" width="16" height="15" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ c.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ c.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ c.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ c.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ c.f4 }}"></path></svg><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.1em;color:{{ c.code }}">{{ c.code2 }}</b>{{ c.label }}</button></sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ obErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#C23B56">{{ obErr }}</span></sc-if>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:8px">
+          <sc-if value="{{ obCanBack }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ obBack }}" style="height:48px;padding:0 20px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418;cursor:pointer" style-hover="background:#EEF1F4">Back</button></sc-if>
+          <button type="submit" style="height:48px;padding:0 26px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 120ms" style-hover="background:#1766D1">{{ obCta }}</button>
+          <span style="margin-left:auto;font-size:13px;color:#6B7280">Press Enter ↵</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="App" style="min-height:100vh;display:flex;background:#FFFFFF">
+    <sc-if value="{{ drawerOn }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeDrawer }}" style="position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.4)"></div></sc-if>
+    <aside style="position:{{ asPos }};top:0;left:0;z-index:60;height:100vh;flex:0 0 248px;width:248px;display:{{ sideD }};flex-direction:column;background:#000000;border-right:1px solid #242831;box-shadow:{{ asSh }}">
+      <div style="display:flex;align-items:center;gap:10px;height:64px;padding:0 20px">
+        <svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+        <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:#ECE8DF">LIMINAL MATH</span>
+      </div>
+      <div style="padding:4px 12px 12px">
+        <button type="button" onClick="{{ openSearch }}" style="width:100%;height:36px;border:1px solid #242831;border-radius:999px;background:#101216;display:flex;align-items:center;gap:8px;padding:0 6px 0 12px;color:#7E828C;font-family:'Figtree',sans-serif;font-size:14px;cursor:pointer" style-hover="border-color:#333844"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><span style="flex:1;text-align:left">Search</span><span style="font-family:'CM Typewriter',monospace;font-size:11px;padding:1px 6px;border-radius:6px;border:1px solid #333844">⌘K</span></button>
+      </div>
+      <nav aria-label="App" style="display:flex;flex-direction:column;gap:2px;padding:0 12px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+          <button type="button" onClick="{{ n.go }}" style="flex:0 0 38px;height:38px;padding:0 12px;border:0;border-radius:8px;background:{{ n.bg }};color:{{ n.fg }};display:flex;align-items:center;gap:12px;font-family:'Figtree',sans-serif;font-weight:{{ n.fw }};font-size:14.5px;cursor:pointer;text-align:left;transition:background 120ms" style-hover="background:rgba(236,232,223,.08)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"></path></svg>
+            <span style="flex:1">{{ n.label }}</span>
+            <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="font-family:'CM Typewriter',monospace;font-size:11px;padding:1px 7px;border-radius:999px;background:#ECE8DF;color:#000000">{{ n.badge }}</span></sc-if>
+          </button>
+        </sc-for>
+      </nav>
+      <p style="margin:20px 0 6px;padding:0 24px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">COMMUNITIES</p>
+      <div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:1px;padding:0 12px 12px">
+        <sc-for list="{{ subs }}" as="sb" hint-placeholder-count="8">
+          <button type="button" onClick="{{ sb.go }}" style="flex:0 0 34px;height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:#A7AAB2;display:flex;align-items:center;gap:10px;font-family:'Figtree',sans-serif;font-size:14px;cursor:pointer;text-align:left" style-hover="background:rgba(236,232,223,.08);color:#ECE8DF">
+            <svg viewBox="0 0 133 128" width="13" height="12" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ sb.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ sb.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ sb.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ sb.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ sb.f4 }}"></path></svg>
+            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ sb.name }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="position:relative;border-top:1px solid #242831;padding:12px">
+        <sc-if value="{{ userMenu }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:12px;right:12px;bottom:calc(100% - 4px);background:#101216;border:1px solid #242831;border-radius:12px;box-shadow:0 16px 40px rgba(18,20,24,.1);padding:6px;display:flex;flex-direction:column">
+            <button type="button" onClick="{{ goProfile }}" style="height:36px;padding:0 10px;border:0;border-radius:8px;background:transparent;text-align:left;font-family:'Figtree',sans-serif;font-size:14px;color:#ECE8DF;cursor:pointer" style-hover="background:rgba(236,232,223,.08)">Profile</button>
+            <button type="button" onClick="{{ signOut }}" style="height:36px;padding:0 10px;border:0;border-radius:8px;background:transparent;text-align:left;font-family:'Figtree',sans-serif;font-size:14px;color:#C23B56;cursor:pointer" style-hover="background:rgba(236,232,223,.08)">Sign out</button>
+          </div>
+        </sc-if>
+        <button type="button" onClick="{{ toggleUserMenu }}" style="width:100%;display:flex;align-items:center;gap:10px;padding:8px;border:0;border-radius:10px;background:transparent;cursor:pointer;text-align:left" style-hover="background:rgba(236,232,223,.08)">
+          <span style="width:34px;height:34px;border-radius:999px;background:#ECE8DF;color:#000000;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:12px;flex:0 0 34px">{{ initials }}</span>
+          <span style="display:flex;flex-direction:column;min-width:0;line-height:1.3"><b style="font-weight:600;font-size:14px;color:#ECE8DF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pName }}</b><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#7E828C">{{ pMeta }}</span></span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7E828C" stroke-width="1.8" stroke-linecap="round" style="margin-left:auto;flex:0 0 16px"><path d="m7 15 5-5 5 5"></path></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <header style="position:sticky;top:0;z-index:5;height:64px;display:flex;align-items:center;gap:16px;padding:0 clamp(20px,3vw,40px);background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid #E2E5EA">
+        <button type="button" onClick="{{ openDrawer }}" aria-label="Open menu" style="display:{{ mobD }};width:40px;height:40px;margin-left:-8px;border:0;border-radius:10px;background:transparent;align-items:center;justify-content:center;cursor:pointer;color:#121418"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"></path></svg></button>
+        <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">{{ pageTitle }}</span>
+        <span style="margin-left:auto;display:{{ deskD }};font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">{{ todayLabel }}</span>
+        <span style="height:28px;padding:0 12px;border-radius:999px;border:1px solid #E2E5EA;display:flex;align-items:center;gap:8px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.08em;color:#4B4F58"><i style="display:block;width:6px;height:6px;border-radius:50%;background:#0B5BC4"></i>UNLOCKS {{ countdown }}</span>
+      </header>
+
+      <div style="flex:1;padding:clamp(20px,4vw,56px) clamp(16px,3vw,40px) {{ mainPb }};max-width:1240px;width:100%">
+        <sc-if value="{{ pgHome }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+              <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="30" height="29" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg></span>
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px">
+                <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:#ECE8DF">{{ greeting }}, {{ firstName }}</h1>
+                <span style="font-size:15px;color:#A7AAB2">{{ dashSub }}</span>
+              </div>
+              <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">{{ greetEyebrow }}</span>
+              <button type="button" onClick="{{ goPod }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#1766D1">{{ podCta }} <span aria-hidden="true">→</span></button>
+            </div>
+
+            <sc-if value="{{ firstRun }}" hint-placeholder-val="{{ false }}">
+              <section style="position:relative;border:1px solid #121418;border-radius:20px;background:#FFFFFF;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+                <button type="button" onClick="{{ dismissFirst }}" aria-label="Dismiss" style="position:absolute;top:14px;right:14px;width:32px;height:32px;border:0;border-radius:8px;background:transparent;font-size:18px;color:#4B4F58;cursor:pointer" style-hover="background:#EEF1F4">×</button>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">YOUR FIRST DAY</span><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">Three small steps to find your feet</span></div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:10px">
+                  <sc-for list="{{ firstSteps }}" as="fs" hint-placeholder-count="3"><button type="button" onClick="{{ fs.go }}" style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #E2E5EA;border-radius:12px;background:{{ fs.bg }};cursor:pointer;text-align:left;font-family:'Figtree',sans-serif" style-hover="border-color:#B9C3D0"><span style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;display:grid;place-items:center;background:{{ fs.dot }};border:1.4px solid {{ fs.dotBd }};font-family:'CM Typewriter',monospace;font-size:11px;color:{{ fs.num }}">{{ fs.mark }}</span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-weight:600;font-size:14.5px;color:#121418">{{ fs.t }}</b><span style="font-size:13px;color:#4B4F58">{{ fs.d }}</span></span></button></sc-for>
+                </div>
+                <sc-if value="{{ notSure }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding-top:12px;border-top:1px solid #EEF1F4;font-size:14px;color:#4B4F58">Not sure where to aim yet? That’s normal. <a href="Liminal Home v2.dc.html#zero" style="font-weight:600;color:#0B5BC4">Start with Chapter Zero →</a></p></sc-if>
+              </section>
+            </sc-if>
+
+            <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:22px">
+              <div style="display:flex;align-items:flex-start;gap:18px">
+                <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#F6F7F9;display:grid;place-items:center;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px;color:#121418"><span>{{ threeDone }}<span style="color:#8A8F99">/3</span></span></span>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-top:4px">
+                  <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.015em;color:#121418">Your three for today</h2>
+                  <p style="margin:0;font-size:16px;line-height:1.55;color:#4B4F58">{{ threeWhyLine }}</p>
+                </div>
+                <button type="button" onClick="{{ goPod }}" style="border:0;background:none;padding:8px 0;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418;cursor:pointer;white-space:nowrap;text-decoration:underline;text-underline-offset:3px">See all twelve</button>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px">
+                <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px;font-weight:500;color:#121418">{{ threePct }} done</span><span style="font-size:15px;color:#6B7280">{{ solvedCount }} of 12 today</span></div>
+                  <span style="display:block;height:6px;border-radius:999px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ threePct }};background:#127A50;border-radius:999px;transition:width 600ms cubic-bezier(.2,0,0,1)"></i></span>
+                </div>
+                <button type="button" onClick="{{ threeCta }}" style="height:50px;padding:0 28px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:pointer" style-hover="opacity:.86">{{ threeCtaLabel }}</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ three }}" as="th" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ th.open }}" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:10px 16px 10px 10px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 6px 18px rgba(18,20,24,.05)">
+                    <span style="width:50px;height:50px;flex:0 0 50px;border-radius:10px;background:{{ th.tileBg }};color:{{ th.tileFg }};display:grid;place-items:center;font-size:17px;font-weight:500">{{ th.n }}</span>
+                    <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:500;color:#121418">{{ th.title }}</span><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.12em;color:#6B7280">{{ th.why }}</span></span>
+                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style="flex:0 0 22px"><circle cx="12" cy="12" r="10" fill="{{ th.icFill }}" stroke="{{ th.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ th.icDash }}"></circle><circle cx="12" cy="12" r="10" fill="none" stroke="{{ th.arcCol }}" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="47 63" transform="rotate(-90 12 12)" style="opacity:{{ th.icArc }}"></circle><path d="{{ th.glyph }}" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ th.icTick }}"></path></svg>
+                    <span style="font-size:15px;color:#4B4F58;white-space:nowrap;min-width:64px">{{ th.stat }}</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><path d="m9 6 6 6-6 6"></path></svg>
+                  </button>
+                </sc-for>
+              </div>
+            </section>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:20px">
+              <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;display:flex;flex-direction:column">
+                <header style="display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid #E2E5EA">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#127A50"></span>
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">YESTERDAY · {{ yShort }}</span><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">Solutions are live</span></div>
+                  <button type="button" onClick="{{ goPod }}" style="margin-left:auto;border:0;background:none;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#0B5BC4;cursor:pointer">Read all →</button>
+                </header>
+                <sc-for list="{{ yesterday }}" as="y" hint-placeholder-count="3">
+                  <div style="display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid #EEF1F4">
+                    <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.12em;color:#6B7280">{{ y.tag }}</span>
+                    <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:15px;color:#121418">{{ y.title }}</span><span style="font-size:13px;color:#4B4F58">{{ y.note }}</span></span>
+                    <span style="height:26px;padding:0 10px;border-radius:999px;border:1px solid {{ y.bd }};display:flex;align-items:center;font-size:12px;font-weight:600;color:{{ y.col }};white-space:nowrap">{{ y.result }}</span>
+                  </div>
+                </sc-for>
+                <p style="margin:0;padding:14px 22px;font-size:13px;color:#6B7280">Your write-ups were shared to each problem’s thread when solutions unlocked.</p>
+              </section>
+
+              <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;display:flex;flex-direction:column">
+                <header style="display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid #E2E5EA">
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">FROM YOUR COMMUNITIES</span><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">Worth a look</span></div>
+                  <button type="button" onClick="{{ goCommunity }}" style="margin-left:auto;border:0;background:none;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#0B5BC4;cursor:pointer">Open community →</button>
+                </header>
+                <sc-for list="{{ threads }}" as="t" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ goCommunity }}" style="display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;padding:14px 22px;border:0;border-bottom:1px solid #EEF1F4;background:#FFFFFF;text-align:left;cursor:pointer;font-family:'Figtree',sans-serif" style-hover="background:#F6F7F9">
+                    <span style="display:flex;flex-direction:column;align-items:center;padding-top:2px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"></path></svg><b style="font-size:13px;font-weight:600;color:#121418">{{ t.votes }}</b></span>
+                    <span style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#0B5BC4">{{ t.sub }}</span><span style="font-weight:600;font-size:15px;line-height:1.35;color:#121418">{{ t.title }}</span><span style="font-size:13px;color:#6B7280">{{ t.meta }}</span></span>
+                  </button>
+                </sc-for>
+              </section>
+            </div>
+
+            <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:18px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">{{ monthLabel }}</span><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">{{ monthSolved }} problems solved</span></div>
+              <div style="flex:1 1 360px;display:flex;flex-wrap:wrap;gap:5px" aria-label="Days this month you solved at least one problem">
+                <sc-for list="{{ monthDays }}" as="md" hint-placeholder-count="30"><span title="{{ md.t }}" style="width:16px;height:16px;border-radius:4px;background:{{ md.bg }};border:1px solid {{ md.bd }}"></span></sc-for>
+              </div>
+              <span style="font-size:13px;color:#6B7280;max-width:28ch">No streaks to protect. Just a record of the days you showed up.</span>
+            </section>
+          </div>
+        </sc-if>
+        <sc-if value="{{ pgPod }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+              <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="30" height="29" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg></span>
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px">
+                <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:#ECE8DF">Problem of the Day</h1>
+                <span style="font-size:15px;color:#A7AAB2">Four categories, three levels, twelve problems. Solutions unlock at midnight.</span>
+              </div>
+              <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">UNLOCKS {{ countdown }}</span>
+              <button type="button" onClick="{{ nextUnsolved }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:#ECE8DF;color:#000000;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#1766D1">Next unsolved <span aria-hidden="true">→</span></button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 24px;border-bottom:1px solid #E2E5EA">
+              <button type="button" onClick="{{ tabToday }}" style="height:48px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tTodayB }};color:{{ tTodayC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px">Today <span style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.1em;color:#6B7280">{{ todayShort }}</span></button>
+              <button type="button" onClick="{{ tabYest }}" style="height:48px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tYestB }};color:{{ tYestC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px"><i style="display:block;width:7px;height:7px;border-radius:50%;background:#127A50"></i>{{ ySolLabel }} <span style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.1em;color:#6B7280">{{ pastShort }}</span></button>
+              <button type="button" onClick="{{ tabArch }}" style="height:48px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tArchB }};color:{{ tArchC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v14H4z M8 3v5 M16 3v5 M4 11h16"></path></svg>Archive</button>
+              <span style="margin-left:auto;padding-bottom:14px;font-size:13px;color:#6B7280">{{ podTabNote }}</span>
+            </div>
+            <sc-if value="{{ showOverview }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:20px;max-width:980px">
+                <sc-for list="{{ catCards }}" as="cc" hint-placeholder-count="4">
+                  <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:22px">
+                    <div style="display:flex;align-items:flex-start;gap:18px">
+                      <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#F6F7F9;display:grid;place-items:center;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px;color:#121418"><span>{{ cc.n }}<span style="color:#8A8F99">/4</span></span></span>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-top:4px">
+                        <div style="display:flex;align-items:center;gap:10px"><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.015em;color:#121418">{{ cc.name }}</h2><svg viewBox="0 0 133 128" width="16" height="15" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ cc.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ cc.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ cc.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ cc.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ cc.f4 }}"></path></svg></div>
+                        <p style="margin:0;font-size:16px;line-height:1.55;color:#4B4F58;max-width:60ch">{{ cc.desc }}</p>
+                      </div>
+                      <button type="button" onClick="{{ cc.toggle }}" aria-label="Toggle problems" aria-expanded="{{ cc.openStr }}" style="width:40px;height:40px;border:0;border-radius:10px;background:transparent;display:grid;place-items:center;cursor:pointer;color:#4B4F58" style-hover="background:#F6F7F9"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="transform:rotate({{ cc.rot }});transition:transform 200ms cubic-bezier(.2,0,0,1)"><path d="m6 15 6-6 6 6"></path></svg></button>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px">
+                      <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:10px">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px;font-weight:500;color:#121418">{{ cc.pct }} done</span><span style="font-size:15px;color:#6B7280">{{ cc.meta }}</span></div>
+                        <span style="display:block;height:6px;border-radius:999px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ cc.pct }};background:#127A50;border-radius:999px;transition:width 600ms cubic-bezier(.2,0,0,1)"></i></span>
+                      </div>
+                      <button type="button" onClick="{{ cc.cta }}" style="height:50px;padding:0 28px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:opacity 120ms" style-hover="opacity:.86">{{ cc.ctaLabel }}</button>
+                    </div>
+                    <sc-if value="{{ cc.open }}" hint-placeholder-val="{{ true }}">
+                      <div style="display:flex;flex-direction:column;gap:12px">
+                        <sc-for list="{{ cc.rows }}" as="rw" hint-placeholder-count="3">
+                          <button type="button" onClick="{{ rw.open }}" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:10px 16px 10px 10px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 6px 18px rgba(18,20,24,.05)">
+                            <span style="width:50px;height:50px;flex:0 0 50px;border-radius:10px;background:{{ rw.tileBg }};color:{{ rw.tileFg }};display:grid;place-items:center;font-size:17px;font-weight:500">{{ rw.n }}</span>
+                            <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:500;color:#121418">{{ rw.title }}</span><span style="font-size:13px;color:#6B7280">{{ rw.sub }}</span></span>
+                            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style="flex:0 0 22px"><circle cx="12" cy="12" r="10" fill="{{ rw.icFill }}" stroke="{{ rw.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ rw.icDash }}"></circle><circle cx="12" cy="12" r="10" fill="none" stroke="{{ rw.arcCol }}" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="47 63" transform="rotate(-90 12 12)" style="opacity:{{ rw.icArc }}"></circle><path d="{{ rw.glyph }}" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ rw.icTick }}"></path></svg>
+                            <span style="font-size:15px;color:#4B4F58;white-space:nowrap;min-width:64px">{{ rw.stat }}</span>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><path d="m9 6 6 6-6 6"></path></svg>
+                          </button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </section>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ showArch }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+                <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">{{ archMonth }}</span><span style="font-size:13px;color:#6B7280">Pick a day to open its problems and solutions.</span></div>
+                <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px">
+                  <sc-for list="{{ archHead }}" as="ah" hint-placeholder-count="7"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.12em;color:#6B7280;text-align:center;padding-bottom:4px">{{ ah.d }}</span></sc-for>
+                  <sc-for list="{{ archDays }}" as="ad" hint-placeholder-count="35">
+                    <button type="button" onClick="{{ ad.pick }}" disabled="{{ ad.dis }}" style="height:64px;border-radius:12px;border:1px solid {{ ad.bd }};background:{{ ad.bg }};opacity:{{ ad.op }};display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:8px 10px;cursor:{{ ad.cur }};font-family:'Figtree',sans-serif;text-align:left">
+                      <span style="font-size:14px;font-weight:600;color:{{ ad.fg }}">{{ ad.n }}</span>
+                      <span style="display:flex;align-items:center;gap:6px;width:100%"><span style="flex:1;height:4px;border-radius:4px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ ad.pct }};background:#127A50"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:10px;color:#6B7280">{{ ad.lbl }}</span></span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <div style="display:{{ gridD }};grid-template-columns:{{ podCols }};gap:{{ podGap }};align-items:start">
+              <sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ toggleRail }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;height:48px;padding:0 16px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:14px;cursor:pointer"><span style="display:flex;align-items:center;gap:10px"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.12em;color:#6B7280">{{ railPos1 }}</b><span style="font-weight:600;color:#121418">{{ railBtn }}</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#4B4F58" stroke-width="1.8" stroke-linecap="round" style="transform:rotate({{ railRot }});transition:transform 200ms"><path d="m6 9 6 6 6-6"></path></svg></button></sc-if>
+              <nav aria-label="Problems" style="display:{{ railD }};flex-direction:column;gap:18px;position:{{ railPosC }};top:88px;padding:{{ railPad }};border:{{ railBd }};border-radius:12px;background:#FFFFFF">
+                <sc-for list="{{ railGroups }}" as="g" hint-placeholder-count="4">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span style="display:flex;align-items:center;gap:8px;padding:0 10px 6px"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.12em;color:#121418">{{ g.code }}</b><span style="font-size:13px;color:#6B7280">{{ g.name }}</span></span>
+                    <sc-for list="{{ g.items }}" as="ri" hint-placeholder-count="3">
+                      <button type="button" onClick="{{ ri.pick }}" style="display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border:0;border-radius:8px;background:{{ ri.bg }};cursor:pointer;text-align:left;font-family:'Figtree',sans-serif" style-hover="background:#EEF1F4">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="flex:0 0 18px"><circle cx="12" cy="12" r="10" fill="{{ ri.icFill }}" stroke="{{ ri.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ ri.icDash }}"></circle><circle cx="12" cy="12" r="10" fill="none" stroke="{{ ri.arcCol }}" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="47 63" transform="rotate(-90 12 12)" style="opacity:{{ ri.icArc }}"></circle><path d="{{ ri.glyph }}" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ ri.icTick }}"></path></svg>
+                        <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;font-weight:{{ ri.fw }};color:#121418">{{ ri.title }}</span>
+                        <span style="font-family:'CM Typewriter',monospace;font-size:10px;letter-spacing:.1em;color:#6B7280">{{ ri.lv }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </nav>
+
+              <div style="min-width:0;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+              <article style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:22px">
+                <sc-if value="{{ showBackOv }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ backOverview }}" style="align-self:flex-start;border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#4B4F58;cursor:pointer" style-hover="color:#121418">← All of today’s problems</button></sc-if>
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px">
+                  <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">{{ q.meta }}</span>
+                  <span style="display:flex;align-items:flex-end;gap:2px;height:12px"><i style="display:block;width:3px;height:5px;border-radius:1px;background:#121418"></i><i style="display:block;width:3px;height:8px;border-radius:1px;background:{{ q.b2 }}"></i><i style="display:block;width:3px;height:12px;border-radius:1px;background:{{ q.b3 }}"></i></span>
+                  <span style="height:24px;padding:0 10px;border-radius:999px;border:1px solid #E2E5EA;display:flex;align-items:center;font-size:12px;font-weight:600;color:#4B4F58">{{ q.typeLabel }}</span>
+                </div>
+                <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:#121418">{{ q.title }}</h1>
+                <div data-tex="{{ q.statement }}" style="font-family:'Figtree',sans-serif;font-size:19px;line-height:1.65;color:#121418;max-width:64ch"></div>
+
+                <sc-if value="{{ showNum }}" hint-placeholder-val="{{ false }}">
+                  <form onSubmit="{{ checkNum }}" novalidate="" style="display:flex;flex-direction:column;gap:12px;padding:22px;border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF">
+                    <label for="pod-ans" style="font-size:14px;font-weight:500;color:#4B4F58">Your answer</label>
+                    <div style="display:flex;gap:10px;max-width:460px">
+                      <input id="pod-ans" value="{{ numVal }}" onChange="{{ onNum }}" inputmode="numeric" autocomplete="off" placeholder="A number" style="flex:1;min-width:0;height:48px;padding:0 16px;border-radius:12px;border:1px solid {{ numBd }};background:#FFFFFF;font-family:'CM Roman','Times New Roman',serif;font-size:20px;color:#121418;outline:none" style-focus="border-color:#0B5BC4">
+                      <button type="submit" style="height:48px;padding:0 24px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#1766D1">Check</button>
+                    </div>
+                    <div aria-live="polite" style="min-height:24px;display:flex;align-items:center;gap:10px;font-size:15px;color:#4B4F58">
+                      <sc-if value="{{ fbOk }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 28 22" width="26" height="20"><path pathLength="1" d="M3 11 Q6 14 10 18 Q17 10 25 2" fill="none" stroke="#127A50" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1 1;animation:lmDraw 320ms cubic-bezier(.65,0,.35,1) both"></path></svg><span><b style="color:#121418">Correct.</b> Nicely done. The full solution unlocks at midnight.</span></sc-if>
+                      <sc-if value="{{ fbBad }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 28 22" width="26" height="20"><path pathLength="1" d="M2 12 Q14 10 26 9" fill="none" stroke="#C23B56" stroke-width="2.4" stroke-linecap="round" style="stroke-dasharray:1 1;animation:lmDraw 320ms cubic-bezier(.65,0,.35,1) both"></path></svg><span><b style="color:#121418">Not quite.</b> Take another look. There’s no limit on tries.</span></sc-if>
+                      <sc-if value="{{ fbIdle }}" hint-placeholder-val="{{ true }}"><span>Numeric answers are checked instantly.</span></sc-if>
+                    </div>
+                  </form>
+                </sc-if>
+
+                <sc-if value="{{ showProof }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;overflow:hidden">
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 10px;border-bottom:1px solid #E2E5EA;background:#F6F7F9">
+                      <button type="button" onClick="{{ modeWrite }}" style="height:32px;padding:0 12px;border:0;border-radius:8px;background:{{ wBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Write</button>
+                      <button type="button" onClick="{{ modePreview }}" style="height:32px;padding:0 12px;border:0;border-radius:8px;background:{{ pBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Preview</button>
+                      <span style="margin-left:auto;font-size:12.5px;color:#6B7280">Use <code style="font-family:'CM Typewriter',monospace;font-size:12px;padding:1px 5px;border-radius:4px;background:#FFFFFF;border:1px solid #E2E5EA">$…$</code> for maths</span>
+                    </div>
+                    <sc-if value="{{ isWrite }}" hint-placeholder-val="{{ true }}">
+                      <textarea value="{{ draftVal }}" onChange="{{ onDraft }}" placeholder="Write your proof. Start with what you are given, then argue step by step." style="display:block;width:100%;min-height:220px;padding:18px 20px;border:0;resize:vertical;font-family:'Figtree',sans-serif;font-size:16px;line-height:1.6;color:#121418;outline:none;background:#FFFFFF"></textarea>
+                    </sc-if>
+                    <sc-if value="{{ isPreview }}" hint-placeholder-val="{{ false }}">
+                      <div data-tex="{{ draftPreview }}" style="min-height:220px;padding:18px 20px;font-family:'Figtree',sans-serif;font-size:16px;line-height:1.7;color:#121418"></div>
+                    </sc-if>
+                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid #E2E5EA;background:#F6F7F9">
+                      <span style="font-size:13px;color:{{ proofNoteCol }}">{{ proofNote }}</span>
+                      <button type="button" onClick="{{ saveDraft }}" style="margin-left:auto;height:38px;padding:0 16px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418;cursor:pointer" style-hover="background:#EEF1F4">Save draft</button>
+                      <button type="button" onClick="{{ submitProof }}" style="height:38px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer" style-hover="background:#1766D1">{{ submitLabel }}</button>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ showLocked }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:center;gap:16px;padding:18px 22px;border:1px solid #E2E5EA;border-radius:14px;background:#F6F7F9">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#4B4F58" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+                    <div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px;color:#121418">Solution unlocks in <span role="timer" aria-live="off" style="font-family:'CM Typewriter',monospace;font-weight:400">{{ countdown }}</span></span><span style="font-size:13px;color:#4B4F58">It goes live with tomorrow’s problems, along with everyone’s write-ups.</span></div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ showSolution }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:16px">
+                    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;border:1px solid {{ yRes.bd }};background:{{ yRes.bg }}"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#6B7280">YOUR RESULT</span><span style="font-size:14px;font-weight:600;color:{{ yRes.col }}">{{ yRes.text }}</span></div>
+                    <div style="border:1px solid #E2E5EA;border-radius:20px;padding:clamp(22px,3vw,32px);background-color:#FFFFFF;background-image:linear-gradient(#EEF1F5 1px,transparent 1px),linear-gradient(90deg,#EEF1F5 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column;gap:12px">
+                      <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#127A50">OFFICIAL SOLUTION</span>
+                      <div data-tex="{{ q.solution }}" style="font-family:'Baskervville',Georgia,serif;font-size:19px;line-height:1.7;color:#121418;max-width:64ch"></div>
+                    </div>
+                    <sc-if value="{{ hasSteps }}" hint-placeholder-val="{{ false }}">
+                      <div style="border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;overflow:hidden">
+                        <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #E2E5EA"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">SELF-CHECK</span><span style="font-weight:600;font-size:16px;color:#121418">Did your write-up cover the key steps?</span></div><span style="margin-left:auto;font-size:13px;font-weight:600;color:{{ stepSumCol }}">{{ stepSum }}</span></div>
+                        <sc-for list="{{ keySteps }}" as="ks" hint-placeholder-count="3"><button type="button" onClick="{{ ks.toggle }}" aria-pressed="{{ ks.on }}" style="width:100%;display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border:0;border-bottom:1px solid #EEF1F4;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif" style-hover="background:#F6F7F9"><span style="width:20px;height:20px;flex:0 0 20px;margin-top:2px;border-radius:6px;border:1.5px solid {{ ks.bd }};background:{{ ks.bg }};display:grid;place-items:center"><svg viewBox="0 0 16 16" width="12" height="12" style="opacity:{{ ks.tick }}"><path d="M3.5 8.3l2.8 2.8 6-6.2" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span data-tex="{{ ks.t }}" style="font-size:15px;line-height:1.55;color:#121418"></span></button></sc-for>
+                        <p style="margin:0;padding:12px 18px;font-size:13px;color:#4B4F58;background:#F6F7F9">{{ stepAdvice }}</p>
+                      </div>
+                    </sc-if>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">TOP WRITE-UPS</span>
+                      <sc-for list="{{ writeups }}" as="w" hint-placeholder-count="2">
+                        <div style="display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;padding:14px 16px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF">
+                          <span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px">{{ w.ini }}</span>
+                          <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b style="font-weight:600;font-size:14px">{{ w.name }}</b><div data-tex="{{ w.text }}" style="font-size:15px;line-height:1.6;color:#121418"></div></div>
+                          <span style="font-size:13px;font-weight:600;color:#6B7280;white-space:nowrap">▲ {{ w.votes }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+              </article>
+
+              <aside style="flex:1 1 240px;max-width:{{ asideMax }};display:flex;flex-direction:column;gap:14px;position:sticky;top:88px">
+                <div style="border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;overflow:hidden">
+                  <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid #EEF1F4"><span style="font-size:13px;color:#6B7280">{{ f.k }}</span><span style="font-size:13px;font-weight:600;color:#121418;text-align:right">{{ f.v }}</span></div></sc-for>
+                  <button type="button" onClick="{{ goThread }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:0;background:#F6F7F9;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#0B5BC4;cursor:pointer">{{ threadLabel }} <span aria-hidden="true">→</span></button>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button type="button" onClick="{{ prevQ }}" style="flex:1;height:40px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418;cursor:pointer" style-hover="background:#EEF1F4">← Previous</button>
+                  <button type="button" onClick="{{ nextQ }}" style="flex:1;height:40px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418;cursor:pointer" style-hover="background:#EEF1F4">Next →</button>
+                </div>
+              </aside>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ pgCommunity }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+    <sc-if value="{{ fFeed }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+          <span style="width:56px;height:56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="30" height="29" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ subHead.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ subHead.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ subHead.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ subHead.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ subHead.f4 }}"></path></svg></span>
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px">
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:#ECE8DF">{{ subHead.name }}</h1>
+            <span style="font-size:15px;color:#A7AAB2">{{ subHead.desc }}</span>
+          </div>
+          <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">{{ subHead.members }}</span>
+          <sc-if value="{{ subHead.isSub }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ toggleJoin }}" style="height:40px;padding:0 18px;border-radius:999px;border:1px solid {{ joinBd }};background:{{ joinBg }};color:{{ joinFg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">{{ joinLabel }}</button></sc-if>
+          <button type="button" onClick="{{ openCompose }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#1766D1"><span style="font-size:18px;line-height:1">+</span> Create post</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+          <div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:4px;padding:4px;border:1px solid #E2E5EA;border-radius:999px;align-self:flex-start;background:#FFFFFF">
+              <sc-for list="{{ sorts }}" as="so" hint-placeholder-count="3"><button type="button" onClick="{{ so.pick }}" style="height:32px;padding:0 14px;border:0;border-radius:999px;background:{{ so.bg }};color:{{ so.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer">{{ so.label }}</button></sc-for>
+            </div>
+            <sc-for list="{{ feed }}" as="p" hint-placeholder-count="5">
+              <article onClick="{{ p.open }}" style="display:grid;grid-template-columns:52px minmax(0,1fr);border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;overflow:hidden;cursor:pointer;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 8px 24px rgba(18,20,24,.05)">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 0;background:#F6F7F9;border-right:1px solid #EEF1F4">
+      <button type="button" onClick="{{ p.up }}" aria-label="Upvote" aria-pressed="{{ p.upP }}" style="width:32px;height:28px;border:0;border-radius:6px;background:transparent;color:{{ p.upC }};display:grid;place-items:center;cursor:pointer" style-hover="background:#E6E9EE"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
+      <b style="font-size:14px;font-weight:700;color:{{ p.scoreC }}">{{ p.score }}</b>
+      <button type="button" onClick="{{ p.down }}" aria-label="Downvote" aria-pressed="{{ p.downP }}" style="width:32px;height:28px;border:0;border-radius:6px;background:transparent;color:{{ p.downC }};display:grid;place-items:center;cursor:pointer" style-hover="background:#E6E9EE"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+    </div>
+                <div style="padding:14px 18px;display:flex;flex-direction:column;gap:8px;min-width:0">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13px;color:#6B7280"><svg viewBox="0 0 133 128" width="14" height="13" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ p.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ p.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ p.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ p.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ p.f4 }}"></path></svg><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.08em;color:#0B5BC4">{{ p.sub }}</b><span>·</span><span>{{ p.author }}</span><span>·</span><span>{{ p.ago }}</span><span style="height:22px;padding:0 9px;border-radius:999px;border:1px solid #E2E5EA;display:flex;align-items:center;font-size:11.5px;font-weight:600;color:#4B4F58">{{ p.flair }}</span></div>
+                  <h2 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;line-height:1.35;color:#121418">{{ p.title }}</h2>
+                  <div style="position:relative">
+                    <div data-tex="{{ p.body }}" style="font-size:15px;line-height:1.6;color:#4B4F58;max-height:4.9em;overflow:hidden;filter:{{ p.blur }};user-select:{{ p.sel }}"></div>
+                    <sc-if value="{{ p.hidden }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;align-items:center;gap:10px;padding:0 4px"><span style="height:28px;padding:0 12px;border-radius:999px;background:#121418;color:#FFFFFF;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Spoiler for today · reveals at midnight</span><button type="button" onClick="{{ p.reveal }}" style="height:28px;padding:0 10px;border:1px solid #D2D7DE;border-radius:999px;background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600;color:#121418;cursor:pointer">Show anyway</button></div></sc-if>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:16px;padding-top:2px;font-size:13px;font-weight:600;color:#6B7280"><span style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"></path></svg>{{ p.comments }}</span></div>
+                </div>
+              </article>
+            </sc-for>
+            <sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:40px;border:1px solid #E2E5EA;border-radius:14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;background:#F6F7F9"><span style="font-weight:600;font-size:17px;color:#121418">Nothing here yet.</span><span style="font-size:14px;color:#4B4F58">Every community starts with one good question.</span><button type="button" onClick="{{ openCompose }}" style="height:38px;padding:0 16px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Start the first thread</button></div></sc-if>
+          </div>
+          <aside style="flex:0 1 300px;min-width:240px;display:flex;flex-direction:column;gap:14px">
+            <div style="border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;padding:18px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">HOW WE TALK HERE</span>
+              <sc-for list="{{ rules }}" as="ru" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14px;line-height:1.5;color:#121418"><span style="font-family:'CM Typewriter',monospace;font-size:11px;color:#0B5BC4;padding-top:2px">{{ ru.n }}</span><span>{{ ru.t }}</span></div></sc-for>
+            </div>
+            <div style="border:1px solid #E2E5EA;border-radius:14px;background:#FFFFFF;padding:18px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">WRITING MATHS</span>
+              <span style="font-size:14px;color:#4B4F58">Wrap maths in dollar signs. <code style="font-family:'CM Typewriter',monospace;font-size:12px">$x^2+y^2$</code> renders as</span>
+              <div data-tex="$x^2+y^2=z^2$" style="font-size:17px"></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ fPost }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:18px;max-width:880px">
+        <nav aria-label="Breadcrumb" style="display:flex;align-items:center;gap:8px;font-size:14px;color:#6B7280"><button type="button" onClick="{{ crumbAll }}" style="border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:500;font-size:14px;color:#4B4F58;cursor:pointer" style-hover="color:#121418">Community</button><span aria-hidden="true">›</span><button type="button" onClick="{{ crumbSub }}" style="border:0;background:none;padding:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.06em;color:#4B4F58;cursor:pointer" style-hover="color:#121418">{{ cp.sub }}</button><span aria-hidden="true">›</span><span style="color:#121418;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40ch">{{ cp.title }}</span></nav>
+        <article style="display:grid;grid-template-columns:56px minmax(0,1fr);border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;overflow:hidden">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:16px 0;background:#F6F7F9;border-right:1px solid #EEF1F4">
+      <button type="button" onClick="{{ cp.up }}" aria-label="Upvote" aria-pressed="{{ cp.upP }}" style="width:32px;height:28px;border:0;border-radius:6px;background:transparent;color:{{ cp.upC }};display:grid;place-items:center;cursor:pointer" style-hover="background:#E6E9EE"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
+      <b style="font-size:14px;font-weight:700;color:{{ cp.scoreC }}">{{ cp.score }}</b>
+      <button type="button" onClick="{{ cp.down }}" aria-label="Downvote" aria-pressed="{{ cp.downP }}" style="width:32px;height:28px;border:0;border-radius:6px;background:transparent;color:{{ cp.downC }};display:grid;place-items:center;cursor:pointer" style-hover="background:#E6E9EE"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+    </div>
+          <div style="padding:20px 24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13px;color:#6B7280"><svg viewBox="0 0 133 128" width="14" height="13" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ cp.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ cp.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ cp.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ cp.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ cp.f4 }}"></path></svg><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.08em;color:#0B5BC4">{{ cp.sub }}</b><span>·</span><span>{{ cp.author }}</span><span>·</span><span>{{ cp.ago }}</span><span style="height:22px;padding:0 9px;border-radius:999px;border:1px solid #E2E5EA;display:flex;align-items:center;font-size:11.5px;font-weight:600;color:#4B4F58">{{ cp.flair }}</span></div>
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(26px,2.6vw,34px);line-height:1.1;letter-spacing:-.02em;color:#121418">{{ cp.title }}</h1>
+            <div style="position:relative">
+              <div data-tex="{{ cp.body }}" style="font-size:16.5px;line-height:1.7;color:#121418;max-width:68ch;filter:{{ cp.blur }};user-select:{{ cp.sel }}"></div>
+              <sc-if value="{{ cp.hidden }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px"><span style="height:32px;padding:0 14px;border-radius:999px;background:#121418;color:#FFFFFF;display:flex;align-items:center;font-size:13px;font-weight:600">Spoiler for today’s problems · reveals in {{ countdown }}</span><button type="button" onClick="{{ cp.reveal }}" style="height:32px;padding:0 12px;border:1px solid #D2D7DE;border-radius:999px;background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;cursor:pointer">Show anyway</button></div></sc-if>
+            </div>
+            <span style="font-size:13px;font-weight:600;color:#6B7280">{{ cp.comments }}</span>
+          </div>
+        </article>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;flex-direction:column;border:1px solid #D2D7DE;border-radius:12px;background:#FFFFFF;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:4px;padding:6px 8px;border-bottom:1px solid #E2E5EA;background:#F6F7F9">
+          <button type="button" onClick="{{ cmWrite }}" style="height:30px;padding:0 12px;border:0;border-radius:8px;background:{{ cmWBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Write</button>
+          <button type="button" onClick="{{ cmPrev }}" style="height:30px;padding:0 12px;border:0;border-radius:8px;background:{{ cmPBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Preview</button>
+          <span style="margin-left:auto;font-size:12px;color:#6B7280">Maths in <code style="font-family:'CM Typewriter',monospace;font-size:11.5px;padding:1px 5px;border-radius:4px;background:#FFFFFF;border:1px solid #E2E5EA">$…$</code> or <code style="font-family:'CM Typewriter',monospace;font-size:11.5px;padding:1px 5px;border-radius:4px;background:#FFFFFF;border:1px solid #E2E5EA">$$…$$</code></span>
+        </div>
+        <sc-if value="{{ cmIsW }}" hint-placeholder-val="{{ true }}"><textarea value="{{ cmVal }}" onChange="{{ cmOn }}" placeholder="Add to the discussion. Show your reasoning." style="display:block;width:100%;min-height:96px;padding:14px 16px;border:0;resize:vertical;font-family:'Figtree',sans-serif;font-size:15.5px;line-height:1.6;color:#121418;outline:none"></textarea></sc-if>
+        <sc-if value="{{ cmIsP }}" hint-placeholder-val="{{ false }}"><div data-tex="{{ cmPreview }}" style="min-height:96px;padding:14px 16px;font-size:15.5px;line-height:1.7;color:#121418"></div></sc-if>
+      </div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px;color:#C23B56">{{ cmErr }}</span><button type="button" onClick="{{ postComment }}" style="margin-left:auto;height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer" style-hover="background:#1766D1">Comment</button></div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ thread }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex;gap:12px;padding:14px 0 6px;margin-left:{{ c.indent }};border-left:{{ c.line }};padding-left:{{ c.pad }}">
+              <span style="width:30px;height:30px;flex:0 0 30px;border-radius:999px;background:{{ c.avBg }};color:{{ c.avFg }};display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:10.5px">{{ c.ini }}</span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#6B7280"><b style="font-weight:600;color:#121418">{{ c.author }}</b><span>·</span><span>{{ c.ago }}</span></div>
+                <div data-tex="{{ c.body }}" style="font-size:15.5px;line-height:1.65;color:#121418"></div>
+                <div style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:#6B7280">
+                  <button type="button" onClick="{{ c.up }}" aria-label="Mark as helpful" aria-pressed="{{ c.pressed }}" style="height:26px;padding:0 8px 0 4px;border:1px solid {{ c.hBd }};border-radius:999px;background:{{ c.hBg }};color:{{ c.upC }};display:flex;align-items:center;gap:4px;cursor:pointer;font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600" style-hover="border-color:#B9C3D0"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg>Helpful · {{ c.score }}</button>
+                  <button type="button" onClick="{{ c.reply }}" style="margin-left:8px;height:26px;padding:0 10px;border:0;border-radius:6px;background:transparent;font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#4B4F58;cursor:pointer" style-hover="background:#EEF1F4">Reply</button>
+                </div>
+                <sc-if value="{{ c.replying }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:8px;padding:6px 0 8px">
+                    <textarea value="{{ replyVal }}" onChange="{{ onReply }}" placeholder="Write a reply" style="width:100%;min-height:72px;padding:10px 12px;border:1px solid #D2D7DE;border-radius:10px;resize:vertical;font-family:'Figtree',sans-serif;font-size:15px;line-height:1.55;outline:none"></textarea>
+                    <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onClick="{{ cancelReply }}" style="height:34px;padding:0 14px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;cursor:pointer">Cancel</button><button type="button" onClick="{{ sendReply }}" style="height:34px;padding:0 14px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;cursor:pointer">Reply</button></div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ fCompose }}" hint-placeholder-val="{{ false }}">
+      <form onSubmit="{{ submitPost }}" novalidate="" style="display:flex;flex-direction:column;gap:18px;max-width:780px">
+        <button type="button" onClick="{{ backToFeed }}" style="align-self:flex-start;border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#0B5BC4;cursor:pointer">← Cancel</button>
+        <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:36px;line-height:1.05;letter-spacing:-.02em;color:#121418">Start a <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">thread.</em></h1>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:500;color:#4B4F58">Community</span>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ subPick }}" as="sp" hint-placeholder-count="8"><button type="button" onClick="{{ sp.pick }}" style="height:36px;padding:0 12px;border-radius:999px;border:1px solid {{ sp.bd }};background:{{ sp.bg }};color:{{ sp.fg }};display:flex;align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer"><svg viewBox="0 0 133 128" width="14" height="13" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ sp.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ sp.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ sp.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ sp.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ sp.f4 }}"></path></svg>{{ sp.name }}</button></sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:500;color:#4B4F58">Type</span>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ flairPick }}" as="fl" hint-placeholder-count="4"><button type="button" onClick="{{ fl.pick }}" style="height:34px;padding:0 14px;border-radius:999px;border:1px solid {{ fl.bd }};background:{{ fl.bg }};color:{{ fl.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer">{{ fl.name }}</button></sc-for>
+          </div>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:500;color:#4B4F58">Title</span>
+          <input value="{{ cTitle }}" onChange="{{ onCTitle }}" placeholder="A clear question or claim" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid #D2D7DE;font-family:'Figtree',sans-serif;font-size:17px;font-weight:600;color:#121418;outline:none" style-focus="border-color:#0B5BC4">
+        </label>
+        <div style="display:flex;flex-direction:column;border:1px solid #D2D7DE;border-radius:12px;background:#FFFFFF;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:4px;padding:6px 8px;border-bottom:1px solid #E2E5EA;background:#F6F7F9">
+          <button type="button" onClick="{{ cbWrite }}" style="height:30px;padding:0 12px;border:0;border-radius:8px;background:{{ cbWBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Write</button>
+          <button type="button" onClick="{{ cbPrev }}" style="height:30px;padding:0 12px;border:0;border-radius:8px;background:{{ cbPBg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;color:#121418;cursor:pointer">Preview</button>
+          <span style="margin-left:auto;font-size:12px;color:#6B7280">Maths in <code style="font-family:'CM Typewriter',monospace;font-size:11.5px;padding:1px 5px;border-radius:4px;background:#FFFFFF;border:1px solid #E2E5EA">$…$</code> or <code style="font-family:'CM Typewriter',monospace;font-size:11.5px;padding:1px 5px;border-radius:4px;background:#FFFFFF;border:1px solid #E2E5EA">$$…$$</code></span>
+        </div>
+        <sc-if value="{{ cbIsW }}" hint-placeholder-val="{{ true }}"><textarea value="{{ cbVal }}" onChange="{{ cbOn }}" placeholder="Explain your idea. Use $…$ for inline maths and $$…$$ for displayed equations." style="display:block;width:100%;min-height:180px;padding:14px 16px;border:0;resize:vertical;font-family:'Figtree',sans-serif;font-size:15.5px;line-height:1.6;color:#121418;outline:none"></textarea></sc-if>
+        <sc-if value="{{ cbIsP }}" hint-placeholder-val="{{ false }}"><div data-tex="{{ cbPreview }}" style="min-height:180px;padding:14px 16px;font-size:15.5px;line-height:1.7;color:#121418"></div></sc-if>
+      </div>
+        <button type="button" onClick="{{ toggleSpoiler }}" aria-pressed="{{ spoilerOn }}" style="align-self:flex-start;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid {{ spBd }};border-radius:12px;background:{{ spBg }};cursor:pointer;font-family:'Figtree',sans-serif;text-align:left"><span style="width:36px;height:20px;border-radius:999px;background:{{ spTrack }};position:relative;flex:0 0 36px;transition:background 200ms"><i style="position:absolute;top:2px;left:{{ spKnob }};width:16px;height:16px;border-radius:50%;background:#FFFFFF;transition:left 200ms cubic-bezier(.2,0,0,1)"></i></span><span style="display:flex;flex-direction:column"><b style="font-size:14px;font-weight:600;color:#121418">Mentions today’s problems</b><span style="font-size:13px;color:#4B4F58">Hidden behind a spoiler until solutions unlock at midnight.</span></span></button>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:14px;color:#C23B56">{{ composeErr }}</span><span style="font-size:13px;color:#6B7280">{{ autosaveNote }}</span><button type="submit" style="margin-left:auto;height:46px;padding:0 24px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#1766D1">Post</button></div>
+      </form>
+    </sc-if>
+  </div>
+        </sc-if>
+        <sc-if value="{{ pgTrack }}" hint-placeholder-val="{{ false }}">
+          <dc-import name="LmsModule" embedded="{{ true }}" start-page="track" hint-size="100%,900px"></dc-import>
+        </sc-if>
+        <sc-if value="{{ pgLearn }}" hint-placeholder-val="{{ false }}">
+          <dc-import name="LmsModule" embedded="{{ true }}" start-page="learn" hint-size="100%,900px"></dc-import>
+        </sc-if>
+        <sc-if value="{{ pgLive }}" hint-placeholder-val="{{ false }}">
+          <dc-import name="LmsModule" embedded="{{ true }}" start-page="live" hint-size="100%,900px"></dc-import>
+        </sc-if>
+        <sc-if value="{{ pgProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:28px;max-width:720px">
+            <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+              <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><span style="font-family:'CM Typewriter',monospace;font-size:16px;color:#ECE8DF">{{ initials }}</span></span>
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px">
+                <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:#ECE8DF">{{ pName }}</h1>
+                <span style="font-size:15px;color:#A7AAB2">Your details, as you gave them at onboarding.</span>
+              </div>
+              <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">{{ pMeta }}</span>
+              <button type="button" onClick="{{ editProfile }}" style="height:40px;padding:0 18px;border-radius:999px;border:1px solid #333844;background:transparent;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#ECE8DF;cursor:pointer" style-hover="background:rgba(236,232,223,.1)">Edit details</button>
+            </div>
+            <div style="border:1px solid #E2E5EA;border-radius:14px;overflow:hidden">
+              <sc-for list="{{ profileRows }}" as="r" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:180px 1fr;gap:16px;padding:16px 20px;border-bottom:1px solid #E2E5EA"><span style="font-size:14px;color:#6B7280">{{ r.k }}</span><span style="font-size:15px;font-weight:500;color:#121418">{{ r.v }}</span></div>
+              </sc-for>
+              <div style="display:flex;gap:10px;padding:16px 20px;background:#F6F7F9">
+                <button type="button" onClick="{{ editProfile }}" style="height:40px;padding:0 18px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer" style-hover="background:#EEF1F4">Edit details</button>
+                <button type="button" onClick="{{ signOut }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:transparent;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#C23B56;cursor:pointer" style-hover="background:#EEF1F4">Sign out</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </main>
+    <sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}">
+      <nav aria-label="Tabs" style="position:fixed;left:0;right:0;bottom:0;z-index:50;height:68px;padding:0 8px env(safe-area-inset-bottom);display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid #E2E5EA">
+        <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="4">
+          <button type="button" onClick="{{ tb.go }}" style="border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:{{ tb.fg }};font-family:'Figtree',sans-serif;font-size:11.5px;font-weight:{{ tb.fw }};cursor:pointer">
+            <span style="position:relative;display:grid;place-items:center;width:44px;height:28px;border-radius:999px;background:{{ tb.bg }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tb.icon }}"></path></svg></span>
+            {{ tb.label }}
+          </button>
+        </sc-for>
+      </nav>
+    </sc-if>
+  </div>
+</sc-if>
+
+<sc-if value="{{ solveOn }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Solved" onClick="{{ closeSolve }}" style="position:fixed;inset:0;z-index:72;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px">
+    <div onClick="{{ stop }}" style="position:relative;width:min(380px,100%);border-radius:20px;background:#000000;color:#ECE8DF;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:16px;padding:28px 24px 24px;box-shadow:0 30px 80px rgba(0,0,0,.4)">
+      <canvas ref="{{ solveMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+      <div data-mark-anchor="" aria-hidden="true" style="position:relative;width:120px;height:116px;margin-top:8px"></div>
+      <span style="position:relative;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">{{ solveTag }}</span>
+      <span style="position:relative;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:34px;letter-spacing:-.02em;line-height:1">Solved<em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">.</em></span>
+      <span style="position:relative;font-size:14px;color:#A7AAB2;text-align:center">{{ solveLine }}</span>
+      <div style="position:relative;display:flex;gap:8px;width:100%;padding-top:6px">
+        <button type="button" onClick="{{ closeSolve }}" style="flex:1;height:44px;border-radius:999px;border:1px solid #333844;background:transparent;color:#ECE8DF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Stay here</button>
+        <button type="button" onClick="{{ solveNext }}" style="flex:1;height:44px;border-radius:999px;border:0;background:#ECE8DF;color:#000000;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Next problem →</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ searchOn }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Search" onClick="{{ closeSearch }}" style="position:fixed;inset:0;z-index:71;background:rgba(18,20,24,.35);backdrop-filter:blur(4px);display:flex;justify-content:center;padding:12vh 16px 16px">
+    <div onClick="{{ stop }}" style="width:min(620px,100%);max-height:70vh;display:flex;flex-direction:column;border-radius:20px;background:#FFFFFF;border:1px solid #E2E5EA;box-shadow:0 30px 80px rgba(18,20,24,.2);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid #E2E5EA"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><input ref="{{ searchInputRef }}" value="{{ searchQ }}" onChange="{{ onSearch }}" onKeyDown="{{ searchKey }}" placeholder="Search problems, threads and communities" style="flex:1;height:56px;border:0;outline:none;font-family:'Figtree',sans-serif;font-size:16px;color:#121418"><span style="font-family:'CM Typewriter',monospace;font-size:11px;padding:1px 6px;border-radius:6px;border:1px solid #D2D7DE;color:#6B7280">ESC</span></div>
+      <div style="overflow:auto;padding:8px">
+        <sc-for list="{{ searchRes }}" as="sr" hint-placeholder-count="6">
+          <sc-if value="{{ sr.head }}" hint-placeholder-val="{{ false }}"><p style="margin:10px 10px 4px;font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:#6B7280">{{ sr.head }}</p></sc-if>
+          <button type="button" onClick="{{ sr.go }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:10px;border:0;border-radius:10px;background:{{ sr.bg }};cursor:pointer;text-align:left;font-family:'Figtree',sans-serif" style-hover="background:#F6F7F9"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#6B7280;min-width:64px">{{ sr.tag }}</span><span style="font-size:15px;font-weight:500;color:#121418">{{ sr.t }}</span></button>
+        </sc-for>
+        <sc-if value="{{ searchEmpty }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding:24px;text-align:center;font-size:14px;color:#6B7280">Nothing matches that yet.</p></sc-if>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ loaderOn }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Setting up your notebook" style="position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:{{ loaderOp }};transition:opacity 300ms cubic-bezier(.2,0,0,1)">
+    <div style="position:relative;height:300px;width:min(460px,86vw);overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)">
+      <div style="position:absolute;left:0;right:0;top:122px;transform:translateY({{ loaderY }});transition:transform 600ms cubic-bezier(.2,0,0,1)">
+        <sc-for list="{{ loaderSteps }}" as="ls" hint-placeholder-count="5">
+          <div style="height:56px;display:flex;align-items:center;gap:16px;opacity:{{ ls.op }};transition:opacity 400ms">
+            <svg viewBox="0 0 24 24" width="24" height="24" style="flex:0 0 24px"><circle cx="12" cy="12" r="10.5" fill="{{ ls.fill }}" stroke="{{ ls.stroke }}" stroke-width="1.5"></circle><path d="M7.5 12.4l3 3 6-6.4" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ ls.tick }}"></path></svg>
+            <span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px;color:{{ ls.col }}">{{ ls.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Sign in&quot;,&quot;Sign up&quot;,&quot;Onboarding&quot;,&quot;App&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  KEY = 'liminal-app-session-v1';
+  USERS = 'liminal-app-users-v1';
+  DEMO = { email: 'student@liminal.math', password: 'proof1234', profile: { name: 'Aarav Mehta', grade: 'Class 11', school: 'Delhi Public School, R.K. Puram', target: 'RMO', topic: 'GEO' } };
+  GRADES = ['Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12', 'Other'];
+  TARGETS = [['IOQM', 'Qualifier'], ['RMO', 'Regional'], ['INMO', 'National'], ['Not sure', 'Just curious']];
+  TOPICS = [['ALG', 'Algebra', 0], ['COMB', 'Combinatorics', 1], ['GEO', 'Geometry', 2], ['NT', 'Number theory', 3]];
+  SUBS = [['m/Algebra', 0], ['m/Combinatorics', 1], ['m/Geometry', 2], ['m/NumberTheory', 3], ['m/ProblemOfTheDay', 4], ['m/Olympiads', 0], ['m/General', 1], ['m/Resources', 2]];
+  MARK = ['#4ECCFC', '#00A8FC', '#0666D8', '#2A4EAE', '#0666D8'];
+  ICONS = {
+    home: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+    pod: 'M4 6h16v14H4z M8 3v5 M16 3v5 M4 11h16',
+    community: 'M4 5h16v10H9l-5 4z M8 9h8 M8 12h5',
+    profile: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21a8 8 0 0 1 16 0',
+    track: 'M4 19h4v-6h4V8h4V4h4',
+    live: 'M3 6h13v12H3z M16 10l5-3v10l-5-3',
+    learn: 'M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z M20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z'
+  };
+  PROBLEMS = [
+    { id: 'ALG-E', cat: 'ALG', lv: 0, title: 'Reciprocal cubes', type: 'num', answer: '18' },
+    { id: 'ALG-M', cat: 'ALG', lv: 1, title: 'Additive and multiplicative', type: 'proof' },
+    { id: 'ALG-H', cat: 'ALG', lv: 2, title: 'Squares beat the sum', type: 'proof' },
+    { id: 'COMB-E', cat: 'COMB', lv: 0, title: 'A room of handshakes', type: 'num', answer: '45' },
+    { id: 'COMB-M', cat: 'COMB', lv: 1, title: 'Two colours, one distance', type: 'proof' },
+    { id: 'COMB-H', cat: 'COMB', lv: 2, title: 'Seven integers, one ten', type: 'proof' },
+    { id: 'GEO-E', cat: 'GEO', lv: 0, title: 'Angle in a semicircle', type: 'num', answer: '90' },
+    { id: 'GEO-M', cat: 'GEO', lv: 1, title: 'Where the medians meet', type: 'proof' },
+    { id: 'GEO-H', cat: 'GEO', lv: 2, title: 'Ptolemy’s equality', type: 'proof' },
+    { id: 'NT-E', cat: 'NT', lv: 0, title: 'Divisors of the year', type: 'num', answer: '4' },
+    { id: 'NT-M', cat: 'NT', lv: 1, title: 'The last two digits', type: 'num', answer: '49' },
+    { id: 'NT-H', cat: 'NT', lv: 2, title: 'Never a square', type: 'proof' }
+  ];
+  STATEMENTS = {"ALG-E":"If $x + \\frac{1}{x} = 3$, find the value of $x^3 + \\frac{1}{x^3}$.","ALG-M":"Find all functions $f:\\mathbb{R}\\to\\mathbb{R}$ such that $f(x+y)=f(x)+f(y)$ and $f(xy)=f(x)f(y)$ for all real numbers $x, y$.","ALG-H":"Let $a, b, c$ be positive real numbers with $abc = 1$. Prove that $a^2+b^2+c^2 \\ge a+b+c$.","COMB-E":"Ten people are in a room, and every pair of them shakes hands exactly once. How many handshakes take place?","COMB-M":"Every point of the plane is coloured either red or blue. Prove that there exist two points at distance $1$ from each other that have the same colour.","COMB-H":"Prove that among any seven distinct integers there are two whose sum or difference is divisible by $10$.","GEO-E":"$AB$ is a diameter of a circle and $P$ is any other point on the circle. Find $\\angle APB$ in degrees.","GEO-M":"Prove that the three medians of any triangle pass through a single point.","GEO-H":"Let $ABCD$ be a cyclic quadrilateral. Prove that $AC\\cdot BD = AB\\cdot CD + AD\\cdot BC$.","NT-E":"How many positive divisors does $2026$ have?","NT-M":"Find the last two digits of $7^{2026}$.","NT-H":"Prove that $n^2+n+1$ is never a perfect square for any positive integer $n$."};
+  YDATA = [["ALG","0","Powers of two","num","Find $1 + 2 + 4 + \\dots + 2^{9}$.","This is a geometric series with ratio $2$ and ten terms, so the sum is $\\frac{2^{10}-1}{2-1} = 1023$."],["ALG","1","Roots, squared","num","If $\\alpha$ and $\\beta$ are the roots of $x^2-5x+3=0$, find $\\alpha^2+\\beta^2$.","By Vieta, $\\alpha+\\beta=5$ and $\\alpha\\beta=3$. Then $\\alpha^2+\\beta^2=(\\alpha+\\beta)^2-2\\alpha\\beta=25-6=19$."],["ALG","2","Cauchy–Schwarz warm-up","proof","Prove that for positive reals $a,b,c$: $(a+b+c)\\left(\\frac1a+\\frac1b+\\frac1c\\right)\\ge 9$.","By Cauchy–Schwarz, $(a+b+c)\\left(\\frac1a+\\frac1b+\\frac1c\\right)\\ge\\left(\\sqrt a\\cdot\\frac{1}{\\sqrt a}+\\sqrt b\\cdot\\frac{1}{\\sqrt b}+\\sqrt c\\cdot\\frac{1}{\\sqrt c}\\right)^2=9$. Equality holds when $a=b=c$."],["COMB","0","Arranging LEVEL","num","In how many distinct ways can the letters of LEVEL be arranged?","Five letters with L and E each repeated twice: $\\frac{5!}{2!\\,2!}=30$."],["COMB","1","No neighbours","num","How many subsets of $\\{1,2,\\dots,10\\}$ (including the empty set) contain no two consecutive integers?","Let $a_n$ count such subsets of $\\{1,\\dots,n\\}$. Either $n$ is excluded ($a_{n-1}$ ways) or included, forcing $n-1$ out ($a_{n-2}$ ways). So $a_n=a_{n-1}+a_{n-2}$ with $a_1=2$, $a_2=3$, giving $a_{10}=144$."],["COMB","2","Friends and strangers","proof","Prove that among any six people there are three who all know each other or three who are all strangers.","Fix a person $P$. Of the other five, at least three are all friends of $P$ or all strangers to $P$; say three friends. If any two of them are friends, they form a friendly triple with $P$. Otherwise those three are mutual strangers."],["GEO","0","An exterior angle","num","Two angles of a triangle measure $50^\\circ$ and $60^\\circ$. Find the exterior angle at the third vertex, in degrees.","An exterior angle equals the sum of the two opposite interior angles: $50^\\circ+60^\\circ=110^\\circ$."],["GEO","1","Tangents from a point","proof","From a point $P$ outside a circle with centre $O$, tangents touch the circle at $A$ and $B$. Prove that $PA=PB$.","$OA\\perp PA$ and $OB\\perp PB$. Triangles $OAP$ and $OBP$ are right-angled with a common hypotenuse $OP$ and $OA=OB$, so they are congruent (RHS), and $PA=PB$."],["GEO","2","The angle bisector theorem","proof","In triangle $ABC$ the bisector of $\\angle A$ meets $BC$ at $D$. Prove that $\\frac{BD}{DC}=\\frac{AB}{AC}$.","Triangles $ABD$ and $ACD$ share the height from $A$, so their areas are in ratio $BD:DC$. Their areas are also $\\tfrac12 AB\\cdot AD\\sin\\tfrac A2$ and $\\tfrac12 AC\\cdot AD\\sin\\tfrac A2$, in ratio $AB:AC$."],["NT","0","Sum of the first n odds","num","Find $1+3+5+\\dots+199$.","There are $100$ odd numbers here, and the sum of the first $n$ odd numbers is $n^2$. So the sum is $100^2=10000$."],["NT","1","A remainder","num","Find the remainder when $2^{100}$ is divided by $7$.","$2^3=8\\equiv1\\pmod 7$, and $100=3\\cdot33+1$, so $2^{100}\\equiv 2\\pmod 7$. The remainder is $2$."],["NT","2","Infinitely many primes","proof","Prove that there are infinitely many prime numbers.","Suppose $p_1,\\dots,p_k$ were all the primes. Then $N=p_1p_2\\cdots p_k+1$ leaves remainder $1$ on division by each $p_i$, so any prime factor of $N$ is a new prime, which is a contradiction."]].map(([cat, lv, title, type, statement, solution], i) => ({ id: 'Y-' + cat + '-' + lv, cat, lv: +lv, title, type, statement, solution }));
+  YRES = { 'Y-GEO-1': ['shared', 'Write-up shared · 4 upvotes'], 'Y-NT-0': ['ok', 'Correct · you answered 10000'], 'Y-ALG-1': ['ok', 'Correct · you answered 19'], 'Y-COMB-1': ['bad', 'Answered 89, the answer was 144'] };
+  SEED_POSTS = [{"id":"p1","sub":"m/Geometry","author":"Rohan D.","mins":120,"title":"Is there a proof of Ptolemy without inversion?","body":"Every proof I know of $AC\\cdot BD = AB\\cdot CD + AD\\cdot BC$ uses inversion or complex numbers. Is there a purely synthetic one that a first-year olympiad student could find?","flair":"Question","score":64},{"id":"p2","sub":"m/ProblemOfTheDay","author":"Meera P.","mins":300,"title":"Yesterday’s NT-H: three different ways in","body":"Euclid’s argument is the classic. You can also use $n!+1$, or the Fermat numbers $F_n = 2^{2^n}+1$, which are pairwise coprime, so each contributes a new prime.","flair":"Approach","score":47},{"id":"p3","sub":"m/Olympiads","author":"Ananya R.","mins":1440,"title":"RMO 2026: how are you splitting the last month?","body":"I’m planning two weeks of geometry, one of combinatorics and one of full mock papers under time. Is that too little number theory?","flair":"Discussion","score":31},{"id":"p4","sub":"m/Algebra","author":"Kabir S.","mins":420,"title":"A slick proof of AM–GM for three variables","body":"Start from $x^3+y^3+z^3-3xyz = \\tfrac12(x+y+z)\\left[(x-y)^2+(y-z)^2+(z-x)^2\\right].$ For non-negative reals the right side is $\\ge 0$, and AM–GM drops out after substituting $x=\\sqrt[3]{a}$ and so on.","flair":"Approach","score":29},{"id":"p5","sub":"m/NumberTheory","author":"Arjun T.","mins":180,"title":"Lifting the exponent: when can I use it?","body":"For an odd prime $p$ with $p \\mid a-b$ and $p\\nmid ab$, we get $v_p(a^n-b^n)=v_p(a-b)+v_p(n)$. What changes when $p=2$?","flair":"Question","score":22},{"id":"p6","sub":"m/Combinatorics","author":"Ishaan M.","mins":1200,"title":"Why the handshake count is n choose 2","body":"Each handshake is a choice of $2$ people from $n$, so there are $\\binom{n}{2}=\\frac{n(n-1)}{2}$ of them. Is there a nice way to see the formula directly, without the “each person shakes $n-1$ hands, then halve” argument?","flair":"Question","score":12},{"id":"p7","sub":"m/Resources","author":"Priya K.","mins":1800,"title":"Books that actually helped me for INMO","body":"Problem-Solving Strategies by Arthur Engel for combinatorics, Challenge and Thrill of Pre-College Mathematics for breadth, and Evan Chen’s EGMO for geometry. What would you add?","flair":"Resource","score":58},{"id":"p9","sub":"m/ProblemOfTheDay","author":"Nikhil G.","mins":45,"title":"Today’s ALG-M: is f(x) = x the only non-zero solution?","body":"Setting $y=1$ in the second equation gives $f(x)(1-f(1))=0$, so either $f\\equiv 0$ or $f(1)=1$. From there additivity pins $f$ on $\\mathbb{Q}$, and $f(x^2)=f(x)^2\\ge 0$ makes it increasing.","flair":"Approach","score":9,"spoiler":true},{"id":"p8","sub":"m/General","author":"Sara V.","mins":3000,"title":"What was the problem that made you love maths?","body":"Mine was proving there are infinitely many primes. It was the first time a proof felt like a magic trick that still made complete sense.","flair":"Discussion","score":40}];
+  SEED_COMMENTS = [{"id":"c1","post":"p1","parent":null,"author":"Ishaan M.","mins":95,"body":"There’s a classic one: pick $E$ on $AC$ with $\\angle ABE = \\angle DBC$. Then $\\triangle ABE \\sim \\triangle DBC$ and $\\triangle ABD \\sim \\triangle EBC$. Write out both ratios and add them.","score":31},{"id":"c2","post":"p1","parent":"c1","author":"Rohan D.","mins":80,"body":"That’s exactly what I was after, thanks. The second similarity is the step I kept missing.","score":9},{"id":"c3","post":"p1","parent":"c2","author":"Ishaan M.","mins":70,"body":"It’s easy to miss. Mark the equal angles on the diagram before you write anything.","score":4},{"id":"c4","post":"p1","parent":null,"author":"Meera P.","mins":60,"body":"Complex numbers are a nice alternative once you know the identity $(a-c)(b-d) = (a-b)(c-d) + (a-d)(b-c)$. Take absolute values and use the triangle inequality; equality is exactly the cyclic case.","score":12},{"id":"c5","post":"p2","parent":null,"author":"Kabir S.","mins":200,"body":"The Fermat number route is my favourite. $F_0F_1\\cdots F_{n-1} = F_n - 2$ does all the work.","score":15},{"id":"c6","post":"p3","parent":null,"author":"Arjun T.","mins":900,"body":"I’d swap one geometry week for NT. Regional papers usually have at least one NT problem and it’s often the most approachable.","score":8},{"id":"c7","post":"p3","parent":"c6","author":"Ananya R.","mins":850,"body":"Fair point. Maybe ten days of geometry and four of NT.","score":3}];
+  SUBDESC = { 'm/Algebra': 'Inequalities, polynomials and functional equations.', 'm/Combinatorics': 'Counting, invariants, graphs and games.', 'm/Geometry': 'Synthetic, coordinate and projective geometry.', 'm/NumberTheory': 'Divisibility, congruences and Diophantine equations.', 'm/ProblemOfTheDay': 'One thread per daily problem. Write-ups land here at midnight.', 'm/Olympiads': 'IOQM, RMO and INMO: papers, preparation and results.', 'm/General': 'Anything mathematical that doesn’t fit elsewhere.', 'm/Resources': 'Books, notes and problem sets worth your time.' };
+  FLAIRS = ['Question', 'Approach', 'Discussion', 'Resource'];
+  KEYSTEPS = {
+    'Y-ALG-2': [String.raw`Applied Cauchy–Schwarz (or AM–GM) to the two brackets`, String.raw`Showed the bound is exactly $9$`, String.raw`Stated the equality case $a=b=c$`],
+    'Y-COMB-2': [String.raw`Fixed one person $P$ and split the other five into friends and strangers of $P$`, String.raw`Used pigeonhole to get at least three on one side`, String.raw`Handled both cases: some pair among them agrees, or none does`],
+    'Y-GEO-1': [String.raw`Noted the radius is perpendicular to each tangent`, String.raw`Identified the two right triangles sharing hypotenuse $OP$`, String.raw`Concluded congruence (RHS) and hence $PA=PB$`],
+    'Y-GEO-2': [String.raw`Compared the areas of $\triangle ABD$ and $\triangle ACD$ via the common height`, String.raw`Expressed the same areas using $\tfrac12 ab\sin C$ with the equal half-angles`, String.raw`Equated the two ratios to get $BD:DC = AB:AC$`],
+    'Y-NT-2': [String.raw`Assumed only finitely many primes $p_1,\dots,p_k$`, String.raw`Built $N = p_1\cdots p_k + 1$`, String.raw`Showed a prime factor of $N$ is new, a contradiction`]
+  };
+  PROGRESS = { 'ALG-E': 'solved', 'NT-E': 'solved', 'GEO-E': 'solved', 'GEO-M': 'draft' };
+  LSTEPS = ['Opening your notebook', 'Ruling the graph paper', 'Choosing today’s problems', 'Finding your community', 'Welcome to Liminal'];
+
+  state = { route: 'signin', mode: 'signin', email: '', password: '', showPw: false, errs: {}, authErr: '', ob: 0, draft: { name: '', grade: '', school: '', target: '', topic: '' }, obErr: '', profile: null, page: 'home', sub: null, userMenu: false, podTab: 'today', podView: 'problem', podSel: 'ALG-M', ySel: 'Y-GEO-1', num: {}, fbs: {}, drafts: {}, edit: 'write', note: '', progress: null, firstRun: false, visitedY: false, visitedC: false, solveOn: null, searchOn: false, searchQ: '', checks: {}, fsort: 'hot', postId: null, composing: false, fposts: null, fcomments: null, fvotes: {}, joined: {}, cmText: '', cmMode: 'write', cmErr: '', replyTo: null, replyText: '', draftPost: { sub: 'm/General', flair: 'Question', title: '', body: '', spoiler: false }, revealed: {}, cbMode: 'write', composeErr: '', loader: null, loaderShown: false, now: Date.now() };
+
+  bannerMeshRef = el => { if (el && el !== this._bcv) { this._bmesh && this._bmesh.stop(); this._bcv = el; this._bmesh = this.initMesh(el); } };
+  meshRef = el => { if (el && el !== this._cv) { this._mesh && this._mesh.stop(); this._cv = el; this._mesh = this.initMesh(el); } };
+
+  componentDidMount() {
+    let sess = null; try { sess = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) {}
+    const start = this.props.startScreen ?? 'Auto';
+    if (start === 'Sign in') this.setState({ route: 'signin', mode: 'signin' });
+    else if (start === 'Sign up') this.setState({ route: 'signin', mode: 'signup' });
+    else if (start === 'Onboarding') this.setState({ route: 'onboarding', ob: 0 });
+    else if (start === 'App') this.setState({ route: 'app', profile: (sess && sess.profile) || this.DEMO.profile, email: (sess && sess.email) || this.DEMO.email });
+    else if (sess && sess.profile) this.setState({ route: 'app', profile: sess.profile, email: sess.email });
+    this.clock = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    addEventListener('resize', this.onResize); this.onResize();
+    this.onKeyG = e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k' && this.state.route === 'app') { e.preventDefault(); this.openSearch(); } };
+    addEventListener('keydown', this.onKeyG);
+    try { const pr = JSON.parse(localStorage.getItem('liminal-app-progress-v1') || 'null'), dr = JSON.parse(localStorage.getItem('liminal-app-drafts-v1') || 'null'); this.setState({ progress: pr || { ...this.PROGRESS }, drafts: dr || {} }); } catch (e) { this.setState({ progress: { ...this.PROGRESS } }); }
+    try { const f = JSON.parse(localStorage.getItem('liminal-app-forum-v1') || 'null'); if (f) this.setState({ fposts: [...(f.posts || []), ...this.SEED_POSTS.filter(p => !(f.posts || []).some(x => x.id === p.id))], fcomments: [...(f.comments || []), ...this.SEED_COMMENTS.filter(c => !(f.comments || []).some(x => x.id === c.id))], fvotes: f.votes || {}, joined: f.joined || {} }); } catch (e) {}
+    this.texTimer = setInterval(() => { this.typeset(); if (window.katex) clearInterval(this.texTimer); }, 300);
+  }
+  componentDidUpdate() { this.typeset(); }
+  openSearch = () => { this.setState({ searchOn: true, searchQ: '' }); setTimeout(() => this._sIn && this._sIn.focus(), 30); };
+  searchInputRef = el => { this._sIn = el; };
+  solveMeshRef = el => { if (el && el !== this._scv) { this._smesh && this._smesh.stop(); this._scv = el; this._smesh = this.initMesh(el); } else if (!el && this._smesh) { this._smesh.stop(); this._smesh = null; this._scv = null; } };
+  onResize = () => { const mob = innerWidth < 820; if (mob !== this.state.mob) this.setState({ mob, drawer: false }); };
+  tex(str) {
+    const k = window.katex, esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    return String(str || '').split(/(\$\$[^$]+\$\$|\$[^$]+\$)/g).map(part => {
+      if (k && /^\$\$[\s\S]+\$\$/.test(part)) return k.renderToString(part.slice(2, -2), { displayMode: true, throwOnError: false });
+      if (k && /^\$[^$]+\$/.test(part)) return k.renderToString(part.slice(1, -1), { throwOnError: false });
+      return esc(part).replace(/\n/g, '<br>');
+    }).join('');
+  }
+  typeset() { document.querySelectorAll('[data-tex]').forEach(el => { const t = el.getAttribute('data-tex') || '', key = t + '|' + !!window.katex; if (el._tex === key) return; el._tex = key; el.innerHTML = this.tex(t); }); }
+  setProgress(id, v) { this.setState(s => { const progress = { ...(s.progress || this.PROGRESS), [id]: v }; try { localStorage.setItem('liminal-app-progress-v1', JSON.stringify(progress)); } catch (e) {} return { progress }; }); }
+  saveDrafts(drafts) { try { localStorage.setItem('liminal-app-drafts-v1', JSON.stringify(drafts)); } catch (e) {} }
+  componentWillUnmount() { removeEventListener('keydown', this.onKeyG); this._smesh && this._smesh.stop(); removeEventListener('resize', this.onResize); clearInterval(this.clock); clearInterval(this.texTimer); (this.lt || []).forEach(clearTimeout); this._mesh && this._mesh.stop(); }
+
+  users() { try { return JSON.parse(localStorage.getItem(this.USERS) || '{}'); } catch (e) { return {}; } }
+  saveSession(email, profile) { try { localStorage.setItem(this.KEY, JSON.stringify({ email, profile })); } catch (e) {} }
+
+  validate() {
+    const { email, password } = this.state, errs = {};
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) errs.email = 'Enter a valid email address.';
+    if (this.state.mode !== 'reset' && password.length < 8) errs.password = 'Use at least 8 characters.';
+    return errs;
+  }
+  onAuthSubmit = e => {
+    e.preventDefault();
+    const errs = this.validate(); this.setState({ errs, authErr: '' });
+    if (Object.keys(errs).length) return;
+    const email = this.state.email.trim().toLowerCase(), pw = this.state.password, users = this.users();
+    if (this.state.mode === 'reset') return this.setState({ authErr: `If an account exists for ${email}, a reset link is on its way. Check your inbox.` });
+    if (this.state.mode === 'signin') {
+      if (email === this.DEMO.email && pw === this.DEMO.password) return this.enterApp(email, users[email]?.profile || this.DEMO.profile);
+      const u = users[email];
+      if (!u) return this.setState({ authErr: 'We couldn’t find an account with that email. Create one instead?' });
+      if (u.password !== pw) return this.setState({ authErr: 'That password doesn’t match. Try again.' });
+      return this.enterApp(email, u.profile);
+    }
+    if (users[email] || email === this.DEMO.email) return this.setState({ authErr: 'An account with that email already exists. Sign in instead.' });
+    users[email] = { password: pw, profile: null };
+    try { localStorage.setItem(this.USERS, JSON.stringify(users)); } catch (e) {}
+    this.setState({ route: 'onboarding', ob: 0, draft: { name: '', grade: '', school: '', target: '', topic: '' }, obErr: '', email });
+  };
+  enterApp(email, profile) {
+    if (!profile) { this.setState({ route: 'onboarding', ob: 0, email }); return; }
+    this.saveSession(email, profile);
+    this.setState({ route: 'app', profile, email, page: 'home', userMenu: false });
+  }
+  obNext = e => {
+    e && e.preventDefault();
+    const { ob, draft } = this.state;
+    if (ob === 0 && !draft.name.trim()) return this.setState({ obErr: 'Tell us your name to continue.' });
+    if (ob === 1 && (!draft.grade || !draft.school.trim())) return this.setState({ obErr: 'Pick your class and add your school.' });
+    if (ob === 2 && (!draft.target || !draft.topic)) return this.setState({ obErr: 'Choose a goal and a favourite topic.' });
+    if (ob < 2) return this.setState({ ob: ob + 1, obErr: '' });
+    const profile = { ...draft, name: draft.name.trim(), school: draft.school.trim() }, email = this.state.email || this.DEMO.email;
+    const users = this.users(); users[email] = { ...(users[email] || {}), password: users[email]?.password || this.state.password, profile };
+    try { localStorage.setItem(this.USERS, JSON.stringify(users)); } catch (e) {}
+    const fresh = !this.state.profile;
+    this.runLoader(() => { if (fresh) { try { localStorage.setItem('liminal-app-progress-v1', '{}'); } catch (e) {} this.setState({ progress: {}, firstRun: true }); } this.enterApp(email, profile); });
+  };
+  runLoader(done) {
+    (this.lt || []).forEach(clearTimeout);
+    this.setState({ loader: 0, loaderShown: false });
+    this.lt = [setTimeout(() => this.setState({ loaderShown: true }), 20)];
+    for (let i = 1; i <= 4; i++) this.lt.push(setTimeout(() => this.setState({ loader: i }), 200 + i * 750));
+    this.lt.push(setTimeout(() => { done(); this.setState({ loaderShown: false }); }, 200 + 4 * 750 + 900));
+    this.lt.push(setTimeout(() => this.setState({ loader: null }), 200 + 4 * 750 + 1250));
+  }
+  setDraft(k, v) { this.setState(s => ({ draft: { ...s.draft, [k]: v }, obErr: '' })); }
+  facets(k, on) { return Object.fromEntries(this.MARK.map((c, i) => ['f' + i, i === k ? c : on ? '#B9C3D0' : '#D2D7DE'])); }
+  chip(sel) { return { bd: sel ? '#121418' : '#D2D7DE', bg: sel ? '#121418' : '#FFFFFF', fg: sel ? '#FFFFFF' : '#121418' }; }
+
+  initMesh(cv) {
+    const ctx = cv.getContext('2d'), sec = cv.parentElement, SKY = '76,152,240', CHK = '236,232,223';
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0, dpr = 1, pts = [], stars = [], mouse = null, raf = 0, last = performance.now(), visible = true, mk = [], mT = [], mprog = 0;
+    const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const MV = [[78, 2], [93, 74], [99, 125], [55, 60], [2, 88], [129, 69], [98, 108]];
+    const MF = [[[0, 1, 2, 3], '78,204,252'], [[0, 4, 3], '0,168,252'], [[4, 3, 2], '6,102,216'], [[1, 5, 6], '42,78,174'], [[5, 2, 6], '6,102,216']];
+    const ME = []; MF.forEach(([f]) => f.forEach((a, i) => { const b = f[(i + 1) % f.length], k = a < b ? a + '-' + b : b + '-' + a; if (!ME.some(e => e[2] === k)) ME.push([a, b, k]); }));
+    const targets = () => {
+      const an = sec.querySelector('[data-mark-anchor]'); if (!an) return [];
+      const cr = cv.getBoundingClientRect(), ar = an.getBoundingClientRect(), sc = ar.width / 133, ox = ar.left - cr.left, oy = ar.top - cr.top;
+      const V = MV.map(([x, y]) => [ox + x * sc, oy + y * sc]), T = V.map(v => ({ x: v[0], y: v[1], v: 1 }));
+      ME.forEach(([a, b]) => { const L = Math.hypot(V[b][0] - V[a][0], V[b][1] - V[a][1]), n = Math.floor(L / 14); for (let j = 1; j < n; j++) T.push({ x: V[a][0] + (V[b][0] - V[a][0]) * j / n, y: V[a][1] + (V[b][1] - V[a][1]) * j / n, v: 0 }); });
+      return T;
+    };
+    const resize = () => {
+      const r = cv.getBoundingClientRect(); if (!r.width) return; dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      const rr = rng(17), n = Math.max(H < 320 ? 16 : 30, Math.min(90, Math.round(W * H / 16000)));
+      pts = []; for (let i = 0; i < n; i++) pts.push({ x: rr() * W, y: rr() * H, vx: (rr() - .5) * .12, vy: (rr() - .5) * .12, s: rr() > .82 });
+      stars = []; for (let i = 0; i < Math.round(W * H / 1800); i++) stars.push([rr() * W, rr() * H, rr()]);
+      mT = targets(); if (mk.length !== mT.length) { const r2 = rng(29); mk = mT.map(() => ({ fx: r2() * W, fy: r2() * H, vx: (r2() - .5) * .12, vy: (r2() - .5) * .12 })); }
+      draw(0);
+    };
+    const wrap = p => { if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20; if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20; };
+    const draw = dt => {
+      if (!W) return;
+      for (const p of pts) { p.x += p.vx * dt * .06; p.y += p.vy * dt * .06; wrap(p); }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      for (const [x, y, z] of stars) { ctx.fillStyle = z > .9 ? `rgba(${SKY},${(.25 + z * .35).toFixed(2)})` : `rgba(${CHK},${(.05 + z * .2).toFixed(2)})`; ctx.fillRect(x, y, z > .96 ? 1.6 : 1, z > .96 ? 1.6 : 1); }
+      ctx.lineWidth = 1;
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 140) { ctx.strokeStyle = `rgba(${SKY},${((1 - d / 140) * .3).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); } }
+      if (mouse) for (const p of pts) { const d = Math.hypot(p.x - mouse[0], p.y - mouse[1]); if (d < 190) { ctx.strokeStyle = `rgba(${CHK},${((1 - d / 190) * .45).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse[0], mouse[1]); ctx.stroke(); } }
+      if (mT.length) {
+        mprog = reduce ? 1 : Math.min(1, mprog + dt / 2800); const e = 1 - Math.pow(1 - mprog, 3);
+        for (const p of mk) { p.fx += p.vx * dt * .06; p.fy += p.vy * dt * .06; }
+        const P = mk.map((p, i) => [p.fx + (mT[i].x - p.fx) * e, p.fy + (mT[i].y - p.fy) * e]);
+        const fa = Math.max(0, (e - .75) / .25), ea = Math.max(0, (e - .35) / .65);
+        if (fa > 0) MF.forEach(([f, c]) => { ctx.fillStyle = `rgba(${c},${(fa * .92).toFixed(3)})`; ctx.beginPath(); f.forEach((vi, j) => j ? ctx.lineTo(P[vi][0], P[vi][1]) : ctx.moveTo(P[vi][0], P[vi][1])); ctx.closePath(); ctx.fill(); });
+        if (ea > 0) { ctx.strokeStyle = `rgba(${CHK},${(ea * .7).toFixed(3)})`; ctx.lineWidth = 1.2; ctx.beginPath(); ME.forEach(([a, b]) => { ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); }); ctx.stroke(); }
+        P.forEach((q, i) => { const v = mT[i].v; ctx.fillStyle = v ? `rgba(${SKY},.95)` : `rgba(${CHK},${(.6 * (1 - fa * .7)).toFixed(3)})`; ctx.beginPath(); ctx.arc(q[0], q[1], v ? 2.6 : 1.4, 0, 7); ctx.fill(); });
+      }
+      for (const p of pts) { ctx.fillStyle = p.s ? `rgba(${SKY},.95)` : `rgba(${CHK},.55)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.s ? 2.1 : 1.4, 0, 7); ctx.fill(); }
+    };
+    const loop = now => { raf = 0; if (!cv.isConnected || !visible) return; const dt = Math.min(64, now - last); last = now; draw(dt); raf = requestAnimationFrame(loop); };
+    const kick = () => { if (!raf && visible && !reduce) { last = performance.now(); raf = requestAnimationFrame(loop); } };
+    const mm = e => { const r = cv.getBoundingClientRect(); mouse = [e.clientX - r.left, e.clientY - r.top]; if (reduce) draw(0); };
+    const ml = () => { mouse = null; };
+    sec.addEventListener('mousemove', mm); sec.addEventListener('mouseleave', ml);
+    const ro = new ResizeObserver(resize); ro.observe(cv); resize(); setTimeout(resize, 80); setTimeout(resize, 600);
+    const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (!W) resize(); kick(); }); io.observe(cv);
+    kick();
+    return { stop: () => { cancelAnimationFrame(raf); raf = 0; visible = false; ro.disconnect(); io.disconnect(); sec.removeEventListener('mousemove', mm); sec.removeEventListener('mouseleave', ml); } };
+  }
+
+  saveForum(patch) { this.setState(patch, () => { const s = this.state; try { localStorage.setItem('liminal-app-forum-v1', JSON.stringify({ posts: s.fposts || this.SEED_POSTS, comments: s.fcomments || this.SEED_COMMENTS, votes: s.fvotes, joined: s.joined })); } catch (e) {} }); }
+  ago(mins) { return mins < 1 ? 'just now' : mins < 60 ? mins + 'm ago' : mins < 1440 ? Math.floor(mins / 60) + 'h ago' : Math.floor(mins / 1440) + 'd ago'; }
+  setDraftPost(patch) { this.setState(st => { const draftPost = { ...st.draftPost, ...patch }; try { localStorage.setItem('liminal-app-postdraft-v1', JSON.stringify(draftPost)); } catch (e) {} return { draftPost, composeErr: '' }; }); }
+  forumVals(p) {
+    const s = this.state, posts = s.fposts || this.SEED_POSTS, comments = s.fcomments || this.SEED_COMMENTS, votes = s.fvotes, subIdx = n => (this.SUBS.find(x => x[0] === n) || [0, 0])[1];
+    const vote = (id, dir) => e => { e && e.stopPropagation(); const cur = votes[id] || 0; this.saveForum({ fvotes: { ...votes, [id]: cur === dir ? 0 : dir } }); };
+    const vv = (id, base) => { const my = votes[id] || 0; return { score: base + my, up: vote(id, 1), down: vote(id, -1), upC: my === 1 ? '#121418' : '#6B7280', downC: my === -1 ? '#C23B56' : '#6B7280', scoreC: my === -1 ? '#C23B56' : '#121418', pressed: String(my === 1), hBd: my === 1 ? '#121418' : '#E2E5EA', hBg: my === 1 ? '#F6F7F9' : '#FFFFFF' }; };
+    const count = id => comments.filter(c => c.post === id).length;
+    const hide = x => !!x.spoiler && !s.revealed[x.id];
+    const reveal = id => e => { e && e.stopPropagation(); this.setState({ revealed: { ...s.revealed, [id]: true } }); };
+    const card = x => ({ ...x, hidden: hide(x), blur: hide(x) ? 'blur(6px)' : 'none', sel: hide(x) ? 'none' : 'auto', reveal: reveal(x.id), upP: String((votes[x.id] || 0) === 1), downP: String((votes[x.id] || 0) === -1), ago: this.ago(x.mins), ...this.facets(subIdx(x.sub), false), ...vv(x.id, x.score), comments: count(x.id) + (count(x.id) === 1 ? ' comment' : ' comments'), open: () => this.setState({ postId: x.id, replyTo: null, cmText: '', cmErr: '' }) });
+    let list = posts.filter(x => !s.sub || x.sub === s.sub);
+    const hot = x => (x.score + (votes[x.id] || 0)) / Math.pow(x.mins / 60 + 2, 1.3);
+    list = [...list].sort((a, b) => s.fsort === 'new' ? a.mins - b.mins : s.fsort === 'top' ? (b.score + (votes[b.id] || 0)) - (a.score + (votes[a.id] || 0)) : hot(b) - hot(a));
+    const cur = posts.find(x => x.id === s.postId);
+    const flat = []; const walk = (parent, depth) => comments.filter(c => c.post === s.postId && c.parent === parent).sort((a, b) => b.score - a.score).forEach(c => { flat.push({ c, depth }); walk(c.id, depth + 1); });
+    if (cur) walk(null, 0);
+    const me = p.name || 'You', meIni = me.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const joined = s.sub && s.joined[s.sub];
+    const ed = (prefix, mode, key, val, set) => ({ [prefix + 'Write']: () => this.setState({ [key]: 'write' }), [prefix + 'Prev']: () => this.setState({ [key]: 'preview' }), [prefix + 'WBg']: mode === 'write' ? '#FFFFFF' : 'transparent', [prefix + 'PBg']: mode === 'preview' ? '#FFFFFF' : 'transparent', [prefix + 'IsW']: mode === 'write', [prefix + 'IsP']: mode === 'preview', [prefix + 'Val']: val, [prefix + 'On']: set, [prefix + 'Preview']: val || 'Nothing to preview yet.' });
+    return {
+      fFeed: !s.postId && !s.composing, fPost: !!cur && !s.composing, fCompose: s.composing,
+      subHead: { name: s.sub || 'Community', desc: s.sub ? this.SUBDESC[s.sub] : 'Every sub-community in one feed. Pick one from the sidebar to focus.', members: s.sub ? ((subIdx(s.sub) * 613 + s.sub.length * 97) % 4000 + 1200 + (joined ? 1 : 0)).toLocaleString('en-IN') + ' MEMBERS' : posts.length + ' THREADS', isSub: !!s.sub, ...this.facets(s.sub ? subIdx(s.sub) : 4, false) },
+      toggleJoin: () => this.saveForum({ joined: { ...s.joined, [s.sub]: !joined } }), joinLabel: joined ? 'Joined' : 'Join', joinBg: joined ? 'transparent' : '#ECE8DF', joinFg: joined ? '#ECE8DF' : '#000000', joinBd: joined ? '#333844' : '#ECE8DF',
+      openCompose: () => { let saved = null; try { saved = JSON.parse(localStorage.getItem('liminal-app-postdraft-v1') || 'null'); } catch (e) {} const base = saved || s.draftPost, sub = s.sub || base.sub; this.setState({ composing: true, composeErr: '', draftPost: { ...base, sub, spoiler: sub === 'm/ProblemOfTheDay' ? true : !!base.spoiler } }); },
+      sorts: [['hot', 'Hot'], ['new', 'New'], ['top', 'Top']].map(([k, label]) => ({ label, bg: s.fsort === k ? '#121418' : 'transparent', fg: s.fsort === k ? '#FFFFFF' : '#4B4F58', pick: () => this.setState({ fsort: k }) })),
+      feed: list.map(card), feedEmpty: !list.length,
+      rules: ['Show your reasoning, not just the answer.', 'Critique arguments, never people.', 'Hide spoilers for today’s problems until midnight.', 'Typeset maths so everyone can read it.'].map((t, i) => ({ n: '0' + (i + 1), t })),
+      cp: cur ? card(cur) : { title: '', body: '' },
+      backToFeed: () => this.setState({ postId: null, composing: false }), backLabel: s.sub || 'Community',
+      crumbAll: () => this.setState({ postId: null, sub: null }), crumbSub: () => this.setState({ postId: null, sub: cur ? cur.sub : s.sub }),
+      spoilerOn: String(!!s.draftPost.spoiler), toggleSpoiler: () => this.setDraftPost({ spoiler: !s.draftPost.spoiler }),
+      spBd: s.draftPost.spoiler ? '#121418' : '#E2E5EA', spBg: s.draftPost.spoiler ? '#F6F7F9' : '#FFFFFF', spTrack: s.draftPost.spoiler ? '#121418' : '#D2D7DE', spKnob: s.draftPost.spoiler ? '18px' : '2px',
+      autosaveNote: (s.draftPost.title || s.draftPost.body) ? 'Draft autosaved' : '',
+      ...ed('cm', s.cmMode, 'cmMode', s.cmText, e => this.setState({ cmText: e.target.value, cmErr: '' })),
+      cmErr: s.cmErr,
+      postComment: () => { const t = s.cmText.trim(); if (t.length < 2) return this.setState({ cmErr: 'Write something first.' }); this.saveForum({ fcomments: [...comments, { id: 'c' + Date.now(), post: s.postId, parent: null, author: me, mins: 0, body: t, score: 1 }], cmText: '', cmMode: 'write' }); },
+      thread: flat.map(({ c, depth }) => ({ ...c, ago: this.ago(c.mins), ...vv(c.id, c.score), up: e => { const cur = votes[c.id] || 0; this.saveForum({ fvotes: { ...votes, [c.id]: cur === 1 ? 0 : 1 } }); }, ini: c.author.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(), avBg: c.author === me ? '#121418' : '#EEF1F4', avFg: c.author === me ? '#FFFFFF' : '#121418', indent: Math.min(depth, 4) * 22 + 'px', pad: depth ? '16px' : '0px', line: depth ? '1px solid #E2E5EA' : '0', replying: s.replyTo === c.id, reply: () => this.setState({ replyTo: c.id, replyText: '' }) })),
+      replyVal: s.replyText, onReply: e => this.setState({ replyText: e.target.value }), cancelReply: () => this.setState({ replyTo: null }),
+      sendReply: () => { const t = s.replyText.trim(); if (!t) return; this.saveForum({ fcomments: [...comments, { id: 'c' + Date.now(), post: s.postId, parent: s.replyTo, author: me, mins: 0, body: t, score: 1 }], replyTo: null, replyText: '' }); },
+      subPick: this.SUBS.map(([name, k]) => { const sel = s.draftPost.sub === name; return { name, ...this.facets(k, sel), bd: sel ? '#121418' : '#D2D7DE', bg: sel ? '#121418' : '#FFFFFF', fg: sel ? '#FFFFFF' : '#121418', pick: () => this.setDraftPost({ sub: name, spoiler: name === 'm/ProblemOfTheDay' ? true : s.draftPost.spoiler }) }; }),
+      flairPick: this.FLAIRS.map(name => { const sel = s.draftPost.flair === name; return { name, bd: sel ? '#121418' : '#D2D7DE', bg: sel ? '#121418' : '#FFFFFF', fg: sel ? '#FFFFFF' : '#121418', pick: () => this.setDraftPost({ flair: name }) }; }),
+      cTitle: s.draftPost.title, onCTitle: e => this.setDraftPost({ title: e.target.value }),
+      ...ed('cb', s.cbMode, 'cbMode', s.draftPost.body, e => this.setDraftPost({ body: e.target.value })),
+      composeErr: s.composeErr,
+      submitPost: e => { e.preventDefault(); const d = s.draftPost; if (d.title.trim().length < 8) return this.setState({ composeErr: 'Give your post a clearer title (8+ characters).' }); if (d.body.trim().length < 20) return this.setState({ composeErr: 'Add a little more detail to the post.' }); const id = 'p' + Date.now(); this.saveForum({ fposts: [{ id, sub: d.sub, author: me, mins: 0, title: d.title.trim(), body: d.body.trim(), flair: d.flair, score: 1, spoiler: !!d.spoiler }, ...posts], composing: false, postId: id, sub: d.sub, revealed: { ...s.revealed, [id]: true }, draftPost: { sub: d.sub, flair: 'Question', title: '', body: '', spoiler: false }, cbMode: 'write' }); try { localStorage.removeItem('liminal-app-postdraft-v1'); } catch (e) {} }
+    };
+  }
+  stIcon(st) { const done = st === 'solved' || st === 'submitted', bad = st === 'bad'; return { icFill: done ? '#127A50' : bad ? '#C23B56' : '#FFFFFF', icStroke: done ? '#127A50' : bad ? '#C23B56' : st === 'draft' ? '#E2E5EA' : '#B9C3D0', icDash: done || bad || st === 'draft' ? '0' : '2.6 3.2', icArc: st === 'draft' ? 1 : 0, arcCol: '#127A50', icTick: done || bad ? 1 : 0, glyph: bad ? 'M8.5 8.5l7 7M15.5 8.5l-7 7' : 'M7.6 12.3l3 3 5.8-6.1' }; }
+  podVals(d) {
+    const s = this.state, prog = s.progress || this.PROGRESS, LV = ['EASY', 'MEDIUM', 'HARD'], today = s.podTab === 'today', ov = (s.podView || 'overview') === 'overview', arch = s.podTab === 'archive', off = s.pastOff || 1, YR = off === 1 ? this.YRES : {};
+    const list = today ? this.PROBLEMS.map(q => ({ ...q, statement: this.STATEMENTS[q.id] })) : this.YDATA;
+    const selId = today ? s.podSel : s.ySel, q = list.find(x => x.id === selId) || list[0], idx = list.indexOf(q);
+    const icon = st => ({ ...this.stIcon(st === 'ok' || st === 'shared' ? 'solved' : st), icBg: st === 'solved' || st === 'ok' || st === 'shared' || st === 'submitted' ? '#127A50' : st === 'bad' ? '#C23B56' : '#FFFFFF', icBd: st === 'solved' || st === 'ok' || st === 'shared' || st === 'submitted' ? '#127A50' : st === 'bad' ? '#C23B56' : '#D2D7DE', icTick: st === 'solved' || st === 'ok' || st === 'shared' || st === 'submitted' ? 'block' : 'none', icDot: st === 'draft' ? 'block' : 'none' });
+    const pick = id => () => this.setState(today ? { podSel: id, edit: 'write', note: '', railOpen: false } : { ySel: id, railOpen: false });
+    const railGroups = this.TOPICS.map(([code, name]) => ({ code, name, items: list.filter(x => x.cat === code).map(x => { const st = today ? prog[x.id] : (YR[x.id] || [])[0]; return { title: x.title, lv: LV[x.lv][0], bg: x.id === q.id ? '#E6E9EE' : 'transparent', fw: x.id === q.id ? 600 : 500, pick: pick(x.id), ...icon(st) }; }) }));
+    const st = prog[q.id], draft = s.drafts[q.id] || '', fb = s.fbs[q.id], topic = this.TOPICS.find(t => t[0] === q.cat);
+    const seed = (q.id.length * 131 + q.lv * 977 + q.cat.charCodeAt(0) * 17) % 900;
+    const go = n => () => { const nq = list[(idx + n + list.length) % list.length]; this.setState(today ? { podSel: nq.id, edit: 'write', note: '' } : { ySel: nq.id }); };
+    const yr = YR[q.id] || ['none', 'Not attempted'];
+    const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], pd = new Date(d); pd.setDate(d.getDate() - off);
+    const first = new Date(d.getFullYear(), d.getMonth(), 1), dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7;
+    const archDays = [...Array(lead).fill(null), ...Array.from({ length: dim }, (_, i) => i + 1)].map(n => { if (!n) return { n: '', dis: true, bd: 'transparent', bg: 'transparent', op: 1, cur: 'default', fg: '#121418', pct: '0%', lbl: '', pick: () => {} }; const fut = n > d.getDate(), isT = n === d.getDate(), sel = !today && !arch ? false : false, solvedN = isT ? this.PROBLEMS.filter(x => prog[x.id] === 'solved').length : fut ? 0 : ((n * 7 + 3) % 13 > 4 ? (n * 5) % 9 + 2 : 0); return { n, dis: fut, bd: isT ? '#121418' : '#E2E5EA', bg: fut ? '#F6F7F9' : '#FFFFFF', op: fut ? .5 : 1, cur: fut ? 'default' : 'pointer', fg: '#121418', pct: (solvedN / 12 * 100) + '%', lbl: fut ? '' : solvedN + '/12', pick: () => { if (fut) return; if (isT) this.setState({ podTab: 'today' }); else this.setState({ podTab: 'yesterday', pastOff: d.getDate() - n, ySel: this.YDATA[0].id }); } }; });
+    return {
+      tabToday: () => this.setState({ podTab: 'today', podView: 'overview' }), tabYest: () => this.setState({ podTab: 'yesterday', pastOff: 1, visitedY: true }), tabArch: () => this.setState({ podTab: 'archive' }),
+      tTodayB: today ? '#121418' : 'transparent', tTodayC: today ? '#121418' : '#6B7280', tYestB: !today && !arch ? '#121418' : 'transparent', tYestC: !today && !arch ? '#121418' : '#6B7280', tArchB: arch ? '#121418' : 'transparent', tArchC: arch ? '#121418' : '#6B7280',
+      showArch: arch, gridD: arch || (today && ov) ? 'none' : 'grid', showOverview: today && ov, showBackOv: today && !ov, backOverview: () => this.setState({ podView: 'overview' }),
+      catCards: this.TOPICS.map(([code, name, k], ci) => { const items = this.PROBLEMS.filter(x => x.cat === code), done = items.filter(x => prog[x.id] === 'solved' || prog[x.id] === 'submitted').length, next = items.find(x => prog[x.id] !== 'solved' && prog[x.id] !== 'submitted'), isOpen = s.podOpen ? !!s.podOpen[code] : (next && ci === this.TOPICS.findIndex(t => this.PROBLEMS.some(x => x.cat === t[0] && prog[x.id] !== 'solved' && prog[x.id] !== 'submitted'))); const openP = id => () => this.setState({ podView: 'problem', podSel: id, edit: 'write', note: '' });
+        return { n: ci + 1, name, desc: this.SUBDESC['m/' + ({ ALG: 'Algebra', COMB: 'Combinatorics', GEO: 'Geometry', NT: 'NumberTheory' })[code]], ...this.facets(k, false), pct: Math.round(done / 3 * 100) + '%', meta: done + ' of 3 solved', open: !!isOpen, openStr: String(!!isOpen), rot: isOpen ? '0deg' : '180deg',
+          toggle: () => this.setState({ podOpen: { ...(s.podOpen || {}), [code]: !isOpen } }), ctaLabel: !done ? 'Start' : next ? 'Continue' : 'Review', cta: openP((next || items[0]).id),
+          rows: items.map((x, i) => { const st = prog[x.id], solvedX = st === 'solved' || st === 'submitted', isNext = next && next.id === x.id; return { n: i + 1, title: x.title, sub: ['Easy', 'Medium', 'Hard'][x.lv] + ' · ' + (x.type === 'num' ? 'Numeric answer' : 'Proof'), tileBg: isNext ? '#121418' : '#F6F7F9', tileFg: isNext ? '#FFFFFF' : '#121418', icFill: solvedX ? '#127A50' : '#FFFFFF', icStroke: solvedX ? '#127A50' : st === 'draft' ? '#E2E5EA' : '#B9C3D0', icDash: solvedX || st === 'draft' ? '0' : '2.6 3.2', icArc: st === 'draft' ? 1 : 0, icTick: solvedX ? 1 : 0, arcCol: '#127A50', glyph: 'M7.6 12.3l3 3 5.8-6.1', stat: solvedX ? (st === 'submitted' ? 'Submitted' : 'Solved') : st === 'draft' ? 'Draft' : 'To do', open: openP(x.id) }; }) }; }), archMonth: MO[d.getMonth()] + ' ' + d.getFullYear(), archHead: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map(x => ({ d: x })), archDays,
+      ySolLabel: off === 1 ? 'Yesterday’s solutions' : 'Solutions', pastShort: (pd.getDate() + ' ' + MO[pd.getMonth()]).toUpperCase(),
+      nextUnsolved: () => { const n = this.PROBLEMS.find(x => prog[x.id] !== 'solved' && prog[x.id] !== 'submitted'); this.setState({ podTab: 'today', podView: 'problem', podSel: n ? n.id : this.PROBLEMS[0].id, edit: 'write', note: '' }); },
+      podTabNote: today ? 'Solutions for today unlock at midnight.' : arch ? 'Every past day stays open.' : 'Solved or not, every solution is open now.',
+      railGroups, railBtn: s.railOpen ? 'Hide problems' : 'All problems', railPos1: String(idx + 1).padStart(2, '0') + ' / ' + list.length,
+      q: { meta: `${q.cat} · ${LV[q.lv]} · MATHNET`, title: q.title, statement: q.statement, solution: q.solution || '', b2: q.lv >= 1 ? '#121418' : '#D2D7DE', b3: q.lv >= 2 ? '#121418' : '#D2D7DE', typeLabel: q.type === 'num' ? 'Numeric answer' : 'Proof' },
+      showNum: today && q.type === 'num', showProof: today && q.type === 'proof', showLocked: today, showSolution: !today,
+      numVal: s.num[q.id] || '', onNum: e => this.setState({ num: { ...s.num, [q.id]: e.target.value }, fbs: { ...s.fbs, [q.id]: null } }),
+      checkNum: e => { e.preventDefault(); const v = (s.num[q.id] || '').replace(/\s/g, ''); if (!v) return; const ok = v === q.answer; this.setState({ fbs: { ...s.fbs, [q.id]: ok ? 'ok' : 'bad' }, solveOn: ok && prog[q.id] !== 'solved' ? q.id : null }); if (ok) this.setProgress(q.id, 'solved'); },
+      fbOk: fb === 'ok' || (st === 'solved' && !fb), fbBad: fb === 'bad', fbIdle: !fb && st !== 'solved',
+      numBd: fb === 'bad' ? '#C23B56' : (fb === 'ok' || st === 'solved') ? '#127A50' : '#D2D7DE',
+      isWrite: s.edit === 'write', isPreview: s.edit === 'preview', modeWrite: () => this.setState({ edit: 'write' }), modePreview: () => this.setState({ edit: 'preview' }),
+      wBg: s.edit === 'write' ? '#FFFFFF' : 'transparent', pBg: s.edit === 'preview' ? '#FFFFFF' : 'transparent',
+      draftVal: draft, draftPreview: draft || 'Nothing to preview yet.',
+      onDraft: e => { const drafts = { ...s.drafts, [q.id]: e.target.value }; this.setState({ drafts, note: '' }); },
+      saveDraft: () => { this.saveDrafts(s.drafts); if (st !== 'submitted' && draft.trim()) this.setProgress(q.id, 'draft'); this.setState({ note: 'saved' }); },
+      submitProof: () => { if (draft.trim().length < 20) return this.setState({ note: 'short' }); this.saveDrafts(s.drafts); this.setProgress(q.id, 'submitted'); this.setState({ note: 'submitted', edit: 'preview' }); },
+      submitLabel: st === 'submitted' ? 'Update write-up' : 'Submit write-up',
+      proofNote: s.note === 'short' ? 'Write a little more before submitting.' : s.note === 'saved' ? 'Draft saved.' : st === 'submitted' ? 'Submitted. It will be shared to the problem’s thread when solutions unlock.' : 'Your write-up is shared to the problem’s thread when solutions unlock.',
+      proofNoteCol: s.note === 'short' ? '#C23B56' : st === 'submitted' ? '#127A50' : '#6B7280',
+      yRes: { text: yr[1], col: yr[0] === 'bad' ? '#C23B56' : yr[0] === 'none' ? '#4B4F58' : '#127A50', bd: yr[0] === 'bad' ? '#F0D2D8' : yr[0] === 'none' ? '#E2E5EA' : '#CFE3D8', bg: yr[0] === 'bad' ? '#FCF6F7' : yr[0] === 'none' ? '#F6F7F9' : '#F5FAF7' },
+      writeups: [['Meera P.', 'MP', 'I set it up the same way, then checked the equality case $a=b=c$ before writing anything else.', 18], ['Kabir S.', 'KS', 'A cleaner route: argue by cases on the first step and the rest follows in two lines.', 11]].map(([name, ini, text, votes]) => ({ name, ini, text, votes })),
+      hasSteps: !today && !!this.KEYSTEPS[q.id],
+      keySteps: (this.KEYSTEPS[q.id] || []).map((t, i) => { const on = !!(s.checks[q.id] || [])[i]; return { t, on: String(on), bd: on ? '#127A50' : '#D2D7DE', bg: on ? '#127A50' : '#FFFFFF', tick: on ? 1 : 0, toggle: () => { const arr = [...(s.checks[q.id] || [false, false, false])]; arr[i] = !arr[i]; this.setState({ checks: { ...s.checks, [q.id]: arr } }); } }; }),
+      ...(() => { const n = (s.checks[q.id] || []).filter(Boolean).length; return { stepSum: n + ' of 3 covered', stepSumCol: n === 3 ? '#127A50' : '#4B4F58', stepAdvice: n === 3 ? 'All three steps are there. Compare your wording with the top write-ups below.' : n ? 'Close. Re-read the official solution for the step you missed, then ask in the thread if it’s unclear.' : 'Tick each step your write-up makes clearly. Be strict: a step you only hinted at doesn’t count.' }; })(),
+      facts: [['Source', 'MathNet'], ['Topic', topic ? topic[1] : ''], ['Level', LV[q.lv][0] + LV[q.lv].slice(1).toLowerCase()], [today ? 'Attempted by' : 'Solved by', (seed + 180).toLocaleString('en-IN') + (today ? '' : ' students')]].map(([k, v]) => ({ k, v })),
+      threadLabel: today ? 'Thread opens at midnight' : 'Discuss in m/ProblemOfTheDay',
+      goThread: () => { if (!today) this.setState({ page: 'community', sub: 'm/ProblemOfTheDay', postId: null, composing: false }); },
+      prevQ: go(-1), nextQ: go(1)
+    };
+  }
+  dashVals(d, p) {
+    const prog = this.state.progress || this.PROGRESS, LV = ['EASY', 'MEDIUM', 'HARD'], months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const solved = this.PROBLEMS.filter(q => prog[q.id] === 'solved').length, y = new Date(d); y.setDate(d.getDate() - 1);
+    const podCols = this.TOPICS.map(([code, name, k]) => ({ code, name, ...this.facets(k, false), items: this.PROBLEMS.filter(q => q.cat === code).map(q => { const st = prog[q.id]; return {
+      level: LV[q.lv], title: q.title, b1: '#121418', b2: q.lv >= 1 ? '#121418' : '#D2D7DE', b3: q.lv >= 2 ? '#121418' : '#D2D7DE',
+      bd: st === 'solved' ? '#CFE3D8' : '#E2E5EA', bg: st === 'solved' ? '#F5FAF7' : '#FFFFFF',
+      status: st === 'solved' ? 'Solved' : st === 'draft' ? 'Draft saved' : q.type === 'num' ? 'Numeric answer' : 'Proof', stCol: st === 'solved' ? '#127A50' : st === 'draft' ? '#121418' : '#6B7280', tickD: st === 'solved' ? 'block' : 'none',
+      open: () => this.setState({ page: 'pod', podTab: 'today', podView: 'problem', podSel: q.id, edit: 'write', note: '', sub: null, userMenu: false }) }; }) }));
+    const days = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(), r = (i => (i * 37 + 11) % 10);
+    const monthDays = Array.from({ length: days }, (_, i) => { const n = i + 1, fut = n > d.getDate(), today = n === d.getDate(), on = !fut && (today ? solved > 0 : r(n) > 3); return { t: `${n} ${months[d.getMonth()]}`, bg: fut ? '#FFFFFF' : on ? '#121418' : '#EEF1F4', bd: today ? '#121418' : fut ? '#E2E5EA' : 'transparent' }; });
+    const monthSolved = monthDays.filter(m => m.bg === '#121418').length * 2 + solved;
+    return {
+      ...(() => {
+        const codes = this.TOPICS.map(t => t[0]), fav = codes.includes(p.topic) ? p.topic : 'GEO', other = codes[(codes.indexOf(fav) + 1) % 4], nm = c => this.TOPICS.find(t => t[0] === c)[1], L = ['E', 'M', 'H'];
+        const plan = p.target === 'INMO' ? [[fav, 1, 'Your level'], [fav, 2, 'Stretch'], [other, 2, 'Stretch']] : (p.target === 'IOQM' || p.target === 'Not sure') ? [[fav, 0, 'Warm-up'], [other, 0, 'Warm-up'], [fav, 1, 'Your level']] : [[fav, 0, 'Warm-up'], [fav, 1, 'Your level'], [other, 2, 'Stretch']];
+        const three = plan.map(([c, lv, why]) => { const q = this.PROBLEMS.find(x => x.id === c + '-' + L[lv]), st = prog[q.id]; return { why: (why + ' · ' + nm(c)).toUpperCase(), title: q.title, statement: this.STATEMENTS[q.id], b2: lv >= 1 ? '#121418' : '#D2D7DE', b3: lv >= 2 ? '#121418' : '#D2D7DE', ...this.stIcon(st), isDone: st === 'solved' || st === 'submitted', stat: st === 'solved' ? 'Solved' : st === 'submitted' ? 'Submitted' : st === 'draft' ? 'Draft' : 'To do', bg: st === 'solved' ? '#F5FAF7' : '#FFFFFF', status: st === 'solved' ? 'Solved' : st === 'draft' ? 'Draft saved' : st === 'submitted' ? 'Submitted' : q.type === 'num' ? 'Numeric answer' : 'Proof', stCol: st === 'solved' || st === 'submitted' ? '#127A50' : '#6B7280', open: () => this.setState({ page: 'pod', podTab: 'today', podView: 'problem', podSel: q.id, edit: 'write', note: '', sub: null, drawer: false }) }; });
+        const s2 = this.state, stepDone = [solved > 0, !!s2.visitedY, !!s2.visitedC];
+        const firstSteps = [['Solve your first problem', 'Start with the warm-up above.', () => three[0].open()], ['Read yesterday’s solutions', 'See how others argued.', () => this.setState({ page: 'pod', podTab: 'yesterday', pastOff: 1, visitedY: true })], ['Say hello in m/General', 'Introduce yourself to the community.', () => this.setState({ page: 'community', sub: 'm/General', postId: null, composing: false, visitedC: true })]].map(([t, dd, go], i) => ({ t, d: dd, go, mark: stepDone[i] ? '✓' : String(i + 1), dot: stepDone[i] ? '#127A50' : '#FFFFFF', dotBd: stepDone[i] ? '#127A50' : '#D2D7DE', num: stepDone[i] ? '#FFFFFF' : '#121418', bg: stepDone[i] ? '#F5FAF7' : '#FFFFFF' }));
+        const doneN = three.filter(t => t.isDone).length, nextT = three.find(t => !t.isDone);
+        three.forEach((t, i) => { t.n = i + 1; t.tileBg = nextT === t ? '#121418' : '#F6F7F9'; t.tileFg = nextT === t ? '#FFFFFF' : '#121418'; });
+        return { threeDone: doneN, threePct: Math.round(doneN / 3 * 100) + '%', threeCtaLabel: !doneN ? 'Start' : nextT ? 'Continue' : 'Review', threeCta: () => (nextT || three[0]).open(), threeWhyLine: 'Picked for your ' + (p.target || 'RMO') + ' goal, starting in ' + nm(fav) + ', your favourite.', three, threeWhy: ('Picked for your ' + (p.target || 'RMO') + ' goal · ' + nm(fav)).toUpperCase(), firstRun: !!s2.firstRun, firstSteps, notSure: p.target === 'Not sure', dismissFirst: () => this.setState({ firstRun: false }) };
+      })(),
+      podCols, solvedCount: solved, solvedPct: (solved / 12 * 100) + '%',
+      todayShort: `${d.getDate()} ${months[d.getMonth()]}`.toUpperCase(), yShort: `${y.getDate()} ${months[y.getMonth()]}`.toUpperCase(),
+      podCta: solved ? 'Continue today’s set' : 'Start today’s set', goPod: () => this.setState({ page: 'pod', sub: null, userMenu: false }), goCommunity: () => this.setState({ page: 'community', sub: null, userMenu: false, postId: null, composing: false }),
+      dashSub: solved ? `${solved} of today’s twelve done. ${12 - solved} still waiting.` : 'Twelve new problems are waiting.',
+      yesterday: [['GEO · M', 'Tangents from a point', 'Your write-up · 4 upvotes', 'Shared', '#E2E5EA', '#121418'], ['NT · E', 'Sum of the first n odds', 'You answered n²', 'Correct', '#CFE3D8', '#127A50'], ['ALG · H', 'Cauchy–Schwarz warm-up', 'Not attempted', 'Read solution', '#E2E5EA', '#0B5BC4']].map(([tag, title, note, result, bd, col]) => ({ tag, title, note, result, bd, col })),
+      threads: [['m/Geometry', 'Is there a proof of Ptolemy without inversion?', '38 replies · 2h ago', 64], ['m/ProblemOfTheDay', 'Yesterday’s NT-H: three different ways in', '21 replies · 5h ago', 47], ['m/Olympiads', 'RMO 2026: how are you splitting the last month?', '52 replies · 1d ago', 31]].map(([sub, title, meta, votes]) => ({ sub, title, meta, votes })),
+      monthLabel: months[d.getMonth()].toUpperCase() + ' SO FAR', monthDays, monthSolved
+    };
+  }
+  renderVals() {
+    const s = this.state, signin = s.mode === 'signin', d = new Date(s.now), mid = new Date(d); mid.setHours(24, 0, 0, 0);
+    const diff = Math.max(0, Math.floor((mid - d) / 1000)), pad = n => String(n).padStart(2, '0');
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'], months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const p = s.profile || this.DEMO.profile, first = (p.name || 'there').split(' ')[0];
+    const topic = this.TOPICS.find(t => t[0] === p.topic), h = d.getHours();
+    const go = page => () => this.setState({ page, sub: null, userMenu: false, postId: null, composing: false, drawer: false });
+    const mob = !!s.mob;
+    return {
+      bannerMeshRef: this.bannerMeshRef, isMob: mob, mobD: mob ? 'flex' : 'none', deskD: mob ? 'none' : 'inline', sideD: !mob || s.drawer ? 'flex' : 'none', asPos: mob ? 'fixed' : 'sticky', asSh: mob ? '0 20px 60px rgba(0,0,0,.25)' : 'none',
+      drawerOn: mob && !!s.drawer, openDrawer: () => this.setState({ drawer: true }), closeDrawer: () => this.setState({ drawer: false }),
+      mainPb: mob ? '96px' : 'clamp(28px,4vw,56px)', authLeftH: mob ? '46vh' : '100vh', authRightH: mob ? 'auto' : '100vh', markW: mob ? '104px' : '168px', markH: mob ? '100px' : '162px',
+      tabs: [['home', 'Home', this.ICONS.home], ['learn', 'Learn', this.ICONS.learn], ['pod', 'Problems', this.ICONS.pod], ['community', 'Community', this.ICONS.community], ['profile', 'Profile', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21a8 8 0 0 1 16 0']].map(([k, label, icon]) => { const a = s.page === k; return { label, icon, go: go(k), fg: a ? '#121418' : '#6B7280', fw: a ? 600 : 500, bg: a ? '#E6E9EE' : 'transparent' }; }),
+      podCols: mob ? 'minmax(0,1fr)' : '220px minmax(0,1fr)', podGap: mob ? '16px' : '28px', railD: !mob || s.railOpen ? 'flex' : 'none', railPosC: mob ? 'static' : 'sticky', railPad: mob ? '12px 6px' : '0', railBd: mob ? '1px solid #E2E5EA' : '0', asideMax: mob ? '100%' : '300px',
+      toggleRail: () => this.setState({ railOpen: !s.railOpen }), railRot: s.railOpen ? '180deg' : '0deg',
+      isAuth: s.route === 'signin', isOnboarding: s.route === 'onboarding', isApp: s.route === 'app',
+      isSignin: s.mode !== 'signup', isSignup: s.mode === 'signup', isSigninForm: s.mode === 'signin', notReset: s.mode !== 'reset', meshRef: this.meshRef,
+      goReset: e => { e.preventDefault(); this.setState({ mode: 'reset', errs: {}, authErr: '' }); },
+      countdown: `${pad(Math.floor(diff / 3600))}:${pad(Math.floor(diff / 60) % 60)}:${pad(diff % 60)}`,
+      authEyebrow: s.mode === 'reset' ? 'Reset password' : signin ? 'Sign in' : 'Create account', authTitle: s.mode === 'reset' ? 'Forgot your password?' : signin ? 'Good to see you again.' : 'Start with Chapter Zero.',
+      authCta: s.mode === 'reset' ? 'Send reset link' : signin ? 'Sign in' : 'Create account',
+      switchText: s.mode === 'reset' ? 'Remembered it?' : signin ? 'New to Liminal?' : 'Already have an account?', switchCta: s.mode === 'reset' ? 'Back to sign in' : signin ? 'Create an account' : 'Sign in',
+      switchMode: e => { e.preventDefault(); this.setState({ mode: s.mode === 'reset' ? 'signin' : signin ? 'signup' : 'signin', errs: {}, authErr: '' }); },
+      email: s.email, password: s.password,
+      onEmail: e => this.setState({ email: e.target.value, errs: { ...s.errs, email: null }, authErr: '' }),
+      onPassword: e => this.setState({ password: e.target.value, errs: { ...s.errs, password: null }, authErr: '' }),
+      emailErr: s.errs.email || '', pwErr: s.errs.password || '', authErr: s.authErr,
+      emailBd: s.errs.email ? '#C23B56' : '#D2D7DE', pwBd: s.errs.password ? '#C23B56' : '#D2D7DE',
+      pwType: s.showPw ? 'text' : 'password', pwToggleLabel: s.showPw ? 'Hide' : 'Show', togglePw: () => this.setState({ showPw: !s.showPw }),
+      onAuthSubmit: this.onAuthSubmit, noop: e => e.preventDefault(),
+      fillDemo: () => this.setState({ email: this.DEMO.email, password: this.DEMO.password, errs: {}, authErr: '' }),
+      obNum: pad(s.ob + 1), obPct: ((s.ob + 1) / 3 * 100) + '%', ob0: s.ob === 0, ob1: s.ob === 1, ob2: s.ob === 2,
+      obName: s.draft.name, obSchool: s.draft.school, onObName: e => this.setDraft('name', e.target.value), onObSchool: e => this.setDraft('school', e.target.value),
+      gradeChips: this.GRADES.map(g => ({ label: g, ...this.chip(s.draft.grade === g), pick: () => this.setDraft('grade', g) })),
+      targetChips: this.TARGETS.map(([t, sub]) => { const sel = s.draft.target === t; return { label: t, sub, bd: sel ? '#0B5BC4' : '#D2D7DE', bg: sel ? '#F0F5FD' : '#FFFFFF', fg: sel ? '#0B5BC4' : '#121418', pick: () => this.setDraft('target', t) }; }),
+      topicChips: this.TOPICS.map(([c, label, k]) => { const sel = s.draft.topic === c; return { label, code2: c, ...this.chip(sel), code: sel ? '#FFFFFF' : '#6B7280', ...this.facets(k, sel), pick: () => this.setDraft('topic', c) }; }),
+      obErr: s.obErr, obCanBack: s.ob > 0, obBack: () => this.setState({ ob: s.ob - 1, obErr: '' }), obNext: this.obNext, obCta: s.ob < 2 ? 'Continue' : 'Enter Liminal',
+      navItems: [['home', 'Home', 'home'], ['track', 'My track', 'track'], ['learn', 'Learn', 'learn'], ['live', 'Live classes', 'live'], ['pod', 'Problem of the Day', 'pod', '12'], ['community', 'Community', 'community'], ['profile', 'Profile', 'profile']].map(([k, label, icon, badge]) => { const a = s.page === k && !s.sub; return { label, icon: this.ICONS[icon], badge: badge || '', bg: a ? 'rgba(236,232,223,.1)' : 'transparent', fg: a ? '#ECE8DF' : '#A7AAB2', fw: a ? 600 : 500, go: go(k) }; }),
+      subs: this.SUBS.map(([name, k]) => ({ name, ...this.facets(k, false), go: () => this.setState({ page: 'community', sub: name, userMenu: false, postId: null, composing: false, drawer: false }) })),
+      userMenu: s.userMenu, toggleUserMenu: () => this.setState({ userMenu: !s.userMenu }),
+      goProfile: go('profile'),
+      signOut: () => { try { localStorage.removeItem(this.KEY); } catch (e) {} this.setState({ route: 'signin', mode: 'signin', profile: null, password: '', userMenu: false, page: 'home' }); },
+      editProfile: () => this.setState({ route: 'onboarding', ob: 0, draft: { ...p } }),
+      initials: (p.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(), pName: p.name, pMeta: `${(p.target || '').toUpperCase()} TRACK · ${(p.grade || '').toUpperCase()}`,
+      pageTitle: { live: 'Live classes', track: 'My track', learn: 'Learn', home: 'Home', pod: 'Problem of the Day', community: s.sub || 'Community', profile: 'Profile' }[s.page],
+      todayLabel: `${days[d.getDay()]} · ${pad(d.getDate())} ${months[d.getMonth()]}`,
+      pgLive: s.page === 'live', pgTrack: s.page === 'track', pgLearn: s.page === 'learn', pgHome: s.page === 'home', pgPod: s.page === 'pod', pgCommunity: s.page === 'community', pgProfile: s.page === 'profile',
+      communityTitle: s.sub || 'Community',
+      greeting: h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening', firstName: first,
+      greetEyebrow: `${days[d.getDay()]} · ${pad(d.getDate())} ${months[d.getMonth()]} · ${p.target} track`,
+      greetSub: `${p.grade} at ${p.school}. ${topic ? topic[1] + ' is your favourite.' : ''}`,
+      profileRows: [['Name', p.name], ['Email', s.email || this.DEMO.email], ['Class', p.grade], ['School', p.school], ['Target olympiad', p.target], ['Favourite topic', topic ? topic[1] : '—']].map(([k, v]) => ({ k, v })),
+      ...this.dashVals(d, p), ...this.podVals(d), ...this.forumVals(p),
+      stop: e => e.stopPropagation(), solveMeshRef: this.solveMeshRef, searchInputRef: this.searchInputRef,
+      solveOn: !!s.solveOn, closeSolve: () => this.setState({ solveOn: null }),
+      solveTag: s.solveOn ? (this.PROBLEMS.find(x => x.id === s.solveOn) || {}).title || '' : '',
+      solveLine: (() => { const n = Object.values(s.progress || {}).filter(v => v === 'solved').length; return n + ' of 12 today. The solution unlocks at midnight.'; })(),
+      solveNext: () => { const pr = s.progress || {}, n = this.PROBLEMS.find(x => pr[x.id] !== 'solved' && pr[x.id] !== 'submitted'); this.setState({ solveOn: null, podTab: 'today', podView: 'problem', podSel: n ? n.id : s.podSel, edit: 'write', note: '' }); },
+      searchOn: s.searchOn, openSearch: this.openSearch, closeSearch: () => this.setState({ searchOn: false }), searchQ: s.searchQ, onSearch: e => this.setState({ searchQ: e.target.value }),
+      ...(() => {
+        const qq = s.searchQ.trim().toLowerCase(), m = t => !qq || t.toLowerCase().includes(qq), out = [];
+        const probs = this.PROBLEMS.filter(x => m(x.title) || m(x.cat)).slice(0, 5).map((x, i) => ({ head: i ? '' : 'PROBLEMS', tag: x.cat + ' · ' + ['E', 'M', 'H'][x.lv], t: x.title, go: () => this.setState({ searchOn: false, page: 'pod', podTab: 'today', podView: 'problem', podSel: x.id, sub: null, postId: null, drawer: false }) }));
+        const posts = (s.fposts || this.SEED_POSTS).filter(x => m(x.title) || m(x.sub)).slice(0, 5).map((x, i) => ({ head: i ? '' : 'THREADS', tag: x.sub.replace('m/', ''), t: x.title, go: () => this.setState({ searchOn: false, page: 'community', sub: x.sub, postId: x.id, composing: false, drawer: false }) }));
+        const subs = this.SUBS.filter(([n]) => m(n)).slice(0, 4).map(([n], i) => ({ head: i ? '' : 'COMMUNITIES', tag: 'COMMUNITY', t: n, go: () => this.setState({ searchOn: false, page: 'community', sub: n, postId: null, composing: false, drawer: false }) }));
+        const all = [...probs, ...posts, ...subs].map((r, i) => ({ ...r, bg: i === 0 && qq ? '#F6F7F9' : 'transparent' }));
+        return { searchRes: all, searchEmpty: !all.length, searchKey: e => { if (e.key === 'Escape') this.setState({ searchOn: false }); if (e.key === 'Enter' && all[0]) all[0].go(); } };
+      })(),
+      loaderOn: s.loader != null, loaderOp: s.loaderShown ? 1 : 0, loaderY: -(Math.min(s.loader || 0, 4) * 56) + 'px',
+      loaderSteps: this.LSTEPS.map((t, i) => { const L = s.loader || 0, done = i < L || (i === 4 && L >= 4); return { t, op: i === L ? 1 : i < L ? .45 : .2, fill: done ? '#4C98F0' : 'transparent', stroke: done ? '#4C98F0' : i === L ? '#ECE8DF' : '#333844', tick: done ? 1 : 0, col: i === L ? '#ECE8DF' : '#A7AAB2' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

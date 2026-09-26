@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Problem of the Day — Liminal Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-normal.woff2) format("woff2");font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+@keyframes lmDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+</style>
+</helmet>
+
+<header style="position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 clamp(12px,3vw,24px);pointer-events:none">
+  <div style="pointer-events:auto;width:100%;max-width:1180px;height:60px;padding:0 8px 0 20px;border-radius:999px;display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);background:{{ nvBg }};border:1px solid {{ nvBd }};backdrop-filter:blur(14px);transition:background 300ms,border-color 300ms">
+    <a href="Liminal Home v2.dc.html" style="flex:0 0 auto;display:flex;align-items:center;gap:10px"><svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:{{ nvFg }}">LIMINAL MATH</span></a>
+    <nav aria-label="Primary" style="flex:1 1 auto;min-width:0;height:36px;overflow:hidden;display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;row-gap:36px">
+      <a href="Liminal App.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvMu }}">Learn</a>
+      <a href="Liminal POD.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvFg }};background:{{ nvAct }}">Problem of the Day</a>
+      <a href="Liminal Community.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvMu }}">Community</a>
+    </nav>
+    <a href="Liminal App.dc.html" style="font-size:14.5px;font-weight:500;color:{{ nvFg }};padding:0 8px;white-space:nowrap">Log in</a>
+    <a href="Liminal App.dc.html" style="height:44px;padding:0 20px;border-radius:999px;display:flex;align-items:center;font-weight:600;font-size:14.5px;background:{{ ctaBg }};color:{{ ctaFg }};white-space:nowrap">Chapter Zero →</a>
+  </div>
+</header>
+
+<section ref="{{ heroRef }}" data-screen-label="POD hero" style="position:relative;isolation:isolate;overflow:hidden;background:#000000;color:#ECE8DF;padding:clamp(128px,14vw,168px) clamp(16px,5vw,72px) clamp(56px,6vw,80px)">
+  <canvas ref="{{ meshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+  <div style="max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+    <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#7E828C">PROBLEM OF THE DAY · {{ dateLabel }}</p>
+    <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(44px,6vw,88px);line-height:.96;letter-spacing:-.034em;max-width:14ch">Twelve problems. Every day. <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">Everyone.</em></h1>
+    <p style="margin:0;max-width:52ch;font-size:18px;font-weight:500;line-height:1.55;color:#A7AAB2">Four olympiad categories, three levels each. Open to anyone, no account needed. Solutions unlock at midnight with every approach the community found.</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px">
+      <div style="display:flex;padding:4px;border-radius:999px;background:rgba(236,232,223,.06);border:1px solid #333844">
+        <button type="button" onClick="{{ tabToday }}" style="height:40px;padding:0 18px;border:0;border-radius:999px;background:{{ tTBg }};color:{{ tTFg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Today</button>
+        <button type="button" onClick="{{ tabYest }}" style="height:40px;padding:0 18px;border:0;border-radius:999px;background:{{ tYBg }};color:{{ tYFg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Yesterday’s solutions</button>
+      </div>
+      <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">SOLUTIONS UNLOCK IN {{ countdown }}</span>
+    </div>
+  </div>
+</section>
+
+<main style="position:relative;z-index:2;margin-top:-28px;border-radius:28px 28px 0 0;background:#FFFFFF;padding:clamp(40px,5vw,64px) clamp(16px,5vw,72px) clamp(64px,7vw,96px)">
+  <div style="max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px">
+    <sc-for list="{{ cards }}" as="cc" hint-placeholder-count="4">
+      <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#F6F7F9;display:flex;align-items:center;justify-content:center;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px"><span>{{ cc.n }}<span style="color:#8A8F99">/4</span></span></span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-top:4px"><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.015em">{{ cc.name }}</h2><p style="margin:0;font-size:16px;color:#4B4F58">{{ cc.desc }}</p></div>
+          <span style="font-size:15px;color:#6B7280;padding-top:8px;white-space:nowrap">{{ cc.meta }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ cc.rows }}" as="rw" hint-placeholder-count="3">
+            <button type="button" onClick="{{ rw.open }}" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:10px 16px 10px 10px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 6px 18px rgba(18,20,24,.05)">
+              <span style="width:50px;height:50px;flex:0 0 50px;border-radius:10px;background:#F6F7F9;display:grid;place-items:center;font-size:17px;font-weight:500">{{ rw.n }}</span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:500">{{ rw.title }}</span><span style="font-size:13px;color:#6B7280">{{ rw.sub }}</span></span>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="{{ rw.icFill }}" stroke="{{ rw.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ rw.icDash }}"></circle><path d="M7.6 12.3l3 3 5.8-6.1" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ rw.tick }}"></path></svg>
+              <span style="font-size:15px;color:#4B4F58;min-width:64px">{{ rw.stat }}</span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><path d="m9 6 6 6-6 6"></path></svg>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding:24px 28px;border-radius:20px;background:#F6F7F9;border:1px solid #E2E5EA">
+      <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px">Want three picked just for you?</span><span style="font-size:15px;color:#4B4F58">A free account saves your progress, shares your proofs at midnight and builds your olympiad track.</span></div>
+      <a href="Liminal App.dc.html" style="height:48px;padding:0 24px;border-radius:999px;background:#0B5BC4;color:#FFFFFF;display:flex;align-items:center;font-weight:600;font-size:15px">Start Chapter Zero →</a>
+    </div>
+  </div>
+</main>
+
+<sc-if value="{{ sheetOn }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:flex;justify-content:flex-end">
+    <div role="dialog" aria-label="{{ q.title }}" onClick="{{ stop }}" style="width:min(640px,100%);height:100%;overflow:auto;background:#FFFFFF;display:flex;flex-direction:column">
+      <div style="position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:16px 24px;background:#000000;color:#ECE8DF">
+        <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#A7AAB2">{{ q.meta }}</span>
+        <button type="button" onClick="{{ closeSheet }}" aria-label="Close" style="margin-left:auto;width:36px;height:36px;border-radius:999px;border:1px solid #333844;background:transparent;color:#ECE8DF;font-size:18px;cursor:pointer">×</button>
+      </div>
+      <div style="padding:28px 28px 40px;display:flex;flex-direction:column;gap:20px">
+        <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:34px;line-height:1.05;letter-spacing:-.02em">{{ q.title }}</h2>
+        <div data-tex="{{ q.statement }}" style="font-size:19px;line-height:1.65"></div>
+        <sc-if value="{{ isNum }}" hint-placeholder-val="{{ false }}">
+          <form onSubmit="{{ check }}" novalidate="" style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px"><input value="{{ ans }}" onChange="{{ onAns }}" inputmode="numeric" placeholder="Your answer" style="flex:1;min-width:0;height:52px;padding:0 16px;border-radius:12px;border:1.5px solid {{ ansBd }};font-family:'CM Roman',serif;font-size:20px;outline:none"><button type="submit" style="height:52px;padding:0 24px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Check</button></div>
+            <span aria-live="polite" style="font-size:15px;color:{{ fbCol }}">{{ fbText }}</span>
+          </form>
+        </sc-if>
+        <sc-if value="{{ isProof }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <textarea value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Sketch your proof here. Use $…$ for maths." style="min-height:180px;padding:14px 16px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:15.5px;line-height:1.6;resize:vertical;outline:none"></textarea>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:#F6F7F9"><span style="flex:1 1 240px;font-size:14px;color:#4B4F58">Your draft stays in this browser. Create a free account to submit it and see it shared at midnight.</span><a href="Liminal App.dc.html" style="height:40px;padding:0 18px;border-radius:999px;background:#121418;color:#FFFFFF;display:flex;align-items:center;font-weight:600;font-size:14px">Create account</a></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid #E2E5EA;border-radius:12px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#4B4F58" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span style="font-size:15px">Solution unlocks in <span style="font-family:'CM Typewriter',monospace">{{ countdown }}</span></span></div>
+        </sc-if>
+        <sc-if value="{{ isYest }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid #E2E5EA;border-radius:20px;padding:24px;background-image:linear-gradient(#EEF1F5 1px,transparent 1px),linear-gradient(90deg,#EEF1F5 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#127A50">OFFICIAL SOLUTION</span><div data-tex="{{ q.solution }}" style="font-family:'Baskervville',Georgia,serif;font-size:19px;line-height:1.7"></div></div>
+        </sc-if>
+        <a href="Liminal Community.dc.html" style="align-self:flex-start;font-weight:600;font-size:15px;color:#0B5BC4">Discuss in m/ProblemOfTheDay →</a>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<footer style="background:#000000;color:#ECE8DF;padding:56px clamp(16px,5vw,72px) 32px">
+  <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center">
+    <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em">LIMINAL MATH</span>
+    <nav style="display:flex;gap:24px;flex-wrap:wrap;margin-left:auto;font-size:14px"><a href="Liminal Home v2.dc.html" style="color:#A7AAB2">Home</a><a href="Liminal App.dc.html" style="color:#A7AAB2">Learn</a><a href="Liminal POD.dc.html" style="color:#A7AAB2">Problem of the Day</a><a href="Liminal Community.dc.html" style="color:#A7AAB2">Community</a></nav>
+    <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">© 2026 THE LIMINAL INITIATIVE</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  CATS = [['ALG', 'Algebra', 'Inequalities, polynomials and functional equations.'], ['COMB', 'Combinatorics', 'Counting, invariants, graphs and games.'], ['GEO', 'Geometry', 'Synthetic, coordinate and projective geometry.'], ['NT', 'Number theory', 'Divisibility, congruences and Diophantine equations.']];
+  TODAY = [
+    ['ALG', 0, 'Reciprocal cubes', 'num', '18', String.raw`If $x + \frac{1}{x} = 3$, find $x^3 + \frac{1}{x^3}$.`],
+    ['ALG', 1, 'Additive and multiplicative', 'proof', '', String.raw`Find all $f:\mathbb{R}\to\mathbb{R}$ with $f(x+y)=f(x)+f(y)$ and $f(xy)=f(x)f(y)$ for all real $x,y$.`],
+    ['ALG', 2, 'Squares beat the sum', 'proof', '', String.raw`Let $a,b,c>0$ with $abc=1$. Prove $a^2+b^2+c^2\ge a+b+c$.`],
+    ['COMB', 0, 'A room of handshakes', 'num', '45', String.raw`Ten people each shake hands once with every other person. How many handshakes?`],
+    ['COMB', 1, 'Two colours, one distance', 'proof', '', String.raw`Every point of the plane is red or blue. Prove two points at distance $1$ share a colour.`],
+    ['COMB', 2, 'Seven integers, one ten', 'proof', '', String.raw`Prove that among any seven distinct integers, two have a sum or difference divisible by $10$.`],
+    ['GEO', 0, 'Angle in a semicircle', 'num', '90', String.raw`$AB$ is a diameter and $P$ another point on the circle. Find $\angle APB$ in degrees.`],
+    ['GEO', 1, 'Where the medians meet', 'proof', '', String.raw`Prove that the three medians of any triangle are concurrent.`],
+    ['GEO', 2, 'Ptolemy’s equality', 'proof', '', String.raw`For a cyclic quadrilateral $ABCD$, prove $AC\cdot BD=AB\cdot CD+AD\cdot BC$.`],
+    ['NT', 0, 'Divisors of the year', 'num', '4', String.raw`How many positive divisors does $2026$ have?`],
+    ['NT', 1, 'The last two digits', 'num', '49', String.raw`Find the last two digits of $7^{2026}$.`],
+    ['NT', 2, 'Never a square', 'proof', '', String.raw`Prove $n^2+n+1$ is never a perfect square for a positive integer $n$.`]
+  ];
+  YEST = [
+    ['ALG', 0, 'Powers of two', String.raw`Find $1+2+4+\dots+2^9$.`, String.raw`Geometric series with ratio $2$: $\frac{2^{10}-1}{2-1}=1023$.`],
+    ['ALG', 1, 'Roots, squared', String.raw`If $\alpha,\beta$ are roots of $x^2-5x+3=0$, find $\alpha^2+\beta^2$.`, String.raw`$(\alpha+\beta)^2-2\alpha\beta=25-6=19$.`],
+    ['ALG', 2, 'Cauchy–Schwarz warm-up', String.raw`Prove $(a+b+c)\left(\frac1a+\frac1b+\frac1c\right)\ge9$ for positive reals.`, String.raw`By Cauchy–Schwarz the product is at least $(1+1+1)^2=9$, with equality at $a=b=c$.`],
+    ['COMB', 0, 'Arranging LEVEL', String.raw`How many arrangements of the letters of LEVEL?`, String.raw`$\frac{5!}{2!\,2!}=30$.`],
+    ['COMB', 1, 'No neighbours', String.raw`How many subsets of $\{1,\dots,10\}$ have no two consecutive integers?`, String.raw`$a_n=a_{n-1}+a_{n-2}$ with $a_1=2,a_2=3$, so $a_{10}=144$.`],
+    ['COMB', 2, 'Friends and strangers', String.raw`Among six people, prove three are mutual friends or three mutual strangers.`, String.raw`Fix $P$; three of the other five are all friends or all strangers of $P$. Either two of them match $P$’s relation, or the three form the triple.`],
+    ['GEO', 0, 'An exterior angle', String.raw`A triangle has angles $50^\circ$ and $60^\circ$. Find the exterior angle at the third vertex.`, String.raw`It equals the sum of the opposite interior angles: $110^\circ$.`],
+    ['GEO', 1, 'Tangents from a point', String.raw`Prove the two tangent segments from an external point are equal.`, String.raw`Right triangles $OAP$ and $OBP$ share hypotenuse $OP$ and $OA=OB$, so they are congruent.`],
+    ['GEO', 2, 'Angle bisector theorem', String.raw`Prove $\frac{BD}{DC}=\frac{AB}{AC}$ for the bisector from $A$.`, String.raw`Compare areas of $\triangle ABD$ and $\triangle ACD$ via the common height and via $\tfrac12 ab\sin C$.`],
+    ['NT', 0, 'Sum of odds', String.raw`Find $1+3+5+\dots+199$.`, String.raw`One hundred odd numbers sum to $100^2=10000$.`],
+    ['NT', 1, 'A remainder', String.raw`Find the remainder of $2^{100}$ divided by $7$.`, String.raw`$2^3\equiv1$, so $2^{100}=2\cdot(2^3)^{33}\equiv2$.`],
+    ['NT', 2, 'Infinitely many primes', String.raw`Prove there are infinitely many primes.`, String.raw`If $p_1,\dots,p_k$ were all, $p_1\cdots p_k+1$ has a new prime factor.`]
+  ];
+  state = { tab: 'today', sel: null, ans: {}, fb: {}, drafts: {}, solved: {}, now: Date.now(), dark: true };
+  heroRef = el => { this._hero = el; };
+  meshRef = el => { if (el && el !== this._cv) { this._stop && this._stop(); this._cv = el; this._stop = this.mesh(el); } };
+  componentDidMount() {
+    try { const v = JSON.parse(localStorage.getItem('liminal-web-pod-v1') || '{}'); this.setState({ solved: v.solved || {}, drafts: v.drafts || {} }); } catch (e) {}
+    this.clk = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.onScroll = () => { const h = this._hero, dark = h ? h.getBoundingClientRect().bottom > 44 : true; if (dark !== this.state.dark) this.setState({ dark }); };
+    addEventListener('scroll', this.onScroll, { passive: true });
+    this.tt = setInterval(() => { this.typeset(); if (window.katex) clearInterval(this.tt); }, 300);
+  }
+  componentDidUpdate() { this.typeset(); }
+  componentWillUnmount() { clearInterval(this.clk); clearInterval(this.tt); removeEventListener('scroll', this.onScroll); this._stop && this._stop(); }
+  save(p) { this.setState(p, () => { try { localStorage.setItem('liminal-web-pod-v1', JSON.stringify({ solved: this.state.solved, drafts: this.state.drafts })); } catch (e) {} }); }
+  tex(str) { const k = window.katex, esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); return String(str || '').split(/(\$[^$]+\$)/g).map(p => (k && /^\$[^$]+\$$/.test(p)) ? k.renderToString(p.slice(1, -1), { throwOnError: false }) : esc(p)).join(''); }
+  typeset() { document.querySelectorAll('[data-tex]').forEach(el => { const t = el.getAttribute('data-tex') || '', key = t + '|' + !!window.katex; if (el._tex === key) return; el._tex = key; el.innerHTML = this.tex(t); }); }
+  mesh(cv) {
+    const ctx = cv.getContext('2d'), sec = cv.parentElement, SKY = '76,152,240', CHK = '236,232,223', reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0, dpr = 1, pts = [], mouse = null, raf = 0, last = performance.now(), vis = true;
+    const resize = () => { const r = cv.getBoundingClientRect(); if (!r.width) return; dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; let seed = 7; const rr = () => (seed = (seed * 16807) % 2147483647) / 2147483647; pts = Array.from({ length: Math.max(24, Math.min(80, Math.round(W * H / 16000))) }, () => ({ x: rr() * W, y: rr() * H, vx: (rr() - .5) * .12, vy: (rr() - .5) * .12, s: rr() > .82 })); draw(0); };
+    const draw = dt => { if (!W) return; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); for (const p of pts) { p.x = (p.x + p.vx * dt * .06 + W) % W; p.y = (p.y + p.vy * dt * .06 + H) % H; } ctx.lineWidth = 1; for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 140) { ctx.strokeStyle = `rgba(${SKY},${((1 - d / 140) * .3).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); } } if (mouse) for (const p of pts) { const d = Math.hypot(p.x - mouse[0], p.y - mouse[1]); if (d < 180) { ctx.strokeStyle = `rgba(${CHK},${((1 - d / 180) * .45).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse[0], mouse[1]); ctx.stroke(); } } for (const p of pts) { ctx.fillStyle = p.s ? `rgba(${SKY},.95)` : `rgba(${CHK},.55)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.s ? 2.1 : 1.4, 0, 7); ctx.fill(); } };
+    const loop = now => { raf = 0; if (!vis || !cv.isConnected) return; draw(Math.min(64, now - last)); last = now; raf = requestAnimationFrame(loop); };
+    const kick = () => { if (!raf && vis && !reduce) { last = performance.now(); raf = requestAnimationFrame(loop); } };
+    const mm = e => { const r = cv.getBoundingClientRect(); mouse = [e.clientX - r.left, e.clientY - r.top]; }, ml = () => { mouse = null; };
+    sec.addEventListener('mousemove', mm); sec.addEventListener('mouseleave', ml);
+    const ro = new ResizeObserver(resize); ro.observe(cv); resize(); setTimeout(resize, 200);
+    const io = new IntersectionObserver(es => { vis = es[0].isIntersecting; kick(); }); io.observe(cv); kick();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); sec.removeEventListener('mousemove', mm); sec.removeEventListener('mouseleave', ml); };
+  }
+  renderVals() {
+    const s = this.state, today = s.tab === 'today', d = new Date(s.now), mid = new Date(d); mid.setHours(24, 0, 0, 0);
+    const diff = Math.max(0, Math.floor((mid - d) / 1000)), pad = n => String(n).padStart(2, '0'), LV = ['Easy', 'Medium', 'Hard'];
+    const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'], y = new Date(d); y.setDate(d.getDate() - 1);
+    const list = today ? this.TODAY.map(([cat, lv, title, type, answer, statement]) => ({ id: cat + lv, cat, lv, title, type, answer, statement })) : this.YEST.map(([cat, lv, title, statement, solution]) => ({ id: 'y' + cat + lv, cat, lv, title, type: 'sol', statement, solution }));
+    const q = list.find(x => x.id === s.sel) || list[0], fb = s.fb[q.id];
+    const cards = this.CATS.map(([code, name, desc], i) => { const items = list.filter(x => x.cat === code), done = items.filter(x => s.solved[x.id]).length; return { n: i + 1, name, desc, meta: today ? done + ' of 3 solved' : '3 solutions', rows: items.map((x, j) => { const ok = !!s.solved[x.id]; return { n: j + 1, title: x.title, sub: LV[x.lv] + ' · ' + (x.type === 'num' ? 'Numeric answer' : x.type === 'proof' ? 'Proof' : 'Solution unlocked'), icFill: ok ? '#127A50' : '#FFFFFF', icStroke: ok ? '#127A50' : '#B9C3D0', icDash: ok || !today ? '0' : '2.6 3.2', tick: ok ? 1 : 0, stat: ok ? 'Solved' : today ? 'To do' : 'Read', open: () => this.setState({ sel: x.id }) }; }) }; });
+    const d0 = s.dark;
+    return {
+      heroRef: this.heroRef, meshRef: this.meshRef, stop: e => e.stopPropagation(),
+      nvBg: d0 ? 'rgba(12,13,16,.45)' : 'rgba(255,255,255,.88)', nvBd: d0 ? 'rgba(236,232,223,.12)' : 'rgba(18,20,24,.1)', nvFg: d0 ? '#ECE8DF' : '#121418', nvMu: d0 ? '#A7AAB2' : '#4B4F58', nvAct: d0 ? 'rgba(236,232,223,.1)' : 'rgba(18,20,24,.06)', ctaBg: d0 ? '#ECE8DF' : '#121418', ctaFg: d0 ? '#000000' : '#FFFFFF',
+      dateLabel: `${d.getDate()} ${M[d.getMonth()]}`, countdown: `${pad(Math.floor(diff / 3600))}:${pad(Math.floor(diff / 60) % 60)}:${pad(diff % 60)}`,
+      tabToday: () => this.setState({ tab: 'today', sel: null }), tabYest: () => this.setState({ tab: 'yesterday', sel: null }),
+      tTBg: today ? '#ECE8DF' : 'transparent', tTFg: today ? '#000000' : '#ECE8DF', tYBg: today ? 'transparent' : '#ECE8DF', tYFg: today ? '#ECE8DF' : '#000000',
+      cards, sheetOn: !!s.sel, closeSheet: () => this.setState({ sel: null }),
+      q: { title: q.title, statement: q.statement, solution: q.solution || '', meta: `${q.cat} · ${LV[q.lv].toUpperCase()} · ${today ? 'TODAY' : 'YESTERDAY ' + y.getDate() + ' ' + M[y.getMonth()]}` },
+      isNum: today && q.type === 'num', isProof: today && q.type === 'proof', isToday: today, isYest: !today,
+      ans: s.ans[q.id] || '', onAns: e => this.setState({ ans: { ...s.ans, [q.id]: e.target.value }, fb: { ...s.fb, [q.id]: null } }),
+      check: e => { e.preventDefault(); const v = (s.ans[q.id] || '').replace(/\s/g, ''); if (!v) return; const ok = v === q.answer; this.setState({ fb: { ...s.fb, [q.id]: ok ? 'ok' : 'bad' } }); if (ok) this.save({ solved: { ...s.solved, [q.id]: true } }); },
+      ansBd: fb === 'bad' ? '#C23B56' : fb === 'ok' || s.solved[q.id] ? '#127A50' : '#D2D7DE', fbCol: fb === 'bad' ? '#C23B56' : '#127A50',
+      fbText: fb === 'ok' || (s.solved[q.id] && !fb) ? 'Correct. Nicely done.' : fb === 'bad' ? 'Not quite. Try again, there’s no limit.' : '',
+      draft: s.drafts[q.id] || '', onDraft: e => this.save({ drafts: { ...s.drafts, [q.id]: e.target.value } })
+    };
+  }
+}
+</script>
+</body>
+</html>

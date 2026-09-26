@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Community — Liminal Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+</style>
+</helmet>
+
+<header style="position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 clamp(12px,3vw,24px);pointer-events:none">
+  <div style="pointer-events:auto;width:100%;max-width:1180px;height:60px;padding:0 8px 0 20px;border-radius:999px;display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);background:{{ nvBg }};border:1px solid {{ nvBd }};backdrop-filter:blur(14px);transition:background 300ms">
+    <a href="Liminal Home v2.dc.html" style="flex:0 0 auto;display:flex;align-items:center;gap:10px"><svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:{{ nvFg }}">LIMINAL MATH</span></a>
+    <nav aria-label="Primary" style="flex:1 1 auto;min-width:0;height:36px;overflow:hidden;display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;row-gap:36px">
+      <a href="Liminal App.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvMu }}">Learn</a>
+      <a href="Liminal POD.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvMu }}">Problem of the Day</a>
+      <a href="Liminal Community.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:{{ nvFg }};background:{{ nvAct }}">Community</a>
+    </nav>
+    <a href="Liminal App.dc.html" style="font-size:14.5px;font-weight:500;color:{{ nvFg }};padding:0 8px;white-space:nowrap">Log in</a>
+    <a href="Liminal App.dc.html" style="height:44px;padding:0 20px;border-radius:999px;display:flex;align-items:center;font-weight:600;font-size:14.5px;background:{{ ctaBg }};color:{{ ctaFg }};white-space:nowrap">Chapter Zero →</a>
+  </div>
+</header>
+
+<section ref="{{ heroRef }}" style="position:relative;background:#000000;color:#ECE8DF;padding:clamp(128px,14vw,168px) clamp(16px,5vw,72px) clamp(56px,6vw,76px);background-image:radial-gradient(ellipse 70% 80% at 80% 20%,rgba(76,152,240,.12),transparent 60%),linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:100% 100%,32px 32px,32px 32px">
+  <div style="max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+    <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#7E828C">COMMUNITY · {{ threadCount }} THREADS</p>
+    <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(44px,6vw,84px);line-height:.96;letter-spacing:-.034em;max-width:15ch">Better questions come from <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">better company.</em></h1>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ subChips }}" as="sc" hint-placeholder-count="9"><button type="button" onClick="{{ sc.pick }}" style="height:38px;padding:0 14px;border-radius:999px;border:1px solid {{ sc.bd }};background:{{ sc.bg }};color:{{ sc.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer">{{ sc.name }}</button></sc-for>
+    </div>
+  </div>
+</section>
+
+<main style="position:relative;z-index:2;margin-top:-28px;border-radius:28px 28px 0 0;background:#FFFFFF;padding:clamp(36px,5vw,56px) clamp(16px,5vw,72px) clamp(64px,7vw,96px)">
+  <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+    <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:14px">
+      <sc-if value="{{ vFeed }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+            <div style="display:flex;gap:4px;padding:4px;border:1px solid #E2E5EA;border-radius:999px"><sc-for list="{{ sorts }}" as="so" hint-placeholder-count="3"><button type="button" onClick="{{ so.pick }}" style="height:32px;padding:0 14px;border:0;border-radius:999px;background:{{ so.bg }};color:{{ so.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer">{{ so.label }}</button></sc-for></div>
+            <button type="button" onClick="{{ openCompose }}" style="margin-left:auto;height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">+ New thread</button>
+          </div>
+          <sc-for list="{{ feed }}" as="p" hint-placeholder-count="5">
+            <article onClick="{{ p.open }}" style="display:grid;grid-template-columns:52px minmax(0,1fr);border:1px solid #E2E5EA;border-radius:16px;background:#FFFFFF;overflow:hidden;cursor:pointer" style-hover="border-color:#B9C3D0">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 0;background:#F6F7F9"><button type="button" onClick="{{ p.up }}" aria-label="Upvote" aria-pressed="{{ p.upP }}" style="width:32px;height:28px;border:0;border-radius:6px;background:transparent;color:{{ p.upC }};cursor:pointer;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 15 6-6 6 6"></path></svg></button><b style="font-size:14px">{{ p.score }}</b></div>
+              <div style="padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0">
+                <div style="display:flex;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:#6B7280"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.08em;color:#0B5BC4">{{ p.sub }}</b><span>{{ p.author }}</span><span>· {{ p.ago }}</span></div>
+                <h2 style="margin:0;font-size:18px;font-weight:600;line-height:1.35">{{ p.title }}</h2>
+                <div data-tex="{{ p.body }}" style="font-size:15px;color:#4B4F58;max-height:4.8em;overflow:hidden;filter:{{ p.blur }}"></div>
+                <span style="font-size:13px;font-weight:600;color:#6B7280">{{ p.comments }}</span>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ vPost }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <button type="button" onClick="{{ back }}" style="align-self:flex-start;border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#4B4F58;cursor:pointer">← All threads</button>
+          <article style="border:1px solid #E2E5EA;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:10px;font-size:13px;color:#6B7280"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;color:#0B5BC4">{{ cp.sub }}</b><span>{{ cp.author }} · {{ cp.ago }}</span></div>
+            <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.1;letter-spacing:-.02em">{{ cp.title }}</h1>
+            <div data-tex="{{ cp.body }}" style="font-size:16.5px;line-height:1.7"></div>
+            <button type="button" onClick="{{ cp.up }}" style="align-self:flex-start;height:34px;padding:0 14px;border-radius:999px;border:1px solid #E2E5EA;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:13.5px;color:{{ cp.upC }};cursor:pointer">▲ {{ cp.score }}</button>
+          </article>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid #E2E5EA;border-radius:16px;background:#F6F7F9">
+            <input value="{{ guest }}" onChange="{{ onGuest }}" placeholder="Your name (shown with your reply)" style="height:44px;padding:0 14px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:15px;outline:none;background:#FFFFFF">
+            <textarea value="{{ reply }}" onChange="{{ onReply }}" placeholder="Add to the discussion. Use $…$ for maths." style="min-height:96px;padding:12px 14px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:15px;line-height:1.55;resize:vertical;outline:none"></textarea>
+            <div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px;color:#C23B56">{{ err }}</span><button type="button" onClick="{{ sendReply }}" style="margin-left:auto;height:40px;padding:0 18px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer">Reply</button></div>
+          </div>
+          <sc-for list="{{ comments }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #EEF1F4;margin-left:{{ c.indent }}"><span style="width:30px;height:30px;flex:0 0 30px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:10.5px">{{ c.ini }}</span><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-size:13px;color:#6B7280"><b style="color:#121418;font-weight:600">{{ c.author }}</b> · {{ c.ago }}</span><div data-tex="{{ c.body }}" style="font-size:15.5px;line-height:1.6"></div></div></div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ vCompose }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <button type="button" onClick="{{ back }}" style="align-self:flex-start;border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#4B4F58;cursor:pointer">← Cancel</button>
+          <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:34px;letter-spacing:-.02em">Start a <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">thread.</em></h1>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ subPick }}" as="sp" hint-placeholder-count="8"><button type="button" onClick="{{ sp.pick }}" style="height:34px;padding:0 12px;border-radius:999px;border:1px solid {{ sp.bd }};background:{{ sp.bg }};color:{{ sp.fg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:13px;cursor:pointer">{{ sp.name }}</button></sc-for></div>
+          <input value="{{ guest }}" onChange="{{ onGuest }}" placeholder="Your name" style="height:46px;padding:0 14px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:15px;outline:none">
+          <input value="{{ dTitle }}" onChange="{{ onDTitle }}" placeholder="A clear question or claim" style="height:52px;padding:0 14px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:17px;font-weight:600;outline:none">
+          <textarea value="{{ dBody }}" onChange="{{ onDBody }}" placeholder="Explain your idea. Use $…$ for maths." style="min-height:180px;padding:14px;border:1px solid #D2D7DE;border-radius:12px;font-family:'Figtree',sans-serif;font-size:15.5px;line-height:1.6;resize:vertical;outline:none"></textarea>
+          <div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px;color:#C23B56">{{ err }}</span><button type="button" onClick="{{ submitPost }}" style="margin-left:auto;height:46px;padding:0 24px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Post</button></div>
+        </div>
+      </sc-if>
+    </div>
+    <aside style="flex:0 1 320px;min-width:260px;display:flex;flex-direction:column;gap:14px;position:sticky;top:96px">
+      <div style="border-radius:20px;background:#000000;color:#ECE8DF;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">JOIN LIMINAL</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px;line-height:1.2">Keep your threads, votes and proofs in one place.</span><a href="Liminal App.dc.html" style="align-self:flex-start;height:42px;padding:0 18px;border-radius:999px;background:#ECE8DF;color:#000000;display:flex;align-items:center;font-weight:600;font-size:14px">Create a free account</a></div>
+      <div style="border:1px solid #E2E5EA;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">HOW WE TALK HERE</span><span style="font-size:14px">01 Show your reasoning, not just the answer.</span><span style="font-size:14px">02 Critique arguments, never people.</span><span style="font-size:14px">03 Today’s problems stay spoiler-free until midnight.</span><a href="Liminal POD.dc.html" style="font-weight:600;font-size:14px">Try today’s problems →</a></div>
+    </aside>
+  </div>
+</main>
+
+<footer style="background:#000000;color:#ECE8DF;padding:56px clamp(16px,5vw,72px) 32px">
+  <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center">
+    <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em">LIMINAL MATH</span>
+    <nav style="display:flex;gap:24px;flex-wrap:wrap;margin-left:auto;font-size:14px"><a href="Liminal Home v2.dc.html" style="color:#A7AAB2">Home</a><a href="Liminal App.dc.html" style="color:#A7AAB2">Learn</a><a href="Liminal POD.dc.html" style="color:#A7AAB2">Problem of the Day</a><a href="Liminal Community.dc.html" style="color:#A7AAB2">Community</a></nav>
+    <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">© 2026 THE LIMINAL INITIATIVE</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  SUBS = ['m/Algebra', 'm/Combinatorics', 'm/Geometry', 'm/NumberTheory', 'm/ProblemOfTheDay', 'm/Olympiads', 'm/General', 'm/Resources'];
+  SEED = [
+    ['p1', 'm/Geometry', 'Rohan D.', 120, 'Is there a proof of Ptolemy without inversion?', String.raw`Every proof I know of $AC\cdot BD = AB\cdot CD + AD\cdot BC$ uses inversion or complex numbers. Is there a purely synthetic one?`, 64],
+    ['p2', 'm/ProblemOfTheDay', 'Meera P.', 300, 'Yesterday’s NT-H: three different ways in', String.raw`Euclid’s argument is the classic. You can also use $n!+1$, or the pairwise coprime Fermat numbers $F_n=2^{2^n}+1$.`, 47],
+    ['p3', 'm/Olympiads', 'Ananya R.', 1440, 'RMO 2026: how are you splitting the last month?', 'Two weeks of geometry, one of combinatorics and one of full mock papers. Too little number theory?', 31],
+    ['p4', 'm/Algebra', 'Kabir S.', 420, 'A slick proof of AM–GM for three variables', String.raw`Start from $x^3+y^3+z^3-3xyz=\tfrac12(x+y+z)\left[(x-y)^2+(y-z)^2+(z-x)^2\right]$ and the inequality drops out.`, 29],
+    ['p5', 'm/Resources', 'Priya K.', 1800, 'Books that actually helped me for INMO', 'Engel’s Problem-Solving Strategies, Challenge and Thrill of Pre-College Mathematics, and Evan Chen’s EGMO. What would you add?', 58],
+    ['p6', 'm/ProblemOfTheDay', 'Nikhil G.', 45, 'Today’s ALG-M: is f(x) = x the only non-zero solution?', String.raw`Setting $y=1$ gives $f(x)(1-f(1))=0$, so $f\equiv0$ or $f(1)=1$…`, 9, true]
+  ].map(([id, sub, author, mins, title, body, score, spoiler]) => ({ id, sub, author, mins, title, body, score, spoiler: !!spoiler }));
+  SEEDC = [['c1', 'p1', 0, 'Ishaan M.', 95, String.raw`Pick $E$ on $AC$ with $\angle ABE=\angle DBC$. Then $\triangle ABE\sim\triangle DBC$ and $\triangle ABD\sim\triangle EBC$; add the two ratios.`], ['c2', 'p1', 1, 'Rohan D.', 80, 'That second similarity is the step I kept missing. Thanks.'], ['c3', 'p3', 0, 'Arjun T.', 900, 'Swap one geometry week for NT. Regional papers nearly always have an approachable NT problem.']].map(([id, post, depth, author, mins, body]) => ({ id, post, depth, author, mins, body }));
+  state = { sub: null, sort: 'hot', view: 'feed', postId: null, posts: null, comments: null, votes: {}, guest: '', reply: '', err: '', d: { sub: 'm/General', title: '', body: '' }, dark: true };
+  heroRef = el => { this._hero = el; };
+  componentDidMount() {
+    try { const v = JSON.parse(localStorage.getItem('liminal-web-forum-v1') || 'null'); if (v) this.setState({ posts: v.posts, comments: v.comments, votes: v.votes || {}, guest: v.guest || '' }); } catch (e) {}
+    this.onScroll = () => { const dark = this._hero ? this._hero.getBoundingClientRect().bottom > 44 : true; if (dark !== this.state.dark) this.setState({ dark }); };
+    addEventListener('scroll', this.onScroll, { passive: true });
+    this.tt = setInterval(() => { this.typeset(); if (window.katex) clearInterval(this.tt); }, 300);
+  }
+  componentDidUpdate() { this.typeset(); }
+  componentWillUnmount() { removeEventListener('scroll', this.onScroll); clearInterval(this.tt); }
+  persist(p) { this.setState(p, () => { const s = this.state; try { localStorage.setItem('liminal-web-forum-v1', JSON.stringify({ posts: s.posts, comments: s.comments, votes: s.votes, guest: s.guest })); } catch (e) {} }); }
+  tex(str) { const k = window.katex, esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); return String(str || '').split(/(\$[^$]+\$)/g).map(p => (k && /^\$[^$]+\$$/.test(p)) ? k.renderToString(p.slice(1, -1), { throwOnError: false }) : esc(p)).join(''); }
+  typeset() { document.querySelectorAll('[data-tex]').forEach(el => { const t = el.getAttribute('data-tex') || '', key = t + '|' + !!window.katex; if (el._tex === key) return; el._tex = key; el.innerHTML = this.tex(t); }); }
+  ago(m) { return m < 1 ? 'just now' : m < 60 ? m + 'm ago' : m < 1440 ? Math.floor(m / 60) + 'h ago' : Math.floor(m / 1440) + 'd ago'; }
+  renderVals() {
+    const s = this.state, posts = s.posts || this.SEED, comments = s.comments || this.SEEDC, v = s.votes, dk = s.dark;
+    const vote = id => e => { e && e.stopPropagation(); this.persist({ votes: { ...v, [id]: v[id] ? 0 : 1 } }); };
+    const card = p => ({ ...p, ago: this.ago(p.mins), score: p.score + (v[p.id] || 0), up: vote(p.id), upP: String(!!v[p.id]), upC: v[p.id] ? '#0B5BC4' : '#6B7280', blur: p.spoiler ? 'blur(6px)' : 'none', comments: comments.filter(c => c.post === p.id).length + ' comments', open: () => this.setState({ view: 'post', postId: p.id, err: '' }) });
+    let list = posts.filter(p => !s.sub || p.sub === s.sub).sort((a, b) => s.sort === 'new' ? a.mins - b.mins : s.sort === 'top' ? (b.score + (v[b.id] || 0)) - (a.score + (v[a.id] || 0)) : (b.score / Math.pow(b.mins / 60 + 2, 1.3)) - (a.score / Math.pow(a.mins / 60 + 2, 1.3)));
+    const cur = posts.find(p => p.id === s.postId), name = s.guest.trim(), ini = n => n.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const chip = (sel) => ({ bd: sel ? '#ECE8DF' : '#333844', bg: sel ? '#ECE8DF' : 'transparent', fg: sel ? '#000000' : '#ECE8DF' });
+    return {
+      heroRef: this.heroRef,
+      nvBg: dk ? 'rgba(12,13,16,.45)' : 'rgba(255,255,255,.88)', nvBd: dk ? 'rgba(236,232,223,.12)' : 'rgba(18,20,24,.1)', nvFg: dk ? '#ECE8DF' : '#121418', nvMu: dk ? '#A7AAB2' : '#4B4F58', nvAct: dk ? 'rgba(236,232,223,.1)' : 'rgba(18,20,24,.06)', ctaBg: dk ? '#ECE8DF' : '#121418', ctaFg: dk ? '#000000' : '#FFFFFF',
+      threadCount: posts.length,
+      subChips: [null, ...this.SUBS].map(n => ({ name: n || 'All', ...chip(s.sub === n), pick: () => this.setState({ sub: n, view: 'feed' }) })),
+      sorts: [['hot', 'Hot'], ['new', 'New'], ['top', 'Top']].map(([k, label]) => ({ label, bg: s.sort === k ? '#121418' : 'transparent', fg: s.sort === k ? '#FFFFFF' : '#4B4F58', pick: () => this.setState({ sort: k }) })),
+      vFeed: s.view === 'feed', vPost: s.view === 'post' && !!cur, vCompose: s.view === 'compose',
+      feed: list.map(card), cp: cur ? card({ ...cur, spoiler: false }) : {},
+      comments: comments.filter(c => c.post === s.postId).map(c => ({ ...c, ago: this.ago(c.mins), ini: ini(c.author), indent: (c.depth || 0) * 28 + 'px' })),
+      back: () => this.setState({ view: 'feed', err: '' }), openCompose: () => this.setState({ view: 'compose', err: '', d: { ...s.d, sub: s.sub || s.d.sub } }),
+      guest: s.guest, onGuest: e => this.setState({ guest: e.target.value }), reply: s.reply, onReply: e => this.setState({ reply: e.target.value, err: '' }), err: s.err,
+      sendReply: () => { if (!name) return this.setState({ err: 'Add your name first.' }); if (s.reply.trim().length < 2) return this.setState({ err: 'Write something first.' }); this.persist({ comments: [...comments, { id: 'c' + Date.now(), post: s.postId, depth: 0, author: name, mins: 0, body: s.reply.trim() }], reply: '' }); },
+      subPick: this.SUBS.map(n => { const sel = s.d.sub === n; return { name: n, bd: sel ? '#121418' : '#D2D7DE', bg: sel ? '#121418' : '#FFFFFF', fg: sel ? '#FFFFFF' : '#121418', pick: () => this.setState({ d: { ...s.d, sub: n } }) }; }),
+      dTitle: s.d.title, dBody: s.d.body, onDTitle: e => this.setState({ d: { ...s.d, title: e.target.value }, err: '' }), onDBody: e => this.setState({ d: { ...s.d, body: e.target.value }, err: '' }),
+      submitPost: () => { if (!name) return this.setState({ err: 'Add your name first.' }); if (s.d.title.trim().length < 8) return this.setState({ err: 'Give it a clearer title.' }); if (s.d.body.trim().length < 20) return this.setState({ err: 'Add a little more detail.' }); const id = 'p' + Date.now(); this.persist({ posts: [{ id, sub: s.d.sub, author: name, mins: 0, title: s.d.title.trim(), body: s.d.body.trim(), score: 1, spoiler: false }, ...posts], view: 'post', postId: id, d: { sub: s.d.sub, title: '', body: '' } }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

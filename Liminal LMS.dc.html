@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Liminal Math — Learn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Caveat:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+button:focus-visible,a:focus-visible,input:focus-visible,svg:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+@keyframes lmDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+</style>
+</helmet>
+
+<div data-screen-label="LMS" style="min-height:{{ rootMinH }};display:flex;background:#FFFFFF">
+  <sc-if value="{{ showSide }}" hint-placeholder-val="{{ true }}">
+    <aside style="position:sticky;top:0;height:100vh;flex:0 0 248px;display:flex;flex-direction:column;background:#000000;border-right:1px solid #242831">
+      <div style="display:flex;align-items:center;gap:10px;height:64px;padding:0 20px">
+        <svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+        <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:#ECE8DF">LIMINAL MATH</span>
+      </div>
+      <nav aria-label="Learning" style="display:flex;flex-direction:column;gap:2px;padding:8px 12px">
+        <a href="Liminal App.dc.html" style="height:38px;padding:0 12px;border-radius:8px;display:flex;align-items:center;gap:12px;font-size:14.5px;font-weight:500;color:#A7AAB2" style-hover="background:rgba(236,232,223,.08);color:#ECE8DF"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="2">
+          <button type="button" onClick="{{ n.go }}" style="height:38px;padding:0 12px;border:0;border-radius:8px;background:{{ n.bg }};color:{{ n.fg }};display:flex;align-items:center;gap:12px;font-family:'Figtree',sans-serif;font-weight:{{ n.fw }};font-size:14.5px;cursor:pointer;text-align:left" style-hover="background:rgba(236,232,223,.08)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"></path></svg>{{ n.label }}</button>
+        </sc-for>
+        <a href="Liminal App.dc.html" style="height:38px;padding:0 12px;border-radius:8px;display:flex;align-items:center;gap:12px;font-size:14.5px;font-weight:500;color:#A7AAB2" style-hover="background:rgba(236,232,223,.08);color:#ECE8DF"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16v14H4z M8 3v5 M16 3v5 M4 11h16"></path></svg>Problem of the Day</a>
+        <a href="Liminal App.dc.html" style="height:38px;padding:0 12px;border-radius:8px;display:flex;align-items:center;gap:12px;font-size:14.5px;font-weight:500;color:#A7AAB2" style-hover="background:rgba(236,232,223,.08);color:#ECE8DF"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"></path></svg>Community</a>
+      </nav>
+      <div style="margin-top:auto;border-top:1px solid #242831;padding:16px 20px;display:flex;align-items:center;gap:10px">
+        <span style="width:34px;height:34px;border-radius:999px;background:#ECE8DF;color:#000000;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:12px">AM</span>
+        <span style="display:flex;flex-direction:column;line-height:1.3"><b style="font-weight:600;font-size:14px;color:#ECE8DF">Aarav Mehta</b><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#7E828C">RMO TRACK · CLASS 11</span></span>
+      </div>
+    </aside>
+  </sc-if>
+
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <sc-if value="{{ showHead }}" hint-placeholder-val="{{ true }}">
+      <header style="position:{{ headPos }};top:0;z-index:5;height:{{ headH }};display:flex;align-items:center;gap:12px;padding:{{ headPad }};background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:{{ headBd }}">
+        <sc-for list="{{ crumbs }}" as="cr" hint-placeholder-count="1"><button type="button" onClick="{{ cr.go }}" style="border:0;background:none;padding:0;font-family:'Figtree',sans-serif;font-weight:{{ cr.fw }};font-size:15px;color:{{ cr.fg }};cursor:pointer">{{ cr.label }}</button><span style="display:{{ cr.sep }};color:#B9C3D0">›</span></sc-for>
+      </header>
+    </sc-if>
+
+    <div style="flex:1;width:100%;max-width:1100px;padding:{{ mainPad }}">
+      <sc-if value="{{ pgTrack }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+            <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="30" height="29" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg></span>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em">Your RMO track</h1><span style="font-size:15px;color:#A7AAB2">Three stages from qualifier to national. Each unit is drawn from a topic course.</span></div>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">RMO · 14 WEEKS LEFT</span>
+            <button type="button" onClick="{{ continueNext }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer" style-hover="background:#1766D1">Continue: {{ nextTitle }} →</button>
+          </div>
+          <sc-for list="{{ stages }}" as="st" hint-placeholder-count="3">
+            <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:22px;opacity:{{ st.op }}">
+              <div style="display:flex;align-items:flex-start;gap:18px">
+                <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#F6F7F9;display:flex;align-items:center;justify-content:center;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px"><span>{{ st.n }}<span style="color:#8A8F99">/3</span></span></span>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-top:4px"><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.015em">{{ st.name }}</h2><p style="margin:0;font-size:16px;line-height:1.55;color:#4B4F58;max-width:62ch">{{ st.desc }}</p></div>
+                <button type="button" onClick="{{ st.toggle }}" aria-expanded="{{ st.openStr }}" aria-label="Toggle units" style="width:40px;height:40px;border:0;border-radius:10px;background:transparent;display:grid;place-items:center;cursor:pointer;color:#4B4F58" style-hover="background:#F6F7F9"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="transform:rotate({{ st.rot }});transition:transform 200ms cubic-bezier(.2,0,0,1)"><path d="m6 15 6-6 6 6"></path></svg></button>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px">
+                <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px;font-weight:500">{{ st.pct }} done</span><span style="font-size:15px;color:#6B7280">{{ st.weeks }}</span></div><span style="display:block;height:6px;border-radius:999px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ st.pct }};background:#127A50;border-radius:999px"></i></span></div>
+                <button type="button" onClick="{{ st.cta }}" disabled="{{ st.locked }}" style="height:50px;padding:0 28px;border-radius:999px;border:0;background:{{ st.ctaBg }};color:{{ st.ctaFg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:{{ st.cur }}">{{ st.ctaLabel }}</button>
+              </div>
+              <sc-if value="{{ st.open }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ st.units }}" as="u" hint-placeholder-count="5">
+                    <button type="button" onClick="{{ u.go }}" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:10px 16px 10px 10px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 6px 18px rgba(18,20,24,.05)">
+                      <span style="width:50px;height:50px;flex:0 0 50px;border-radius:10px;background:{{ u.tileBg }};color:{{ u.tileFg }};display:grid;place-items:center;font-size:17px;font-weight:500">{{ u.n }}</span>
+                      <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:500;color:#121418">{{ u.title }}</span><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.12em;color:#6B7280">{{ u.from }}</span></span>
+                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="{{ u.icFill }}" stroke="{{ u.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ u.icDash }}"></circle><circle cx="12" cy="12" r="10" fill="none" stroke="#127A50" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="{{ u.arc }}" transform="rotate(-90 12 12)"></circle><path d="M7.6 12.3l3 3 5.8-6.1" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ u.tick }}"></path></svg>
+                      <span style="font-size:15px;color:#4B4F58;white-space:nowrap;min-width:78px">{{ u.count }}</span>
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><path d="{{ u.endIcon }}"></path></svg>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </section>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pgLearn }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+            <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#ECE8DF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z M20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"></path></svg></span>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em">Topic courses</h1><span style="font-size:15px;color:#A7AAB2">Four courses, one per olympiad category. Your track borrows units from each.</span></div>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">{{ lessonTotals }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px">
+            <sc-for list="{{ courses }}" as="c" hint-placeholder-count="4">
+              <button type="button" onClick="{{ c.go }}" style="display:flex;flex-direction:column;gap:18px;padding:24px;border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;transition:border-color 120ms,box-shadow 200ms" style-hover="border-color:#B9C3D0;box-shadow:0 10px 28px rgba(18,20,24,.06)">
+                <span style="display:flex;align-items:center;gap:12px"><span style="width:48px;height:48px;border-radius:12px;background:#F6F7F9;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="24" height="23" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ c.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ c.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ c.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ c.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ c.f4 }}"></path></svg></span><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#6B7280">{{ c.code }} · {{ c.units }}</span></span>
+                <span style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;letter-spacing:-.015em;color:#121418">{{ c.name }}</span><span style="font-size:15px;line-height:1.55;color:#4B4F58">{{ c.desc }}</span></span>
+                <span style="display:flex;flex-direction:column;gap:8px"><span style="display:flex;justify-content:space-between;font-size:15px"><span style="font-weight:500;color:#121418">{{ c.pct }} done</span><span style="color:#6B7280">{{ c.lessons }}</span></span><span style="display:block;height:6px;border-radius:999px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ c.pct }};background:#127A50;border-radius:999px"></i></span></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pgCourse }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+              <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+              <span aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.04) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)"></span>
+            <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="30" height="29" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ cur.f0 }}"></path><path d="M78 2L2 88L55 60Z" fill="{{ cur.f1 }}"></path><path d="M2 88L55 60L99 125Z" fill="{{ cur.f2 }}"></path><path d="M93 74L129 69L98 108Z" fill="{{ cur.f3 }}"></path><path d="M129 69L99 125L98 108Z" fill="{{ cur.f4 }}"></path></svg></span>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em">{{ cur.name }}</h1><span style="font-size:15px;color:#A7AAB2">{{ cur.desc }}</span></div>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">{{ cur.pct }} DONE · {{ cur.lessons }}</span>
+          </div>
+          <sc-for list="{{ cur.unitCards }}" as="uc" hint-placeholder-count="3">
+            <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:18px">
+              <div style="display:flex;align-items:center;gap:18px">
+                <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#F6F7F9;display:flex;align-items:center;justify-content:center;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px"><span>{{ uc.n }}<span style="color:#8A8F99">/{{ uc.of }}</span></span></span>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-.015em">{{ uc.title }}</h2><span style="font-size:15px;color:#6B7280;white-space:nowrap">{{ uc.pct }} done</span></div><span style="display:block;height:6px;border-radius:999px;background:#EEF1F4;overflow:hidden"><i style="display:block;height:100%;width:{{ uc.pct }};background:#127A50;border-radius:999px"></i></span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ uc.rows }}" as="lr" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ lr.go }}" style="display:flex;align-items:center;gap:16px;min-height:64px;padding:8px 16px 8px 8px;border:1px solid #E2E5EA;border-radius:12px;background:#FFFFFF;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif" style-hover="border-color:#B9C3D0">
+                    <span style="width:44px;height:44px;flex:0 0 44px;border-radius:10px;background:{{ lr.tileBg }};color:{{ lr.tileFg }};display:grid;place-items:center;font-size:16px;font-weight:500">{{ lr.n }}</span>
+                    <span style="flex:1;min-width:0;font-size:16px;font-weight:500;color:#121418">{{ lr.title }}</span>
+                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="{{ lr.icFill }}" stroke="{{ lr.icStroke }}" stroke-width="1.8" stroke-dasharray="{{ lr.icDash }}"></circle><path d="M7.6 12.3l3 3 5.8-6.1" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ lr.tick }}"></path></svg>
+                    <span style="font-size:14px;color:#4B4F58;white-space:nowrap;min-width:56px">{{ lr.mins }}</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"><path d="m9 6 6 6-6 6"></path></svg>
+                  </button>
+                </sc-for>
+              </div>
+            </section>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pgLive }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px;padding:clamp(24px,3vw,34px) clamp(22px,3vw,30px);border-radius:20px;background:#000000;color:#ECE8DF">
+            <canvas ref="{{ bannerMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block"></canvas>
+            <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:rgba(236,232,223,.06);border:1px solid #333844;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#ECE8DF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-.02em;color:#ECE8DF">Live classes</h1><span style="font-size:15px;color:#A7AAB2">Small groups with a mentor, twice a week. Every class is recorded.</span></div>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C">NEXT CLASS IN {{ nextIn }}</span>
+            <button type="button" onClick="{{ joinNext }}" style="height:40px;padding:0 18px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;cursor:pointer" style-hover="background:#1766D1">{{ joinLabel }}</button>
+          </div>
+          <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:flex-start;gap:18px">
+              <span style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#121418;color:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1"><span style="font-family:'CM Typewriter',monospace;font-size:10px;letter-spacing:.12em;color:#A7AAB2">{{ up.dow }}</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px">{{ up.day }}</span></span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-top:2px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">UP NEXT · {{ up.time }}</span><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.015em">{{ up.title }}</h2><p style="margin:0;font-size:16px;color:#4B4F58">{{ up.desc }}</p></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-top:16px;border-top:1px solid #EEF1F4">
+              <span style="font-size:14px;color:#4B4F58">Mentor <b style="font-weight:600;color:#121418">{{ up.mentor }}</b></span>
+              <span style="font-size:14px;color:#4B4F58">{{ up.len }}</span>
+              <span style="font-size:14px;color:#4B4F58">{{ up.seats }}</span>
+              <button type="button" onClick="{{ toggleRemind }}" style="margin-left:auto;height:46px;padding:0 22px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418;cursor:pointer">{{ remindLabel }}</button>
+              <button type="button" onClick="{{ joinNext }}" style="height:46px;padding:0 24px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Join class</button>
+            </div>
+          </section>
+          <section style="border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px">This week</h2><span style="font-size:14px;color:#6B7280">RMO cohort B</span></div>
+            <sc-for list="{{ week }}" as="wk" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:16px;min-height:68px;padding:8px 16px 8px 8px;border:1px solid #E2E5EA;border-radius:12px">
+                <span style="width:50px;height:50px;flex:0 0 50px;border-radius:10px;background:#F6F7F9;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1"><span style="font-family:'CM Typewriter',monospace;font-size:9.5px;letter-spacing:.1em;color:#6B7280">{{ wk.dow }}</span><span style="font-size:17px;font-weight:600">{{ wk.day }}</span></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:500">{{ wk.title }}</span><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#6B7280">{{ wk.meta }}</span></span>
+                <span style="height:26px;padding:0 10px;border-radius:999px;border:1px solid {{ wk.bd }};color:{{ wk.fg }};display:flex;align-items:center;font-size:12.5px;font-weight:600;white-space:nowrap">{{ wk.status }}</span>
+              </div>
+            </sc-for>
+          </section>
+          <section style="display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px">Recordings</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px">
+              <sc-for list="{{ recs }}" as="rc" hint-placeholder-count="3">
+                <button type="button" onClick="{{ rc.play }}" style="display:flex;flex-direction:column;border:1px solid #E2E5EA;border-radius:20px;background:#FFFFFF;overflow:hidden;cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;padding:0" style-hover="border-color:#B9C3D0">
+                  <span style="position:relative;display:grid;place-items:center;height:132px;background:#000000;background-image:linear-gradient(rgba(236,232,223,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.06) 1px,transparent 1px);background-size:20px 20px"><span style="width:44px;height:44px;border-radius:999px;background:#ECE8DF;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5l11 7-11 7z" fill="#000000"></path></svg></span><span style="position:absolute;right:10px;bottom:10px;font-family:'CM Typewriter',monospace;font-size:10.5px;color:#ECE8DF">{{ rc.len }}</span></span>
+                  <span style="display:flex;flex-direction:column;gap:4px;padding:14px 16px"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.1em;color:#6B7280">{{ rc.meta }}</span><span style="font-size:15.5px;font-weight:600;color:#121418">{{ rc.title }}</span></span>
+                </button>
+              </sc-for>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pgLesson }}" hint-placeholder-val="{{ false }}">
+        <div style="min-height:{{ rootMinH }};display:flex;flex-direction:column;border-radius:{{ lessonRad }};overflow:hidden;border:{{ lessonBd }}">
+          <header style="position:sticky;top:{{ lessonTop }};z-index:5;display:flex;align-items:center;gap:16px;height:64px;padding:0 clamp(16px,3vw,32px);background:#000000;color:#ECE8DF;border-bottom:1px solid #242831">
+            <button type="button" onClick="{{ exitLesson }}" aria-label="Exit lesson" style="width:40px;height:40px;border:1px solid #333844;border-radius:999px;background:transparent;display:grid;place-items:center;cursor:pointer;font-size:18px;color:#ECE8DF">×</button>
+            <div style="display:flex;flex-direction:column;line-height:1.25;min-width:0"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.12em;color:#7E828C">GEOMETRY · ANGLES IN CIRCLES · LESSON 1</span><b style="font-weight:600;font-size:15px">Thales’ theorem</b></div>
+            <div style="flex:1;display:flex;gap:6px;max-width:420px;margin-left:auto">
+              <sc-for list="{{ stepBars }}" as="sb" hint-placeholder-count="5"><span style="flex:1;height:6px;border-radius:999px;background:{{ sb.bg }};transition:background 300ms"></span></sc-for>
+            </div>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#7E828C;white-space:nowrap">{{ stepLabel }}</span>
+          </header>
+          <div style="flex:1;display:grid;grid-template-columns:{{ lessonCols }};gap:clamp(20px,3vw,40px);padding:clamp(20px,3vw,40px) clamp(16px,3vw,40px);max-width:1280px;width:100%;margin:0 auto">
+            <nav aria-label="Steps" style="display:{{ railD }};flex-direction:column;gap:4px">
+              <sc-for list="{{ stepRail }}" as="sr" hint-placeholder-count="5"><button type="button" onClick="{{ sr.go }}" disabled="{{ sr.dis }}" style="display:flex;align-items:center;gap:10px;height:44px;padding:0 10px;border:0;border-radius:10px;background:{{ sr.bg }};cursor:{{ sr.cur }};font-family:'Figtree',sans-serif;text-align:left;opacity:{{ sr.op }}"><span style="width:24px;height:24px;flex:0 0 24px;border-radius:50%;display:grid;place-items:center;background:{{ sr.dot }};border:1.5px solid {{ sr.dotBd }};font-family:'CM Typewriter',monospace;font-size:10.5px;color:{{ sr.num }}">{{ sr.mark }}</span><span style="font-size:14px;font-weight:{{ sr.fw }};color:#121418">{{ sr.t }}</span></button></sc-for>
+            </nav>
+            <section style="min-width:0;display:flex;flex-direction:column;gap:22px">
+              <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">{{ stepNum }}</span> — {{ stepKind }}</p>
+              <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(30px,3.4vw,44px);line-height:1.05;letter-spacing:-.025em">{{ stepTitle }}</h1>
+              <div data-tex="{{ stepText }}" style="font-size:18px;line-height:1.65;color:#121418;max-width:62ch"></div>
+
+              <sc-if value="{{ showFig }}" hint-placeholder-val="{{ true }}">
+                <figure style="margin:0;border:1px solid #E2E5EA;border-radius:20px;background-color:#FFFFFF;background-image:linear-gradient(#F1F3F6 1px,transparent 1px),linear-gradient(90deg,#F1F3F6 1px,transparent 1px);background-size:24px 24px;overflow:hidden">
+                  <svg viewBox="0 0 520 400" tabindex="0" role="img" aria-label="Circle with diameter AB and a point P on the circle" onPointerDown="{{ tDown }}" onPointerMove="{{ tMove }}" onPointerUp="{{ tUp }}" onKeyDown="{{ tKey }}" style="width:100%;height:auto;display:block;touch-action:none;cursor:{{ figCursor }}">
+                    <circle cx="260" cy="210" r="150" fill="none" stroke="#121418" stroke-width="1.8"></circle>
+                    <line x1="110" y1="210" x2="410" y2="210" stroke="#121418" stroke-width="1.8" stroke-linecap="round"></line>
+                    <g style="opacity:{{ pOp }};transition:opacity 300ms">
+                      <line x1="110" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#0B5BC4" stroke-width="2.2" stroke-linecap="round"></line>
+                      <line x1="410" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#0B5BC4" stroke-width="2.2" stroke-linecap="round"></line>
+                      <path d="{{ rightMark }}" fill="none" stroke="#127A50" stroke-width="1.8" stroke-linejoin="round" style="opacity:{{ markOp }}"></path>
+                    </g>
+                    <g style="opacity:{{ proofOp }};transition:opacity 400ms">
+                      <line x1="260" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#9A6B12" stroke-width="1.8" stroke-dasharray="6 5" stroke-linecap="round"></line>
+                      <path d="{{ arcA }}" fill="none" stroke="#C23B56" stroke-width="1.8"></path>
+                      <path d="{{ arcPA }}" fill="none" stroke="#C23B56" stroke-width="1.8"></path>
+                      <path d="{{ arcB }}" fill="none" stroke="#127A50" stroke-width="1.8"></path>
+                      <path d="{{ arcPB }}" fill="none" stroke="#127A50" stroke-width="1.8"></path>
+                      <text x="{{ laX }}" y="{{ laY }}" style="font-family:'CM Roman',serif;font-style:italic;font-size:18px" fill="#C23B56">α</text>
+                      <text x="{{ lbX }}" y="{{ lbY }}" style="font-family:'CM Roman',serif;font-style:italic;font-size:18px" fill="#127A50">β</text>
+                    </g>
+                    <circle cx="260" cy="210" r="3.5" fill="#121418"></circle><circle cx="110" cy="210" r="4" fill="#121418"></circle><circle cx="410" cy="210" r="4" fill="#121418"></circle>
+                    <text x="90" y="238" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#121418">A</text>
+                    <text x="418" y="238" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#121418">B</text>
+                    <text x="252" y="238" style="font-family:'CM Roman',serif;font-style:italic;font-size:20px" fill="#4B4F58">O</text>
+                    <g style="opacity:{{ pOp }};transition:opacity 300ms">
+                      <text x="{{ plx }}" y="{{ ply }}" text-anchor="middle" dominant-baseline="middle" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#0B5BC4">P</text>
+                      <circle cx="{{ px }}" cy="{{ py }}" r="20" fill="#0B5BC4" fill-opacity="{{ haloOp }}"></circle>
+                      <circle cx="{{ px }}" cy="{{ py }}" r="7" fill="#FFFFFF" stroke="#0B5BC4" stroke-width="2.4"></circle>
+                    </g>
+                  </svg>
+                  <figcaption style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid #E2E5EA;background:#FFFFFF"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">{{ figCap }}</span><span style="font-family:'CM Roman',serif;font-size:18px;display:{{ angleD }}">∠<i>APB</i> = {{ angle }}°</span></figcaption>
+                </figure>
+              </sc-if>
+
+              <sc-if value="{{ showQuiz }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px">
+                  <sc-for list="{{ quizOpts }}" as="qo" hint-placeholder-count="4"><button type="button" onClick="{{ qo.pick }}" style="display:flex;align-items:center;gap:12px;min-height:60px;padding:12px 16px;border:1.5px solid {{ qo.bd }};border-radius:12px;background:{{ qo.bg }};cursor:pointer;text-align:left;font-family:'Figtree',sans-serif;font-size:16px;font-weight:500;color:#121418;transition:border-color 150ms,background 150ms"><span style="font-family:'CM Typewriter',monospace;font-size:11px;color:#6B7280">{{ qo.k }}</span><span data-tex="{{ qo.t }}"></span></button></sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showNum }}" hint-placeholder-val="{{ false }}">
+                <form onSubmit="{{ checkNum }}" novalidate="" style="display:flex;gap:10px;max-width:420px">
+                  <input value="{{ numVal }}" onChange="{{ onNum }}" inputmode="numeric" placeholder="Length of AB" style="flex:1;min-width:0;height:52px;padding:0 16px;border-radius:12px;border:1.5px solid {{ numBd }};font-family:'CM Roman',serif;font-size:20px;outline:none">
+                  <button type="submit" style="height:52px;padding:0 24px;border-radius:999px;border:0;background:#121418;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Check</button>
+                </form>
+              </sc-if>
+
+              <sc-if value="{{ fbShow }}" hint-placeholder-val="{{ false }}">
+                <div aria-live="polite" style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:12px;background:{{ fbBg }};border:1px solid {{ fbBd }}">
+                  <svg viewBox="0 0 28 22" width="26" height="20" style="flex:0 0 26px;margin-top:2px"><path pathLength="1" d="{{ fbPath }}" fill="none" stroke="{{ fbCol }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1 1;animation:lmDraw 320ms cubic-bezier(.65,0,.35,1) both"></path></svg>
+                  <div data-tex="{{ fbText }}" style="font-size:15.5px;line-height:1.6;color:#121418"></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showDone }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:28px;border-radius:20px;background:#000000;color:#ECE8DF">
+                  <svg viewBox="0 0 133 128" width="44" height="42" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+                  <span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:32px;letter-spacing:-.02em;line-height:1">Lesson complete<em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">.</em></span>
+                  <span style="font-size:15px;color:#A7AAB2;max-width:48ch">You found Thales’ theorem by moving it, then proved it. Next up: the inscribed angle theorem, which contains this one as a special case.</span>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" onClick="{{ exitLesson }}" style="height:46px;padding:0 22px;border-radius:999px;border:0;background:#ECE8DF;color:#000000;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Back to your track</button><button type="button" onClick="{{ restart }}" style="height:46px;padding:0 22px;border-radius:999px;border:1px solid #333844;background:transparent;color:#ECE8DF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer">Replay lesson</button></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:12px;padding-top:8px;border-top:1px solid #E2E5EA">
+                  <button type="button" onClick="{{ prevStep }}" disabled="{{ atStart }}" style="height:48px;padding:0 20px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418;cursor:pointer;opacity:{{ prevOp }}">Back</button>
+                  <span style="font-size:14px;color:#6B7280">{{ gateNote }}</span>
+                  <button type="button" onClick="{{ nextStep }}" disabled="{{ locked }}" style="margin-left:auto;height:48px;padding:0 26px;border-radius:999px;border:0;background:{{ nextBg }};color:{{ nextFg }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:{{ nextCur }};transition:background 200ms">{{ nextLabel }}</button>
+                </div>
+              </sc-if>
+            </section>
+            <aside style="display:{{ notesD }};flex-direction:column;gap:14px">
+              <div style="border:1px solid #E2E5EA;border-radius:20px;padding:18px;background:#FFFFFF;display:flex;flex-direction:column;gap:10px">
+                <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">NOTE</span>
+                <div data-tex="{{ noteText }}" style="font-size:14.5px;line-height:1.6;color:#4B4F58"></div>
+              </div>
+              <div style="border:1px solid #E2E5EA;border-radius:20px;padding:18px;background:#FFFFFF;display:flex;flex-direction:column;gap:8px">
+                <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">PEN COLOURS</span>
+                <span style="display:flex;align-items:center;gap:8px;font-size:13.5px"><i style="width:10px;height:10px;border-radius:50%;background:#0B5BC4"></i>The claim</span>
+                <span style="display:flex;align-items:center;gap:8px;font-size:13.5px"><i style="width:10px;height:10px;border-radius:50%;background:#9A6B12"></i>Equal lengths</span>
+                <span style="display:flex;align-items:center;gap:8px;font-size:13.5px"><i style="width:10px;height:10px;border-radius:50%;background:#C23B56"></i>First angle family</span>
+                <span style="display:flex;align-items:center;gap:8px;font-size:13.5px"><i style="width:10px;height:10px;border-radius:50%;background:#127A50"></i>Second angle family</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+</div>
+
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:80;padding:12px 18px;border-radius:999px;background:#121418;color:#FFFFFF;font-size:14px;font-weight:500;box-shadow:0 12px 32px rgba(0,0,0,.2)">{{ toast }}</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  MARK = ['#4ECCFC', '#00A8FC', '#0666D8', '#2A4EAE', '#0666D8'];
+  COURSES = [
+    { id: 'ALG', k: 0, name: 'Algebra', desc: 'Inequalities, polynomials and functional equations.', units: [['Inequalities', [['AM–GM', 10, 'done'], ['Cauchy–Schwarz', 12, 'done'], ['Rearrangement', 12]]], ['Polynomials', [['Vieta’s formulas', 10], ['Roots and factors', 12], ['Integer polynomials', 14]]], ['Functional equations', [['Substitutions', 10], ['Cauchy’s equation', 14], ['Injectivity and surjectivity', 14]]]] },
+    { id: 'COMB', k: 1, name: 'Combinatorics', desc: 'Counting, invariants, graphs and games.', units: [['Counting', [['Permutations', 8, 'done'], ['Binomial coefficients', 10, 'done'], ['Bijections', 12, 'done']]], ['Pigeonhole', [['The basic principle', 8, 'done'], ['Clever boxes', 12]]], ['Invariants', [['Parity', 10], ['Colourings', 12], ['Monovariants', 14]]]] },
+    { id: 'GEO', k: 2, name: 'Geometry', desc: 'Synthetic, coordinate and projective geometry.', units: [['Angles in circles', [['Thales’ theorem', 8, 'play'], ['Inscribed angle theorem', 10], ['Cyclic quadrilaterals', 12]]], ['Similar triangles', [['AA similarity', 10, 'done'], ['Ratios in triangles', 12, 'done'], ['Angle bisector theorem', 10]]], ['Power of a point', [['Intersecting chords', 10], ['Tangent–secant', 12], ['Radical axis', 14]]]] },
+    { id: 'NT', k: 3, name: 'Number theory', desc: 'Divisibility, congruences and Diophantine equations.', units: [['Divisibility', [['Primes and factors', 8, 'done'], ['gcd and Euclid', 10, 'done']]], ['Modular arithmetic', [['Congruences', 10, 'done'], ['Fermat’s little theorem', 12], ['Orders', 14]]], ['Diophantine equations', [['Linear equations', 10], ['Factoring tricks', 12], ['Bounding', 12]]]] }
+  ];
+  STAGES = [
+    { name: 'IOQM', desc: 'Indian Olympiad Qualifier in Mathematics. Speed and breadth on short-answer problems.', weeks: 'Completed', units: [['COMB', 0], ['NT', 0], ['ALG', 0], ['GEO', 1]], done: true },
+    { name: 'RMO', desc: 'Regional Mathematical Olympiad. Six problems, full written proofs.', weeks: '14 weeks left', units: [['GEO', 0], ['NT', 1], ['COMB', 1], ['ALG', 1], ['COMB', 2], ['GEO', 2]] },
+    { name: 'INMO', desc: 'Indian National Mathematical Olympiad. Unlocks when you finish the RMO stage.', weeks: 'Unlocks after RMO', units: [['ALG', 2], ['NT', 2], ['GEO', 2]], locked: true }
+  ];
+  STEPS = [
+    { kind: 'Meet the figure', title: 'A circle and its diameter', text: String.raw`Here is a circle with centre $O$. The segment $AB$ passes through $O$, so it is a diameter. We’re going to add one more point and watch what happens.`, note: String.raw`A diameter is a chord through the centre. Its length is twice the radius.`, fig: 'base' },
+    { kind: 'Move it', title: 'Drag P around the circle', text: String.raw`Drag $P$ anywhere on the circle, or focus the figure and use the arrow keys. Keep an eye on $\angle APB$.`, note: String.raw`You can’t break the figure. $P$ always stays on the circle.`, fig: 'drag', gate: 'drag' },
+    { kind: 'Quick check', title: 'What did you notice?', text: String.raw`If $AB$ is a diameter and $P$ is any other point on the circle, then $\angle APB$ is always…`, note: String.raw`Trust what you saw, then we’ll prove it.`, fig: 'none', gate: 'quiz' },
+    { kind: 'Why it’s true', title: 'Two isosceles triangles', text: String.raw`Join $O$ to $P$. Then $OA = OP = OB$, since all three are radii. So $\triangle OAP$ and $\triangle OBP$ are isosceles, with base angles $\alpha$ and $\beta$. The angles of $\triangle APB$ add up to $180^\circ$, so $2\alpha + 2\beta = 180^\circ$, which gives $\alpha + \beta = 90^\circ$. And $\angle APB = \alpha + \beta$.`, note: String.raw`Equal radii are the whole trick. Look for them in every circle problem.`, fig: 'proof' },
+    { kind: 'Your turn', title: 'Use it once', text: String.raw`Triangle $ABC$ is inscribed in a circle with $AB$ as a diameter. If $AC = 6$ and $BC = 8$, how long is $AB$?`, note: String.raw`Which angle of the triangle does Thales hand you for free?`, fig: 'none', gate: 'num' }
+  ];
+  ICON = { track: 'M4 19h4v-6h4V8h4V4h4', learn: 'M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z M20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z' };
+  state = { remind: false, now: Date.now(), page: 'track', course: 'GEO', step: 0, maxStep: 0, theta: -2.1, dragged: false, quiz: null, num: '', numFb: null, done: false, open: { 1: true }, mob: false, toast: '', played: false };
+
+  initMesh(cv) {
+    const ctx = cv.getContext('2d'), sec = cv.parentElement, SKY = '76,152,240', CHK = '236,232,223';
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0, dpr = 1, pts = [], stars = [], mouse = null, raf = 0, last = performance.now(), visible = true, mk = [], mT = [], mprog = 0;
+    const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const MV = [[78, 2], [93, 74], [99, 125], [55, 60], [2, 88], [129, 69], [98, 108]];
+    const MF = [[[0, 1, 2, 3], '78,204,252'], [[0, 4, 3], '0,168,252'], [[4, 3, 2], '6,102,216'], [[1, 5, 6], '42,78,174'], [[5, 2, 6], '6,102,216']];
+    const ME = []; MF.forEach(([f]) => f.forEach((a, i) => { const b = f[(i + 1) % f.length], k = a < b ? a + '-' + b : b + '-' + a; if (!ME.some(e => e[2] === k)) ME.push([a, b, k]); }));
+    const targets = () => {
+      const an = sec.querySelector('[data-mark-anchor]'); if (!an) return [];
+      const cr = cv.getBoundingClientRect(), ar = an.getBoundingClientRect(), sc = ar.width / 133, ox = ar.left - cr.left, oy = ar.top - cr.top;
+      const V = MV.map(([x, y]) => [ox + x * sc, oy + y * sc]), T = V.map(v => ({ x: v[0], y: v[1], v: 1 }));
+      ME.forEach(([a, b]) => { const L = Math.hypot(V[b][0] - V[a][0], V[b][1] - V[a][1]), n = Math.floor(L / 14); for (let j = 1; j < n; j++) T.push({ x: V[a][0] + (V[b][0] - V[a][0]) * j / n, y: V[a][1] + (V[b][1] - V[a][1]) * j / n, v: 0 }); });
+      return T;
+    };
+    const resize = () => {
+      const r = cv.getBoundingClientRect(); if (!r.width) return; dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      const rr = rng(17), n = Math.max(H < 320 ? 16 : 30, Math.min(90, Math.round(W * H / 16000)));
+      pts = []; for (let i = 0; i < n; i++) pts.push({ x: rr() * W, y: rr() * H, vx: (rr() - .5) * .12, vy: (rr() - .5) * .12, s: rr() > .82 });
+      stars = []; for (let i = 0; i < Math.round(W * H / 1800); i++) stars.push([rr() * W, rr() * H, rr()]);
+      mT = targets(); if (mk.length !== mT.length) { const r2 = rng(29); mk = mT.map(() => ({ fx: r2() * W, fy: r2() * H, vx: (r2() - .5) * .12, vy: (r2() - .5) * .12 })); }
+      draw(0);
+    };
+    const wrap = p => { if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20; if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20; };
+    const draw = dt => {
+      if (!W) return;
+      for (const p of pts) { p.x += p.vx * dt * .06; p.y += p.vy * dt * .06; wrap(p); }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      for (const [x, y, z] of stars) { ctx.fillStyle = z > .9 ? `rgba(${SKY},${(.25 + z * .35).toFixed(2)})` : `rgba(${CHK},${(.05 + z * .2).toFixed(2)})`; ctx.fillRect(x, y, z > .96 ? 1.6 : 1, z > .96 ? 1.6 : 1); }
+      ctx.lineWidth = 1;
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 140) { ctx.strokeStyle = `rgba(${SKY},${((1 - d / 140) * .3).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); } }
+      if (mouse) for (const p of pts) { const d = Math.hypot(p.x - mouse[0], p.y - mouse[1]); if (d < 190) { ctx.strokeStyle = `rgba(${CHK},${((1 - d / 190) * .45).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse[0], mouse[1]); ctx.stroke(); } }
+      if (mT.length) {
+        mprog = reduce ? 1 : Math.min(1, mprog + dt / 2800); const e = 1 - Math.pow(1 - mprog, 3);
+        for (const p of mk) { p.fx += p.vx * dt * .06; p.fy += p.vy * dt * .06; }
+        const P = mk.map((p, i) => [p.fx + (mT[i].x - p.fx) * e, p.fy + (mT[i].y - p.fy) * e]);
+        const fa = Math.max(0, (e - .75) / .25), ea = Math.max(0, (e - .35) / .65);
+        if (fa > 0) MF.forEach(([f, c]) => { ctx.fillStyle = `rgba(${c},${(fa * .92).toFixed(3)})`; ctx.beginPath(); f.forEach((vi, j) => j ? ctx.lineTo(P[vi][0], P[vi][1]) : ctx.moveTo(P[vi][0], P[vi][1])); ctx.closePath(); ctx.fill(); });
+        if (ea > 0) { ctx.strokeStyle = `rgba(${CHK},${(ea * .7).toFixed(3)})`; ctx.lineWidth = 1.2; ctx.beginPath(); ME.forEach(([a, b]) => { ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); }); ctx.stroke(); }
+        P.forEach((q, i) => { const v = mT[i].v; ctx.fillStyle = v ? `rgba(${SKY},.95)` : `rgba(${CHK},${(.6 * (1 - fa * .7)).toFixed(3)})`; ctx.beginPath(); ctx.arc(q[0], q[1], v ? 2.6 : 1.4, 0, 7); ctx.fill(); });
+      }
+      for (const p of pts) { ctx.fillStyle = p.s ? `rgba(${SKY},.95)` : `rgba(${CHK},.55)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.s ? 2.1 : 1.4, 0, 7); ctx.fill(); }
+    };
+    const loop = now => { raf = 0; if (!cv.isConnected || !visible) return; const dt = Math.min(64, now - last); last = now; draw(dt); raf = requestAnimationFrame(loop); };
+    const kick = () => { if (!raf && visible && !reduce) { last = performance.now(); raf = requestAnimationFrame(loop); } };
+    const mm = e => { const r = cv.getBoundingClientRect(); mouse = [e.clientX - r.left, e.clientY - r.top]; if (reduce) draw(0); };
+    const ml = () => { mouse = null; };
+    sec.addEventListener('mousemove', mm); sec.addEventListener('mouseleave', ml);
+    const ro = new ResizeObserver(resize); ro.observe(cv); resize(); setTimeout(resize, 80); setTimeout(resize, 600);
+    const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (!W) resize(); kick(); }); io.observe(cv);
+    kick();
+    return { stop: () => { cancelAnimationFrame(raf); raf = 0; visible = false; ro.disconnect(); io.disconnect(); sec.removeEventListener('mousemove', mm); sec.removeEventListener('mouseleave', ml); } };
+  }
+  bannerMeshRef = el => { if (el && el !== this._bcv) { this._bmesh && this._bmesh.stop(); this._bcv = el; this._bmesh = this.initMesh(el); } };
+  componentDidMount() {
+    if (this.props.startPage) this.setState({ page: this.props.startPage });
+    this.onResize = () => { const mob = innerWidth < 900; if (mob !== this.state.mob) this.setState({ mob }); };
+    addEventListener('resize', this.onResize); this.onResize();
+    try { if (localStorage.getItem('liminal-lms-thales') === 'done') this.setState({ played: true }); } catch (e) {}
+    this.clk = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.tt = setInterval(() => { this.typeset(); if (window.katex) clearInterval(this.tt); }, 300);
+  }
+  componentDidUpdate(pp) { this.typeset(); if (pp && pp.startPage !== this.props.startPage && this.props.startPage) this.setState({ page: this.props.startPage }); }
+  componentWillUnmount() { clearInterval(this.clk); removeEventListener('resize', this.onResize); clearInterval(this.tt); clearTimeout(this.toastT); }
+  tex(str) {
+    const k = window.katex, esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    return String(str || '').split(/(\$[^$]+\$)/g).map(part => (k && /^\$[^$]+\$$/.test(part)) ? k.renderToString(part.slice(1, -1), { throwOnError: false }) : esc(part)).join('');
+  }
+  typeset() { document.querySelectorAll('[data-tex]').forEach(el => { const t = el.getAttribute('data-tex') || '', key = t + '|' + !!window.katex; if (el._tex === key) return; el._tex = key; el.innerHTML = this.tex(t); }); }
+  facets(k) { return Object.fromEntries(this.MARK.map((c, i) => ['f' + i, i === k ? c : '#D2D7DE'])); }
+  showToast(t) { clearTimeout(this.toastT); this.setState({ toast: t }); this.toastT = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  lessonState(course, ui, li) {
+    const L = this.COURSES.find(c => c.id === course).units[ui][1][li];
+    if (L[2] === 'play') return this.state.played ? 'done' : 'next';
+    return L[2] === 'done' ? 'done' : 'todo';
+  }
+  unitStats(course, ui) { const ls = this.COURSES.find(c => c.id === course).units[ui][1], d = ls.filter((_, i) => this.lessonState(course, ui, i) === 'done').length; return { d, n: ls.length }; }
+  openLesson(course, ui, li) { const L = this.COURSES.find(c => c.id === course).units[ui][1][li]; if (L[2] === 'play') this.setState({ page: 'lesson', step: 0, maxStep: 0, dragged: false, quiz: null, num: '', numFb: null, done: false }); else this.showToast('Only Thales’ theorem is interactive in this prototype.'); }
+  clampT(th) { const s = Math.sin(th); return Math.abs(s) < .14 ? Math.atan2((s >= 0 ? 1 : -1) * .14, Math.cos(th)) : th; }
+  moveT(e) { const r = e.currentTarget.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 520, y = (e.clientY - r.top) / r.height * 400; this.setState({ theta: this.clampT(Math.atan2(y - 210, x - 260)), dragged: true }); }
+  arc(cx, cy, R, a1, a2) { const f = n => n.toFixed(1), d = ((a2 - a1) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI), sw = d < Math.PI ? 1 : 0; return `M${f(cx + R * Math.cos(a1))} ${f(cy + R * Math.sin(a1))} A${R} ${R} 0 0 ${sw} ${f(cx + R * Math.cos(a2))} ${f(cy + R * Math.sin(a2))}`; }
+
+  liveVals() {
+    const s = this.state, d = new Date(s.now), DOW = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'], pad = n => String(n).padStart(2, '0');
+    const next = new Date(d); next.setDate(d.getDate() + 1); next.setHours(17, 30, 0, 0);
+    const diff = Math.max(0, Math.floor((next - d) / 1000));
+    const day = n => { const x = new Date(d); x.setDate(d.getDate() + n); return x; };
+    const W = [[-2, 'Similar triangles: ratio chasing', 'GEO · 90 MIN', 'Recorded'], [-1, 'Fermat’s little theorem in practice', 'NT · 90 MIN', 'Recorded'], [1, 'Cyclic quadrilaterals: angle chasing', 'GEO · 17:30 · 90 MIN', 'Up next'], [3, 'Mock paper walkthrough', 'RMO · 10:00 · 120 MIN', 'Scheduled']];
+    return {
+      pgLive: s.page === 'live', nextIn: `${pad(Math.floor(diff / 3600))}:${pad(Math.floor(diff / 60) % 60)}:${pad(diff % 60)}`,
+      joinLabel: diff < 600 ? 'Join now' : 'Opens 10 min before',
+      joinNext: () => this.showToast(diff < 600 ? 'Opening the class room…' : 'The room opens 10 minutes before class.'),
+      up: { dow: DOW[next.getDay()], day: next.getDate(), time: '17:30 IST', title: 'Cyclic quadrilaterals: angle chasing', desc: 'Opposite angles, the converse, and three RMO problems solved live.', mentor: 'R. Iyer', len: '90 min', seats: '11 of 14 seats taken' },
+      remindLabel: s.remind ? 'Reminder set' : 'Remind me', toggleRemind: () => { this.setState({ remind: !s.remind }); this.showToast(s.remind ? 'Reminder removed.' : 'We’ll remind you 30 minutes before.'); },
+      week: W.map(([o, title, meta, status]) => { const x = day(o); return { dow: DOW[x.getDay()], day: x.getDate(), title, meta, status, bd: status === 'Up next' ? '#121418' : '#E2E5EA', fg: status === 'Recorded' ? '#127A50' : '#121418' }; }),
+      recs: [['Similar triangles: ratio chasing', 'GEO · 2 DAYS AGO', '1:28:40'], ['Fermat’s little theorem in practice', 'NT · YESTERDAY', '1:31:05'], ['Pigeonhole: choosing the boxes', 'COMB · LAST WEEK', '1:24:12']].map(([title, meta, len]) => ({ title, meta, len, play: () => this.showToast('Recordings play here once connected to your video host.') }))
+    };
+  }
+  renderVals() {
+    const s = this.state, mob = s.mob;
+    const go = (page, extra) => () => this.setState({ page, ...(extra || {}) });
+    const nextLesson = { title: 'Thales’ theorem', go: () => this.openLesson('GEO', 0, 0) };
+    const stIc = st => ({ icFill: st === 'done' ? '#127A50' : '#FFFFFF', icStroke: st === 'done' ? '#127A50' : st === 'part' || st === 'next' ? '#E2E5EA' : '#B9C3D0', icDash: st === 'done' || st === 'part' || st === 'next' ? '0' : '2.6 3.2', tick: st === 'done' ? 1 : 0 });
+    const stages = this.STAGES.map((g, gi) => {
+      const units = g.units.map(([c, ui], i) => { const C = this.COURSES.find(x => x.id === c), U = C.units[ui], st = this.unitStats(c, ui), state = g.locked ? 'lock' : st.d === st.n ? 'done' : st.d ? 'part' : (c === 'GEO' && ui === 0) ? 'next' : 'todo'; const frac = st.d / st.n;
+        return { n: i + 1, title: U[0], from: `FROM ${C.name.toUpperCase()} · ${st.n} LESSONS`, count: g.locked ? 'Locked' : `${st.d} of ${st.n}`, ...stIc(state), arc: state === 'part' || state === 'next' ? `${(63 * Math.max(frac, .08)).toFixed(1)} 63` : '0 63', tileBg: state === 'next' || (state === 'part' && gi === 1 && i === 0) ? '#121418' : '#F6F7F9', tileFg: state === 'next' || (state === 'part' && gi === 1 && i === 0) ? '#FFFFFF' : '#121418', endIcon: g.locked ? 'M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v9H5z' : 'm9 6 6 6-6 6', go: () => g.locked ? this.showToast('INMO unlocks when you finish the RMO stage.') : this.setState({ page: 'course', course: c }) }; });
+      const tot = g.units.reduce((a, [c, ui]) => a + this.unitStats(c, ui).n, 0), dn = g.done ? tot : g.units.reduce((a, [c, ui]) => a + this.unitStats(c, ui).d, 0), pct = Math.round(dn / tot * 100) + '%', isOpen = !!s.open[gi];
+      return { n: gi + 1, name: g.name, desc: g.desc, weeks: g.weeks, pct, units, open: isOpen, openStr: String(isOpen), rot: isOpen ? '0deg' : '180deg', op: g.locked ? .72 : 1, toggle: () => this.setState({ open: { ...s.open, [gi]: !isOpen } }), locked: !!g.locked, ctaLabel: g.done ? 'Review' : g.locked ? 'Locked' : 'Continue learning', ctaBg: g.locked ? '#EEF1F4' : '#121418', ctaFg: g.locked ? '#6B7280' : '#FFFFFF', cur: g.locked ? 'default' : 'pointer', cta: () => g.done ? this.setState({ page: 'learn' }) : nextLesson.go() };
+    });
+    const courses = this.COURSES.map(c => { const tot = c.units.reduce((a, u) => a + u[1].length, 0), dn = c.units.reduce((a, _, ui) => a + this.unitStats(c.id, ui).d, 0); return { code: c.id, name: c.name, desc: c.desc, units: c.units.length + ' UNITS', lessons: dn + ' of ' + tot + ' lessons', pct: Math.round(dn / tot * 100) + '%', ...this.facets(c.k), go: () => this.setState({ page: 'course', course: c.id }) }; });
+    const C = this.COURSES.find(x => x.id === s.course), ctot = C.units.reduce((a, u) => a + u[1].length, 0), cdn = C.units.reduce((a, _, ui) => a + this.unitStats(C.id, ui).d, 0);
+    const cur = { name: C.name, desc: C.desc, ...this.facets(C.k), pct: Math.round(cdn / ctot * 100) + '%', lessons: ctot + ' LESSONS', unitCards: C.units.map((u, ui) => { const st = this.unitStats(C.id, ui); return { n: ui + 1, of: C.units.length, title: u[0], pct: Math.round(st.d / st.n * 100) + '%', rows: u[1].map((L, li) => { const ls = this.lessonState(C.id, ui, li); return { n: li + 1, title: L[0], mins: L[1] + ' min', ...stIc(ls), tileBg: ls === 'next' ? '#121418' : '#F6F7F9', tileFg: ls === 'next' ? '#FFFFFF' : '#121418', go: () => this.openLesson(C.id, ui, li) }; }) }; }) };
+    const crumbs = s.page === 'live' ? [['Live classes', null]] : s.page === 'track' ? [['My track', null]] : s.page === 'learn' ? [['Learn', null]] : [['Learn', go('learn')], [C.name, null]];
+    // lesson
+    const step = s.step, S = this.STEPS[step], th = s.theta, px = 260 + 150 * Math.cos(th), py = 210 + 150 * Math.sin(th);
+    const ux = 110 - px, uy = 210 - py, vx = 410 - px, vy = 210 - py, lu = Math.hypot(ux, uy), lv = Math.hypot(vx, vy), a = [ux / lu, uy / lu], b = [vx / lv, vy / lv], m = 16;
+    const angle = (Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1]))) * 180 / Math.PI).toFixed(1);
+    const angA = Math.atan2(py - 210, px - 110), angB = Math.atan2(py - 210, px - 410), angPA = Math.atan2(210 - py, 110 - px), angPB = Math.atan2(210 - py, 410 - px), angPO = Math.atan2(210 - py, 260 - px);
+    const gateOk = !S.gate || (S.gate === 'drag' && s.dragged) || (S.gate === 'quiz' && s.quiz === 1) || (S.gate === 'num' && s.numFb === 'ok');
+    const quizCorrect = s.quiz === 1, fbShow = (S.gate === 'quiz' && s.quiz != null) || (S.gate === 'num' && s.numFb);
+    const fbOk = S.gate === 'quiz' ? quizCorrect : s.numFb === 'ok';
+    const fbText = S.gate === 'quiz' ? (quizCorrect ? String.raw`**Right.** It’s always $90^\circ$, wherever $P$ sits. That’s Thales’ theorem. Now let’s see why.`.replace(/\*\*/g, '') : String.raw`Not quite. Go back a step and drag $P$ again. Does the angle ever change?`) : (fbOk ? String.raw`Correct. $\angle ACB = 90^\circ$ by Thales, so $AB = \sqrt{6^2+8^2} = 10$.` : String.raw`Not quite. Which angle is a right angle? Then use Pythagoras.`);
+    return {
+      bannerMeshRef: this.bannerMeshRef, notLesson: s.page !== 'lesson',
+      headPos: this.props.embedded ? 'static' : 'sticky', headH: this.props.embedded ? '44px' : '64px', headPad: this.props.embedded ? '0 0 12px' : '0 clamp(20px,3vw,40px)', headBd: this.props.embedded ? '0' : '1px solid #E2E5EA',
+      showSide: s.page !== 'lesson' && !this.props.embedded, showHead: s.page !== 'lesson' && (!this.props.embedded || s.page === 'course'), rootMinH: this.props.embedded ? 'auto' : '100vh',
+      lessonTop: this.props.embedded ? '64px' : '0px', lessonRad: this.props.embedded ? '20px' : '0', lessonBd: this.props.embedded ? '1px solid #E2E5EA' : '0', pgTrack: s.page === 'track', pgLearn: s.page === 'learn', pgCourse: s.page === 'course', pgLesson: s.page === 'lesson',
+      mainPad: s.page === 'lesson' || this.props.embedded ? '0' : 'clamp(20px,4vw,48px) clamp(16px,3vw,40px)',
+      nav: [['track', 'My track', this.ICON.track], ['learn', 'Learn', this.ICON.learn], ['live', 'Live classes', 'M3 6h13v12H3z M16 10l5-3v10l-5-3']].map(([k, label, icon]) => { const act = s.page === k || (k === 'learn' && s.page === 'course'); return { label, icon, go: go(k), bg: act ? 'rgba(236,232,223,.1)' : 'transparent', fg: act ? '#ECE8DF' : '#A7AAB2', fw: act ? 600 : 500 }; }),
+      crumbs: crumbs.map(([label, g], i) => ({ label, go: g || (() => {}), fw: i === crumbs.length - 1 ? 600 : 500, fg: i === crumbs.length - 1 ? '#121418' : '#6B7280', sep: i < crumbs.length - 1 ? 'inline' : 'none' })),
+      stages, nextTitle: s.played ? 'Inscribed angle theorem' : 'Thales’ theorem', continueNext: () => s.played ? this.showToast('Only Thales’ theorem is interactive in this prototype.') : nextLesson.go(),
+      courses, lessonTotals: this.COURSES.reduce((x, c) => x + c.units.reduce((a, u) => a + u[1].length, 0), 0) + ' LESSONS', cur,
+      ...this.liveVals(),
+      toastOn: !!s.toast, toast: s.toast,
+      stepBars: this.STEPS.map((_, i) => ({ bg: i < step || (i === step && s.done) ? '#74C9A0' : i === step ? '#ECE8DF' : '#333844' })),
+      stepLabel: s.done ? 'DONE' : `STEP ${step + 1} / ${this.STEPS.length}`,
+      lessonCols: mob ? 'minmax(0,1fr)' : '200px minmax(0,1fr) 240px', railD: mob ? 'none' : 'flex', notesD: mob ? 'none' : 'flex',
+      stepRail: this.STEPS.map((x, i) => { const dn = i < step || (s.done && i <= step), act = i === step && !s.done, reach = i <= s.maxStep; return { t: x.kind, mark: dn ? '✓' : String(i + 1), dot: dn ? '#127A50' : act ? '#121418' : '#FFFFFF', dotBd: dn ? '#127A50' : act ? '#121418' : '#D2D7DE', num: dn || act ? '#FFFFFF' : '#6B7280', bg: act ? '#F6F7F9' : 'transparent', fw: act ? 600 : 500, op: reach ? 1 : .5, dis: !reach, cur: reach ? 'pointer' : 'default', go: () => reach && this.setState({ step: i, done: false }) }; }),
+      stepNum: String(step + 1).padStart(2, '0'), stepKind: S.kind, stepTitle: s.done ? 'Nicely done.' : S.title, stepText: s.done ? String.raw`You now own a theorem: an angle in a semicircle is a right angle.` : S.text, noteText: S.note,
+      showFig: !s.done && S.fig !== 'none', pOp: S.fig === 'base' ? 0 : 1, markOp: S.fig === 'drag' || S.fig === 'proof' ? 1 : 0, proofOp: S.fig === 'proof' ? 1 : 0, haloOp: S.fig === 'drag' ? .16 : 0, figCursor: S.fig === 'drag' ? 'grab' : 'default',
+      figCap: S.fig === 'drag' ? 'FIG. 1 — DRAG P' : S.fig === 'proof' ? 'FIG. 2 — EQUAL RADII' : 'FIG. 1 — THE DIAMETER', angleD: S.fig === 'base' ? 'none' : 'inline',
+      px: px.toFixed(1), py: py.toFixed(1), plx: (260 + 176 * Math.cos(th)).toFixed(1), ply: (210 + 176 * Math.sin(th)).toFixed(1), angle,
+      rightMark: `M${px + a[0] * m} ${py + a[1] * m} L${px + (a[0] + b[0]) * m} ${py + (a[1] + b[1]) * m} L${px + b[0] * m} ${py + b[1] * m}`,
+      arcA: this.arc(110, 210, 30, 0, angA), arcB: this.arc(410, 210, 30, angB, Math.PI), arcPA: this.arc(px, py, 26, angPA, angPO), arcPB: this.arc(px, py, 32, angPO, angPB),
+      laX: (110 + 44 * Math.cos(angA / 2)).toFixed(1), laY: (210 + 44 * Math.sin(angA / 2) + 6).toFixed(1), lbX: (410 + 48 * Math.cos(((angB < 0 ? angB + 2 * Math.PI : angB) + Math.PI) / 2) - 6).toFixed(1), lbY: (210 + 48 * Math.sin(((angB < 0 ? angB + 2 * Math.PI : angB) + Math.PI) / 2) + 6).toFixed(1),
+      tDown: e => { if (S.fig !== 'drag') return; this.dragT = true; e.currentTarget.setPointerCapture(e.pointerId); this.moveT(e); },
+      tMove: e => { if (this.dragT) this.moveT(e); }, tUp: () => { this.dragT = false; },
+      tKey: e => { if (S.fig !== 'drag') return; const k = { ArrowLeft: -.06, ArrowDown: -.06, ArrowRight: .06, ArrowUp: .06 }[e.key]; if (k) { e.preventDefault(); this.setState(st => ({ theta: this.clampT(st.theta + k), dragged: true })); } },
+      showQuiz: !s.done && S.gate === 'quiz', quizOpts: [String.raw`$60^\circ$`, String.raw`$90^\circ$`, 'It depends on where P is', String.raw`$180^\circ$`].map((t, i) => { const sel = s.quiz === i, ok = i === 1; return { k: 'ABCD'[i], t, bd: sel ? (ok ? '#127A50' : '#C23B56') : '#E2E5EA', bg: sel ? (ok ? '#F5FAF7' : '#FCF6F7') : '#FFFFFF', pick: () => this.setState({ quiz: i }) }; }),
+      showNum: !s.done && S.gate === 'num', numVal: s.num, onNum: e => this.setState({ num: e.target.value, numFb: null }), numBd: s.numFb === 'bad' ? '#C23B56' : s.numFb === 'ok' ? '#127A50' : '#D2D7DE',
+      checkNum: e => { e.preventDefault(); const v = s.num.replace(/\s/g, ''); if (!v) return; this.setState({ numFb: v === '10' ? 'ok' : 'bad' }); },
+      fbShow: !s.done && !!fbShow, fbText, fbCol: fbOk ? '#127A50' : '#C23B56', fbBg: fbOk ? '#F5FAF7' : '#FCF6F7', fbBd: fbOk ? '#CFE3D8' : '#F0D2D8', fbPath: fbOk ? 'M3 11 Q6 14 10 18 Q17 10 25 2' : 'M2 12 Q14 10 26 9',
+      showDone: s.done, showNav: !s.done, atStart: step === 0, prevOp: step === 0 ? .4 : 1, locked: !gateOk,
+      gateNote: gateOk ? '' : S.gate === 'drag' ? 'Drag P to continue.' : S.gate === 'quiz' ? 'Pick an answer.' : 'Check your answer to finish.',
+      nextBg: gateOk ? '#121418' : '#EEF1F4', nextFg: gateOk ? '#FFFFFF' : '#6B7280', nextCur: gateOk ? 'pointer' : 'default', nextLabel: step === this.STEPS.length - 1 ? 'Finish lesson' : 'Continue',
+      prevStep: () => step > 0 && this.setState({ step: step - 1 }),
+      nextStep: () => { if (!gateOk) return; if (step === this.STEPS.length - 1) { try { localStorage.setItem('liminal-lms-thales', 'done'); } catch (e) {} this.setState({ done: true, played: true }); } else this.setState({ step: step + 1, maxStep: Math.max(s.maxStep, step + 1) }); },
+      exitLesson: () => this.setState({ page: 'track', done: false }), restart: () => this.setState({ step: 0, maxStep: 0, dragged: false, quiz: null, num: '', numFb: null, done: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

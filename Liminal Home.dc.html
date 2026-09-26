@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Liminal Math — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Caveat:wght@400..700&amp;display=swap">
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+::selection{background:rgba(76,152,240,.3)}
+input:focus-visible,button:focus-visible,a:focus-visible,svg:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+</style>
+</helmet>
+
+<sc-if value="{{ introOn }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ skipIntro }}" role="dialog" aria-label="Intro: the Liminal Math mark writes itself" style="position:fixed;inset:0;z-index:60;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:{{ introOpacity }};transition:opacity 500ms cubic-bezier(.4,0,1,1)">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(#DCE2EA 1px,transparent 1px),linear-gradient(90deg,#DCE2EA 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 50% 45% at 50% 50%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 50% 45% at 50% 50%,#000 0%,transparent 100%);opacity:.8"></div>
+    <div style="position:relative;display:flex;align-items:center;gap:28px">
+      <svg viewBox="-4 -4 141 136" style="width:112px;height:108px;display:block" aria-hidden="true">
+        <path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 0ms"></path>
+        <path d="M78 2L2 88L55 60Z" fill="#00A8FC" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 90ms"></path>
+        <path d="M2 88L55 60L99 125Z" fill="#0666D8" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 180ms"></path>
+        <path d="M93 74L129 69L98 108Z" fill="#2A4EAE" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 270ms"></path>
+        <path d="M129 69L99 125L98 108Z" fill="#0666D8" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 360ms"></path>
+        <g fill="none" stroke="#121418" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" style="opacity:{{ edgesOp }};transition:opacity 400ms ease">
+          <path pathLength="1" d="M78 2L2 88L99 125L129 69L93 74Z" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 700ms cubic-bezier(.65,0,.35,1) 0ms"></path>
+          <path pathLength="1" d="M78 2L55 60" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 300ms cubic-bezier(.65,0,.35,1) 480ms"></path>
+          <path pathLength="1" d="M2 88L55 60L99 125" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 340ms cubic-bezier(.65,0,.35,1) 560ms"></path>
+          <path pathLength="1" d="M93 74L98 108L99 125M98 108L129 69" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 280ms cubic-bezier(.65,0,.35,1) 620ms"></path>
+        </g>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;font-family:'CM Typewriter','Courier New',monospace;font-size:30px;letter-spacing:.32em;color:#121418;line-height:1">
+          <sc-for list="{{ letters }}" as="l" hint-placeholder-count="12"><span style="opacity:{{ wordOp }};transition:opacity 60ms linear {{ l.d }};white-space:pre">{{ l.c }}</span></sc-for>
+        </div>
+        <div style="font-family:'Figtree',sans-serif;font-weight:500;font-size:16px;color:#4B4F58;opacity:{{ byOp }};transform:translateY({{ byY }});transition:opacity 500ms cubic-bezier(.2,0,0,1),transform 500ms cubic-bezier(.2,0,0,1)">by the Liminal Initiative</div>
+      </div>
+    </div>
+    <p style="position:absolute;bottom:32px;left:0;right:0;text-align:center;margin:0;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Click, tap or press any key to skip</p>
+  </div>
+</sc-if>
+
+<section id="top" data-screen-label="01 Hero" style="position:relative;min-height:100vh;display:flex;flex-direction:column;background:#FFFFFF;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(#DCE2EA 1px,transparent 1px),linear-gradient(90deg,#DCE2EA 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 72%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 72%,transparent 100%)"></div>
+
+  <header style="position:relative;z-index:2;width:100%;max-width:1440px;margin:0 auto;padding:22px clamp(16px,5vw,72px);display:flex;align-items:center;gap:clamp(16px,3vw,32px);flex-wrap:nowrap">
+    <a href="#top" aria-label="Liminal Math — home" style="flex:0 0 auto;display:flex;align-items:center;gap:12px;color:#121418;white-space:nowrap">
+      <svg viewBox="0 0 133 128" style="width:26px;height:25px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+      <span style="font-family:'CM Typewriter','Courier New',monospace;font-size:15px;letter-spacing:.32em;color:#121418">LIMINAL MATH</span>
+    </a>
+    <nav aria-label="Primary" style="flex:1 1 auto;min-width:0;height:24px;overflow:hidden;display:flex;justify-content:flex-end;align-items:center;column-gap:clamp(16px,2vw,28px);row-gap:24px;flex-wrap:wrap;white-space:nowrap">
+      <a href="#method" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;color:#4B4F58" style-hover="color:#121418">Learn</a>
+      <a href="#pathway" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;color:#4B4F58" style-hover="color:#121418">Practice</a>
+      <a href="#today" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;color:#4B4F58" style-hover="color:#121418">Problem of the Day</a>
+      <a href="#community" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;color:#4B4F58" style-hover="color:#121418">Community</a>
+    </nav>
+    <div style="flex:0 0 auto;display:flex;align-items:center;gap:16px;white-space:nowrap">
+      <button type="button" aria-label="Search" style="width:36px;height:36px;border-radius:999px;border:0;background:transparent;color:#4B4F58;display:grid;place-items:center;cursor:pointer" style-hover="background:#EEF1F4;color:#121418"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg></button>
+      <a href="#zero" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;color:#121418">Log in</a>
+      <a href="#zero" style="height:36px;padding:0 16px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;display:flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#EEF1F4;color:#121418">Chapter Zero</a>
+    </div>
+  </header>
+
+  <div style="position:relative;z-index:1;flex:1;width:100%;max-width:1440px;margin:0 auto;padding:clamp(24px,4vw,56px) clamp(16px,5vw,72px) clamp(40px,5vw,72px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(32px,4vw,64px)">
+    <div style="flex:1.3 1 560px;min-width:0;display:flex;flex-direction:column;gap:32px">
+      <p style="margin:0;font-family:'CM Typewriter','Courier New',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§01</span> — Olympiad mathematics, on the threshold</p>
+
+      <sc-if value="{{ hA }}" hint-placeholder-val="{{ true }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(56px,8.4vw,136px);line-height:.92;letter-spacing:-.035em;color:#121418">There is more<br>to mathematics<br>than <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">the answer.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;left:2%;bottom:-.06em;width:92%;height:.16em;overflow:visible"><path d="{{ underline }}" fill="none" stroke="#0B5BC4" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></em></h1>
+      </sc-if>
+      <sc-if value="{{ hB }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(56px,8.4vw,136px);line-height:.92;letter-spacing:-.035em;color:#121418">Enter the space<br>between knowing<br>and <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">discovering.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;left:2%;bottom:-.06em;width:92%;height:.16em;overflow:visible"><path d="{{ underline }}" fill="none" stroke="#0B5BC4" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></em></h1>
+      </sc-if>
+      <sc-if value="{{ hC }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(56px,8.4vw,136px);line-height:.92;letter-spacing:-.035em;color:#121418">A place for<br>people who<br>think in <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">mathematics.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;left:2%;bottom:-.06em;width:92%;height:.16em;overflow:visible"><path d="{{ underline }}" fill="none" stroke="#0B5BC4" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></em></h1>
+      </sc-if>
+
+      <p style="margin:0;max-width:50ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">Liminal is where curious students learn olympiad mathematics by doing it: one real problem every day, figures you can move, and a community that argues about approaches, not answers.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <a href="#zero" style="height:52px;padding:0 26px;border-radius:999px;background:#0B66D8;color:#FFFFFF;display:flex;align-items:center;gap:10px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1A74E6;color:#FFFFFF" style-active="background:#0852B0">Start Chapter Zero <span aria-hidden="true">→</span></a>
+        <a href="#today" style="height:52px;padding:0 24px;border-radius:999px;background:#FFFFFF;border:1px solid #D2D7DE;color:#121418;display:flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#EEF1F4;color:#121418">Try today’s problem</a>
+      </div>
+    </div>
+
+    <figure style="flex:1 1 420px;min-width:0;margin:0;display:flex;flex-direction:column;gap:16px">
+      <div style="position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1/1">
+        <canvas ref="{{ canvasRef }}" role="img" aria-label="A 24-cell rotating in four dimensions. Drag to turn it." style="position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none"></canvas>
+        <span aria-hidden="true" style="position:absolute;top:0;left:0;width:18px;height:18px;border-top:1px solid #121418;border-left:1px solid #121418"></span>
+        <span aria-hidden="true" style="position:absolute;top:0;right:0;width:18px;height:18px;border-top:1px solid #121418;border-right:1px solid #121418"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;left:0;width:18px;height:18px;border-bottom:1px solid #121418;border-left:1px solid #121418"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;right:0;width:18px;height:18px;border-bottom:1px solid #121418;border-right:1px solid #121418"></span>
+        <span style="position:absolute;top:14px;left:28px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280;pointer-events:none">FIG. 0</span>
+        <span style="position:absolute;top:12px;right:28px;font-family:'CM Roman','Times New Roman',serif;font-size:15px;color:#4B4F58;pointer-events:none">ℝ<sup style="font-size:10px">4</sup> → ℝ<sup style="font-size:10px">2</sup></span>
+        <div aria-hidden="true" style="position:absolute;top:13%;right:-2%;display:flex;flex-direction:column;align-items:flex-start;pointer-events:none">
+          <span style="font-family:'Caveat',cursive;font-size:26px;line-height:1;color:#9A6B12;transform:translateX(18px)">drag to turn it</span>
+          <svg viewBox="0 0 120 60" style="width:96px;height:48px;overflow:visible"><path d="{{ arrowPath }}" fill="none" stroke="#9A6B12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="{{ arrowHead }}" fill="none" stroke="#9A6B12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <span style="position:absolute;bottom:14px;left:28px;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.06em;color:#0B5BC4;pointer-events:none">{{ vtxLabel }}</span>
+      </div>
+      <figcaption style="width:100%;max-width:620px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:baseline">
+        <span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:20px;letter-spacing:-.01em;color:#121418">The 24-cell</span>
+        <span style="font-family:'Figtree',sans-serif;font-size:14px;line-height:1.5;color:#4B4F58;text-wrap:pretty">A regular solid that exists only in four dimensions: 24 vertices, 96 edges, 24 octahedral cells, and no twin in three.</span>
+      </figcaption>
+    </figure>
+
+    <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Chapters" style="flex:0 0 160px;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-left:1px solid #D2D7DE;padding-left:20px">
+        <a href="#top" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#0B5BC4">01</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#121418">Threshold</span></a>
+        <a href="#today" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">02</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">Today’s problem</span></a>
+        <a href="#method" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">03</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">The method</span></a>
+        <a href="#pathway" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">04</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">Pathway</span></a>
+        <a href="#community" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">05</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">Community</span></a>
+        <a href="#letter" style="display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #E2E5EA" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">06</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">The letter</span></a>
+        <a href="#zero" style="display:flex;flex-direction:column;gap:2px;padding:12px 0" style-hover="opacity:.7"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">07</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#4B4F58">Chapter Zero</span></a>
+      </nav>
+    </sc-if>
+  </div>
+
+  <a href="#today" style="position:relative;z-index:1;display:block;border-top:1px solid #E2E5EA;background:rgba(255,255,255,.9);color:#121418" style-hover="background:#F6F7F9;color:#121418">
+    <div style="max-width:1440px;margin:0 auto;padding:18px clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Problem of the Day · {{ today }}</span>
+      <span style="flex:1 1 320px;font-family:'CM Roman','Times New Roman',serif;font-size:20px;color:#121418">How many positive divisors does 2026 have?</span>
+      <span style="display:flex;align-items:center;gap:8px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">MEDIUM</span></span>
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.08em;color:#4B4F58">SOLUTION IN {{ countdown }}</span>
+      <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#0B5BC4">Solve →</span>
+    </div>
+  </a>
+</section>
+
+<section id="today" data-screen-label="02 Today's problem" style="background:#F6F7F9;border-top:1px solid #E2E5EA;padding:clamp(88px,10vw,144px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,96px);align-items:center">
+    <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:24px">
+      <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§02</span> — Today’s problem</p>
+      <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(40px,5.2vw,64px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">One problem. Every day. <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">Everyone.</em></h2>
+      <p style="margin:0;max-width:46ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">A real problem is more convincing than a big number. Solve it now; the full solution and every approach unlock tomorrow.</p>
+    </div>
+    <article style="flex:1 1 460px;min-width:0;max-width:600px;background:#FFFFFF;border:1px solid #E2E5EA;border-radius:14px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Problem of the Day · {{ today }}</span>
+        <span style="display:flex;align-items:center;gap:8px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">MEDIUM</span></span>
+      </div>
+      <h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.005em;color:#121418">Divisors of the year</h3>
+      <p style="margin:0;font-family:'CM Roman','Times New Roman',serif;font-size:22px;line-height:1.5;color:#121418">How many positive divisors does <i>n</i> = 2026 have?</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;border:1px solid #E2E5EA;border-radius:999px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:#4B4F58"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.1em;color:#121418">NT</b>Number theory</span>
+      </div>
+      <form onSubmit="{{ onCheck }}" novalidate="" style="display:flex;flex-direction:column;gap:14px;padding-top:20px;border-top:1px solid #E2E5EA">
+        <label for="ans" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:14px;color:#4B4F58">Your answer</label>
+        <div style="display:flex;gap:10px">
+          <input id="ans" value="{{ ans }}" onChange="{{ onAns }}" inputmode="numeric" autocomplete="off" placeholder="A whole number" style="flex:1;min-width:0;height:44px;padding:0 16px;border-radius:10px;border:1px solid {{ ansBorder }};background:#FFFFFF;font-family:'CM Roman','Times New Roman',serif;font-size:19px;color:#121418;outline:none">
+          <button type="submit" style="height:44px;padding:0 22px;border-radius:999px;border:0;background:#0B66D8;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1A74E6" style-active="background:#0852B0">Check</button>
+        </div>
+        <div aria-live="polite" style="min-height:48px;display:flex;gap:12px;align-items:flex-start;font-family:'Figtree',sans-serif;font-size:15px;line-height:1.5;color:#4B4F58">
+          <sc-if value="{{ fbIdle }}" hint-placeholder-val="{{ true }}"><span>Think before you factor. What does 2026 split into?</span></sc-if>
+          <sc-if value="{{ fbEmpty }}" hint-placeholder-val="{{ false }}"><span>Enter a whole number first.</span></sc-if>
+          <sc-if value="{{ fbOk }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 28 22" style="flex:0 0 28px;width:28px;height:22px;margin-top:1px" aria-hidden="true"><path d="{{ tickPath }}" fill="none" stroke="#127A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span><b style="color:#121418">Correct.</b> 2026 = 2 · 1013, and 1013 is prime, so the divisors are 1, 2, 1013 and 2026.</span>
+          </sc-if>
+          <sc-if value="{{ fbBad }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 28 22" style="flex:0 0 28px;width:28px;height:22px;margin-top:1px" aria-hidden="true"><path d="{{ strikePath }}" fill="none" stroke="#C23B56" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            <span><b style="color:#121418">Not quite.</b> Start by factoring 2026. Is 1013 prime?</span>
+          </sc-if>
+        </div>
+      </form>
+    </article>
+  </div>
+</section>
+
+<section id="method" data-screen-label="03 The method" style="background:#FFFFFF;padding:clamp(88px,10vw,144px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap-reverse;gap:clamp(40px,6vw,96px);align-items:center">
+    <figure style="flex:1.2 1 460px;min-width:0;margin:0;display:flex;flex-direction:column;gap:12px">
+      <svg ref="{{ thalesRef }}" viewBox="0 0 520 400" tabindex="0" role="img" aria-label="Drag P around the circle; the angle APB stays 90 degrees." onPointerDown="{{ tDown }}" onPointerMove="{{ tMove }}" onPointerUp="{{ tUp }}" onKeyDown="{{ tKey }}" style="width:100%;height:auto;display:block;touch-action:none;cursor:pointer;border-radius:14px">
+        <path d="{{ circlePath }}" fill="none" stroke="#121418" stroke-width="1.6" stroke-linecap="round"></path>
+        <line x1="110" y1="210" x2="410" y2="210" stroke="#121418" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="110" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#0B5BC4" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="410" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#0B5BC4" stroke-width="2" stroke-linecap="round"></line>
+        <path d="{{ rightMark }}" fill="none" stroke="#127A50" stroke-width="1.8" stroke-linejoin="round"></path>
+        <circle cx="260" cy="210" r="3" fill="#121418"></circle>
+        <circle cx="110" cy="210" r="3.5" fill="#121418"></circle>
+        <circle cx="410" cy="210" r="3.5" fill="#121418"></circle>
+        <text x="92" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#121418">A</text>
+        <text x="416" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#121418">B</text>
+        <text x="254" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:20px" fill="#4B4F58">O</text>
+        <text x="{{ plx }}" y="{{ ply }}" text-anchor="middle" dominant-baseline="middle" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#0B5BC4">P</text>
+        <circle cx="{{ px }}" cy="{{ py }}" r="22" fill="transparent"></circle>
+        <circle cx="{{ px }}" cy="{{ py }}" r="7" fill="#FFFFFF" stroke="#0B5BC4" stroke-width="2.4"></circle>
+      </svg>
+      <figcaption style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #E2E5EA">
+        <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Fig. 3 — Drag <span style="text-transform:none;font-family:'CM Roman',serif;font-style:italic;font-size:15px;letter-spacing:0;color:#0B5BC4">P</span></span>
+        <span style="font-family:'CM Roman','Times New Roman',serif;font-size:18px;color:#121418">∠<i>APB</i> = {{ angle }}°</span>
+      </figcaption>
+    </figure>
+    <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:28px">
+      <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§03</span> — The method</p>
+      <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(40px,5.2vw,64px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">Don’t memorise it. <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">Move it.</em></h2>
+      <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid #E2E5EA">
+        <li style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:4px">01</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#121418">Drag <i style="font-family:'CM Roman',serif;font-size:18px">P</i> anywhere on the circle.</span></li>
+        <li style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:4px">02</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#121418">Watch the angle at <i style="font-family:'CM Roman',serif;font-size:18px">P</i>. It never changes.</span></li>
+        <li style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:4px">03</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#121418">That’s Thales’ theorem. You just found it yourself.</span></li>
+      </ol>
+      <a href="#pathway" style="font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:#0B5BC4">See how lessons work →</a>
+    </div>
+  </div>
+</section>
+
+<section id="pathway" data-screen-label="04 Pathway" style="background:#F6F7F9;border-top:1px solid #E2E5EA;padding:clamp(88px,10vw,144px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:clamp(48px,6vw,80px)">
+    <div style="display:flex;flex-direction:column;gap:24px;max-width:760px">
+      <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§04</span> — Pathway</p>
+      <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(40px,5.2vw,64px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">From first proof to <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">olympiad.</em></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:end;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 1</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(56px,7vw,96px);line-height:.95;letter-spacing:-.03em;color:#121418">IOQM</span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Indian Olympiad Qualifier in Mathematics</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 2</span><span style="display:flex;align-items:baseline;gap:20px"><span style="font-family:'CM Roman','Times New Roman',serif;font-size:clamp(40px,4.5vw,64px);line-height:1;color:#0B5BC4">⇒</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(56px,7vw,96px);line-height:.95;letter-spacing:-.03em;color:#121418">RMO</span></span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Regional Mathematical Olympiad</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 3</span><span style="display:flex;align-items:baseline;gap:20px"><span style="font-family:'CM Roman','Times New Roman',serif;font-size:clamp(40px,4.5vw,64px);line-height:1;color:#0B5BC4">⇒</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(56px,7vw,96px);line-height:.95;letter-spacing:-.03em;color:#121418">INMO</span></span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Indian National Mathematical Olympiad</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));border-top:1px solid #D2D7DE">
+      <div style="padding:28px 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">LIVE</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Live classes</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">Small groups with mentors who have sat the papers themselves.</p></div>
+      <div style="padding:28px 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">TIMED</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Mock tests</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">Full papers under real conditions, with written feedback on every proof.</p></div>
+      <div style="padding:28px 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">DAILY</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Problem of the Day</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">One problem, open to everyone, with several approaches the next day.</p></div>
+    </div>
+    <div><a href="#community" style="height:44px;padding:0 20px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;display:inline-flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418" style-hover="background:#EEF1F4;color:#121418">Explore programmes</a></div>
+  </div>
+</section>
+
+<section id="community" data-screen-label="05 Community" style="background:#FFFFFF;padding:clamp(88px,10vw,144px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:48px">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;justify-content:space-between">
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:720px">
+        <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§05</span> — Community</p>
+        <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(40px,5.2vw,64px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">Better questions come from <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">better company.</em></h2>
+      </div>
+      <a href="#letter" style="font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:#0B5BC4">Visit the community →</a>
+    </div>
+    <div style="padding:24px 0;border-top:1px solid #E2E5EA;border-bottom:1px solid #E2E5EA;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline">
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">ALG · FE · 3 APPROACHES</span>
+      <p style="margin:0;flex:1 1 420px;font-family:'CM Roman','Times New Roman',serif;font-size:20px;line-height:1.5;color:#121418">Find all <i>f</i> : ℝ → ℝ with <i>f</i>(<i>x</i> + <i>y</i>) = <i>f</i>(<i>x</i>) + <i>f</i>(<i>y</i>) and <i>f</i>(<i>xy</i>) = <i>f</i>(<i>x</i>)<i>f</i>(<i>y</i>) for all real <i>x</i>, <i>y</i>.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+      <article style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;transition:border-color 120ms" style-hover="border-color:#D2D7DE">
+        <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">AR</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Ananya R.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 1</span></header>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Put <span style="font-family:'CM Roman',serif;font-size:17px"><i>y</i> = 1</span> in the second: <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i>)(1 − <i>f</i>(1)) = 0</span>. So either <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i> ≡ 0</span>, or <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(1) = 1</span>.</p>
+        <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>31 votes</span><span>4 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">SPLIT CASES</span></footer>
+      </article>
+      <article style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;transition:border-color 120ms" style-hover="border-color:#D2D7DE">
+        <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">IM</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Ishaan M.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 2</span></header>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Put <span style="font-family:'CM Roman',serif;font-size:17px"><i>y</i> = <i>x</i></span>: <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i><sup>2</sup>) = <i>f</i>(<i>x</i>)<sup>2</sup> ≥ 0</span>. So <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i></span> is non-negative on non-negatives, and additivity makes it increasing.</p>
+        <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>42 votes</span><span>7 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">MONOTONICITY</span></footer>
+      </article>
+      <article style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;transition:border-color 120ms" style-hover="border-color:#D2D7DE">
+        <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">KS</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Kabir S.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 3</span></header>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Additivity gives <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>q</i>) = <i>q</i></span> on the rationals. An increasing function that agrees with <span style="font-family:'CM Roman',serif;font-size:17px"><i>x</i></span> on ℚ must be <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i>) = <i>x</i></span>.</p>
+        <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>27 votes</span><span>3 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">DENSITY</span></footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="letter" data-screen-label="06 The letter" style="position:relative;background:#FFFFFF;border-top:1px solid #E2E5EA;border-bottom:1px solid #E2E5EA;padding:clamp(96px,11vw,160px) 0;background-image:linear-gradient(#DCE2EA 1px,transparent 1px),linear-gradient(90deg,#DCE2EA 1px,transparent 1px);background-size:32px 32px">
+  <div style="max-width:840px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:32px">
+    <p style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="color:#0B5BC4">§06</span> — Why we built <span style="text-transform:none">Liminal</span></p>
+    <p style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(34px,4.2vw,52px);line-height:1.05;letter-spacing:-.02em;color:#121418;text-wrap:balance">We didn’t build a coaching centre. We built the room we <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">wished</em> we’d had.</p>
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:62ch;font-family:'Baskervville',Georgia,serif;font-size:21px;line-height:1.6;color:#4B4F58">
+      <p style="margin:0">Most of us met olympiad mathematics alone, with a borrowed book and nobody to ask. The hard part was never the problems. It was having no one to think out loud with.</p>
+      <p style="margin:0">Liminal is that room: a problem worth a morning, people who care how you got there, and the patience to stay in the in-between until it makes sense.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;padding-top:8px">
+      <span style="font-family:'Caveat',cursive;font-size:30px;color:#121418">The founders</span>
+      <span style="width:32px;height:1px;background:#D2D7DE"></span>
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">THE LIMINAL INITIATIVE</span>
+    </div>
+  </div>
+</section>
+
+<section id="zero" data-screen-label="07 Chapter Zero" style="background:#FFFFFF;padding:clamp(96px,12vw,176px) 0">
+  <div style="max-width:720px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px">
+    <svg viewBox="0 0 133 128" style="width:48px;height:46px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+    <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(44px,6vw,80px);line-height:.98;letter-spacing:-.03em;color:#121418;text-wrap:balance">Every mathematician starts at <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">zero.</em></h2>
+    <p style="margin:0;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;color:#4B4F58">Chapter Zero is free. Your first proof takes about twenty minutes.</p>
+    <form onSubmit="{{ onBegin }}" style="width:100%;max-width:460px;display:flex;gap:10px;flex-wrap:wrap">
+      <input type="email" placeholder="you@example.com" aria-label="Email" style="flex:1 1 220px;min-width:0;height:48px;padding:0 18px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;font-family:'Figtree',sans-serif;font-size:16px;color:#121418;outline:none">
+      <button type="submit" style="height:48px;padding:0 26px;border-radius:999px;border:0;background:#0B66D8;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1A74E6" style-active="background:#0852B0">{{ beginLabel }}</button>
+    </form>
+  </div>
+</section>
+
+<footer style="background:#F6F7F9;border-top:1px solid #E2E5EA">
+  <div style="max-width:1320px;margin:0 auto;padding:40px clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center">
+    <span style="display:flex;align-items:center;gap:12px"><svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.32em;color:#121418">LIMINAL MATH</span></span>
+    <span style="font-size:14px;color:#6B7280">by the Liminal Initiative</span>
+    <nav style="display:flex;gap:24px;flex-wrap:wrap;margin-left:auto;font-size:14px">
+      <a href="#method" style="color:#4B4F58">Learn</a><a href="#pathway" style="color:#4B4F58">Practice</a><a href="#today" style="color:#4B4F58">Problem of the Day</a><a href="#community" style="color:#4B4F58">Community</a>
+    </nav>
+    <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">© 2026</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;headline&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Answer&quot;,&quot;Discovering&quot;,&quot;Mathematics&quot;],&quot;default&quot;:&quot;Answer&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;showRail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;playIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Intro&quot;}}">
+class Component extends DCLogic {
+  state = { p: 0, intro: true, vtx: null, ans: '', fb: null, theta: -2.1, now: Date.now(), begun: false };
+  canvasRef = el => { if (el && el !== this._cv) { this.teardownCell(); this._cv = el; this.initCell(matchMedia('(prefers-reduced-motion: reduce)').matches); } };
+  teardownCell() { cancelAnimationFrame(this.raf); this.raf = 0; this.ro && this.ro.disconnect(); this.io && this.io.disconnect(); }
+  thalesRef = React.createRef();
+
+  rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  rough(pts, amp = 1.1, seed = 1) {
+    const r = this.rng(seed), f = n => n.toFixed(1);
+    let d = `M${f(pts[0][0] + (r() - .5) * amp)} ${f(pts[0][1] + (r() - .5) * amp)}`;
+    for (let i = 1; i < pts.length; i++) {
+      const [x1, y1] = pts[i - 1], [x2, y2] = pts[i];
+      const len = Math.hypot(x2 - x1, y2 - y1) || 1, n = Math.max(1, Math.round(len / 34));
+      const nx = -(y2 - y1) / len, ny = (x2 - x1) / len;
+      for (let j = 1; j <= n; j++) {
+        const t = j / n, tm = (j - .5) / n, co = (r() - .5) * amp * 2, eo = (r() - .5) * amp * (j === n ? .6 : 1.4);
+        d += ` Q${f(x1 + (x2 - x1) * tm + nx * co)} ${f(y1 + (y2 - y1) * tm + ny * co)} ${f(x1 + (x2 - x1) * t + nx * eo)} ${f(y1 + (y2 - y1) * t + ny * eo)}`;
+      }
+    }
+    return d;
+  }
+  roughCircle(cx, cy, R, amp = 1.2, seed = 1) {
+    const r = this.rng(seed), n = 36, pts = [], f = x => x.toFixed(1);
+    for (let i = 0; i <= n; i++) { const a = -1.9 + i / n * Math.PI * 2 * 1.03, rr = R + (r() - .5) * amp * 2; pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
+    let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+    for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; d += ` Q${f(pts[i][0])} ${f(pts[i][1])} ${f(mx)} ${f(my)}`; }
+    return d;
+  }
+
+  componentDidMount() {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!(this.props.playIntro ?? true) || reduce) this.setState({ intro: false });
+    else {
+      this.timers = [[60, 1], [760, 2], [1250, 3], [1850, 4], [2350, 5]].map(([t, p]) => setTimeout(() => this.setState({ p }), t));
+      this.timers.push(setTimeout(() => this.setState({ intro: false }), 2850));
+      this.onKey = () => this.skipIntro();
+      addEventListener('keydown', this.onKey, { once: true });
+    }
+    this.clock = setInterval(() => this.setState({ now: Date.now() }), 1000);
+  }
+  componentWillUnmount() {
+    (this.timers || []).forEach(clearTimeout); clearInterval(this.clock);
+    this.teardownCell();
+    this.onKey && removeEventListener('keydown', this.onKey);
+  }
+  skipIntro = () => {
+    if (!this.state.intro) return;
+    (this.timers || []).forEach(clearTimeout);
+    this.setState({ p: 5 });
+    this.timers = [setTimeout(() => this.setState({ intro: false }), 500)];
+  };
+
+  initCell(reduce) {
+    const cv = this._cv;
+    if (!cv) return;
+    const ctx = cv.getContext('2d'), SKY = '11,91,196', CH = '18,20,24';
+    const V = []; for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) for (const a of [1, -1]) for (const b of [1, -1]) { const v = [0, 0, 0, 0]; v[i] = a; v[j] = b; V.push(v); }
+    const E = []; for (let i = 0; i < V.length; i++) for (let j = i + 1; j < V.length; j++) { let d = 0; for (let k = 0; k < 4; k++) d += (V[i][k] - V[j][k]) ** 2; if (d === 2) E.push([i, j]); }
+    const rot = (v, p, q, a) => { const c = Math.cos(a), s = Math.sin(a), x = v[p], y = v[q]; v[p] = x * c - y * s; v[q] = x * s + y * c; };
+    let W = 0, H = 0, dpr = 1, S = 1, t = 0, last = performance.now(), hover = -1, down = null, P = [], stars = [];
+    const drag = { x: 0, y: 0 };
+    const resize = () => {
+      const r = cv.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); S = Math.min(W, H) * .17;
+      const rr = this.rng(7); stars = [];
+      for (let i = 0; i < Math.round(W * H / 2400); i++) stars.push([rr() * W, rr() * H, rr()]);
+      draw();
+    };
+    const draw = () => {
+      P = V.map(v0 => {
+        const v = v0.slice();
+        rot(v, 0, 1, .42); rot(v, 0, 3, t * .00011 + drag.x * .006); rot(v, 1, 2, t * .00007 + .2); rot(v, 1, 3, drag.y * .006 + .3); rot(v, 2, 3, t * .00005);
+        const s4 = 4 / (4 - v[3]), x = v[0] * s4, y = v[1] * s4, z = v[2] * s4, s3 = 5 / (5 - z);
+        return { x: W / 2 + x * s3 * S, y: H / 2 + y * s3 * S, d: Math.min(1, Math.max(0, (v[3] + z) / 4 + .5)) };
+      });
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      for (const [x, y, z] of stars) { ctx.fillStyle = z > .88 ? `rgba(${SKY},${(.2 + z * .3).toFixed(2)})` : `rgba(${CH},${(.05 + z * .2).toFixed(2)})`; const s = z > .94 ? 1.6 : 1; ctx.fillRect(x, y, s, s); }
+      for (const [a, b] of E) {
+        const A = P[a], B = P[b], hi = hover === a || hover === b;
+        ctx.strokeStyle = hi ? `rgba(${SKY},.95)` : `rgba(${SKY},${(.08 + .5 * (A.d + B.d) / 2).toFixed(3)})`;
+        ctx.lineWidth = hi ? 1.5 : 1.1; ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+      }
+      P.forEach((p, i) => {
+        const r = 1.5 + 2.6 * p.d;
+        ctx.fillStyle = `rgba(${SKY},${(.07 + .15 * p.d).toFixed(3)})`; ctx.beginPath(); ctx.arc(p.x, p.y, r * 3.2, 0, 7); ctx.fill();
+        ctx.fillStyle = i === hover ? `rgb(${CH})` : `rgba(${SKY},${(.5 + .5 * p.d).toFixed(3)})`; ctx.beginPath(); ctx.arc(p.x, p.y, i === hover ? r + 1.4 : r, 0, 7); ctx.fill();
+      });
+      if (hover >= 0) { const p = P[hover]; ctx.strokeStyle = `rgb(${CH})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, 7); ctx.stroke(); }
+    };
+    let visible = true;
+    const loop = now => { this.raf = 0; if (!cv.isConnected || !visible) return; t += Math.min(64, now - last); last = now; draw(); this.raf = requestAnimationFrame(loop); };
+    const kick = () => { if (!reduce && !this.raf && visible) { last = performance.now(); this.raf = requestAnimationFrame(loop); } };
+    const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    cv.addEventListener('pointerdown', e => { down = pos(e); cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing'; });
+    cv.addEventListener('pointerup', () => { down = null; cv.style.cursor = 'grab'; });
+    cv.addEventListener('pointerleave', () => { if (!down) { hover = -1; this.setState({ vtx: null }); draw(); } });
+    cv.addEventListener('pointermove', e => {
+      const [x, y] = pos(e);
+      if (down) { drag.x += x - down[0]; drag.y += y - down[1]; down = [x, y]; draw(); return; }
+      let best = -1, bd = 16; P.forEach((p, i) => { const d = Math.hypot(p.x - x, p.y - y); if (d < bd) { bd = d; best = i; } });
+      if (best !== hover) { hover = best; this.setState({ vtx: best >= 0 ? '(' + V[best].map(n => n < 0 ? '−1' : n > 0 ? '1' : '0').join(', ') + ')' : null }); draw(); }
+    });
+    this.ro = new ResizeObserver(resize); this.ro.observe(cv); resize();
+    this.io = new IntersectionObserver(es => { visible = es[0].isIntersecting; kick(); }); this.io.observe(cv);
+    kick();
+  }
+
+  clampT(th) { const s = Math.sin(th); return Math.abs(s) < .14 ? Math.atan2((s >= 0 ? 1 : -1) * .14, Math.cos(th)) : th; }
+  moveT(e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width * 520, y = (e.clientY - r.top) / r.height * 400;
+    this.setState({ theta: this.clampT(Math.atan2(y - 210, x - 260)) });
+  }
+
+  renderVals() {
+    if (!this._rp) this._rp = {
+      underline: this.rough([[4, 10], [150, 6], [296, 11]], 1.6, 21),
+      arrowPath: this.rough([[96, 4], [66, 22], [22, 50]], 1.4, 5),
+      arrowHead: this.rough([[20, 36], [20, 51], [34, 50]], .8, 6),
+      tickPath: this.rough([[3, 11], [10, 18], [25, 2]], .9, 301),
+      strikePath: this.rough([[2, 12], [26, 9]], 1.2, 302),
+      circlePath: this.roughCircle(260, 210, 150, 1.3, 9)
+    };
+    const { p, theta, fb, now } = this.state;
+    const h = this.props.headline ?? 'Answer';
+    const px = 260 + 150 * Math.cos(theta), py = 210 + 150 * Math.sin(theta);
+    const ux = 110 - px, uy = 210 - py, vx = 410 - px, vy = 210 - py, lu = Math.hypot(ux, uy), lv = Math.hypot(vx, vy);
+    const a = [ux / lu, uy / lu], b = [vx / lv, vy / lv], s = 16;
+    const rightMark = `M${px + a[0] * s} ${py + a[1] * s} L${px + (a[0] + b[0]) * s} ${py + (a[1] + b[1]) * s} L${px + b[0] * s} ${py + b[1] * s}`;
+    const angle = (Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1]))) * 180 / Math.PI).toFixed(1);
+    const d = new Date(now), mid = new Date(d); mid.setHours(24, 0, 0, 0);
+    const diff = Math.max(0, Math.floor((mid - d) / 1000)), pad = n => String(n).padStart(2, '0');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return {
+      ...this._rp,
+      introOn: this.state.intro, skipIntro: this.skipIntro,
+      introOpacity: p >= 5 ? 0 : 1, edgeOff: p >= 1 ? 0 : 1, edgesOp: p >= 1 ? 1 : 0, facesOp: p >= 2 ? 1 : 0,
+      wordOp: p >= 3 ? 1 : 0, byOp: p >= 4 ? 1 : 0, byY: p >= 4 ? '0px' : '8px',
+      letters: 'LIMINAL MATH'.split('').map((c, i) => ({ c, d: i * 45 + 'ms' })),
+      hA: h === 'Answer', hB: h === 'Discovering', hC: h === 'Mathematics',
+      showRail: this.props.showRail ?? true,
+      canvasRef: this.canvasRef, thalesRef: this.thalesRef,
+      vtxLabel: this.state.vtx || 'Hover a vertex to read its coordinates',
+      today: d.getDate() + ' ' + months[d.getMonth()],
+      countdown: `${pad(Math.floor(diff / 3600))}:${pad(Math.floor(diff / 60) % 60)}:${pad(diff % 60)}`,
+      ans: this.state.ans,
+      onAns: e => this.setState({ ans: e.target.value, fb: null }),
+      onCheck: e => { e.preventDefault(); const v = this.state.ans.replace(/\s/g, ''); this.setState({ fb: !v ? 'empty' : v === '4' ? 'ok' : 'bad' }); },
+      fbIdle: !fb, fbEmpty: fb === 'empty', fbOk: fb === 'ok', fbBad: fb === 'bad',
+      ansBorder: fb === 'bad' ? '#C23B56' : fb === 'ok' ? '#127A50' : '#D2D7DE',
+      px: px.toFixed(1), py: py.toFixed(1),
+      plx: (260 + 176 * Math.cos(theta)).toFixed(1), ply: (210 + 176 * Math.sin(theta)).toFixed(1),
+      rightMark, angle,
+      tDown: e => { this.dragT = true; e.currentTarget.setPointerCapture(e.pointerId); this.moveT(e); },
+      tMove: e => { if (this.dragT) this.moveT(e); },
+      tUp: () => { this.dragT = false; },
+      tKey: e => { const k = { ArrowLeft: -.06, ArrowDown: -.06, ArrowRight: .06, ArrowUp: .06 }[e.key]; if (k) { e.preventDefault(); this.setState(st => ({ theta: this.clampT(st.theta + k) })); } },
+      onBegin: e => { e.preventDefault(); this.setState({ begun: true }); },
+      beginLabel: this.state.begun ? 'Check your inbox' : 'Begin'
+    };
+  }
+}
+</script>
+</body>
+</html>

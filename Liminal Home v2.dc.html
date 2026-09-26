@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Liminal Math — Home</title>
+<script src="./image-slot.js"></script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'-4%20-4%20141%20136'%3E%3Cpath%20d%3D'M78%202L93%2074L99%20125L55%2060Z'%20fill%3D'%234ECCFC'%2F%3E%3Cpath%20d%3D'M78%202L2%2088L55%2060Z'%20fill%3D'%2300A8FC'%2F%3E%3Cpath%20d%3D'M2%2088L55%2060L99%20125Z'%20fill%3D'%230666D8'%2F%3E%3Cpath%20d%3D'M93%2074L129%2069L98%20108Z'%20fill%3D'%232A4EAE'%2F%3E%3Cpath%20d%3D'M129%2069L99%20125L98%20108Z'%20fill%3D'%230666D8'%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&amp;family=Figtree:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Caveat:wght@400..700&amp;display=swap">
+<style>
+@font-face{font-family:"CM Typewriter";src:url(fonts/CMTypewriter-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"CM Roman";src:url(fonts/CMRoman-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#FFFFFF;color:#121418;font-family:"Figtree","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#0B5BC4;text-decoration:none}
+a:hover{color:#0852B0}
+::selection{background:rgba(76,152,240,.3)}
+input:focus-visible,button:focus-visible,a:focus-visible,svg:focus-visible{outline:2px solid #0B5BC4;outline-offset:3px}
+input::placeholder{color:#6B7280}
+@keyframes lmDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+</style>
+</helmet>
+
+<sc-if value="{{ introOn }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ skipIntro }}" role="dialog" aria-label="Intro: the Liminal Math mark writes itself" style="position:fixed;inset:0;z-index:60;background:#000000;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:{{ introOpacity }};transition:opacity 500ms cubic-bezier(.4,0,1,1)">
+    <canvas ref="{{ introMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(0,0,0,.2) 0%,rgba(0,0,0,.7) 70%,#000000 100%)"></div>
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(236,232,223,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.05) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 50% 45% at 50% 50%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 50% 45% at 50% 50%,#000 0%,transparent 100%)"></div>
+    <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(16px,4vw,28px);padding:0 16px">
+      <svg viewBox="-4 -4 141 136" style="width:112px;height:108px;display:block" aria-hidden="true">
+        <path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 0ms"></path>
+        <path d="M78 2L2 88L55 60Z" fill="#00A8FC" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 90ms"></path>
+        <path d="M2 88L55 60L99 125Z" fill="#0666D8" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 180ms"></path>
+        <path d="M93 74L129 69L98 108Z" fill="#2A4EAE" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 270ms"></path>
+        <path d="M129 69L99 125L98 108Z" fill="#0666D8" style="opacity:{{ facesOp }};transition:opacity 420ms cubic-bezier(.2,0,0,1) 360ms"></path>
+        <g fill="none" stroke="#ECE8DF" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" style="opacity:{{ edgesOp }};transition:opacity 400ms ease">
+          <path pathLength="1" d="M78 2L2 88L99 125L129 69L93 74Z" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 700ms cubic-bezier(.65,0,.35,1) 0ms"></path>
+          <path pathLength="1" d="M78 2L55 60" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 300ms cubic-bezier(.65,0,.35,1) 480ms"></path>
+          <path pathLength="1" d="M2 88L55 60L99 125" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 340ms cubic-bezier(.65,0,.35,1) 560ms"></path>
+          <path pathLength="1" d="M93 74L98 108L99 125M98 108L129 69" style="stroke-dasharray:1 1;stroke-dashoffset:{{ edgeOff }};transition:stroke-dashoffset 280ms cubic-bezier(.65,0,.35,1) 620ms"></path>
+        </g>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;font-family:'CM Typewriter','Courier New',monospace;font-size:clamp(18px,5.4vw,30px);letter-spacing:.32em;color:#ECE8DF;line-height:1">
+          <sc-for list="{{ letters }}" as="l" hint-placeholder-count="12"><span style="opacity:{{ wordOp }};transition:opacity 60ms linear {{ l.d }};white-space:pre">{{ l.c }}</span></sc-for>
+        </div>
+        <div style="font-family:'Figtree',sans-serif;font-weight:500;font-size:16px;color:#A7AAB2;opacity:{{ byOp }};transform:translateY({{ byY }});transition:opacity 500ms cubic-bezier(.2,0,0,1),transform 500ms cubic-bezier(.2,0,0,1)">by the Liminal Initiative</div>
+      </div>
+    </div>
+    <p style="position:absolute;bottom:32px;left:0;right:0;text-align:center;margin:0;font-family:'Figtree',sans-serif;font-size:13px;color:#7E828C">Click, tap or press any key to skip</p>
+  </div>
+</sc-if>
+
+<sc-if value="{{ loaderOn }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Setting up Chapter Zero" style="position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:{{ loaderOp }};transition:opacity 300ms cubic-bezier(.2,0,0,1)">
+    <button type="button" onClick="{{ closeLoader }}" aria-label="Close" style="position:absolute;top:24px;right:24px;width:40px;height:40px;border-radius:999px;border:1px solid #333844;background:transparent;color:#ECE8DF;font-size:20px;cursor:pointer" style-hover="background:rgba(236,232,223,.08)">×</button>
+    <div style="position:relative;height:300px;width:min(440px,86vw);overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)">
+      <div style="position:absolute;left:0;right:0;top:122px;display:flex;flex-direction:column;gap:0;transform:translateY({{ loaderY }});transition:transform 600ms cubic-bezier(.2,0,0,1)">
+        <sc-for list="{{ loaderSteps }}" as="ls" hint-placeholder-count="5">
+          <div style="height:56px;display:flex;align-items:center;gap:16px;opacity:{{ ls.op }};transition:opacity 400ms cubic-bezier(.2,0,0,1)">
+            <svg viewBox="0 0 24 24" width="24" height="24" style="flex:0 0 24px"><circle cx="12" cy="12" r="10.5" fill="{{ ls.fill }}" stroke="{{ ls.stroke }}" stroke-width="1.5"></circle><path d="M7.5 12.4l3 3 6-6.4" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ ls.tick }};transition:opacity 300ms"></path></svg>
+            <span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:22px;letter-spacing:-.01em;color:{{ ls.col }}">{{ ls.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <p style="position:absolute;bottom:40px;left:0;right:0;margin:0;text-align:center;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">CHAPTER ZERO · {{ loaderCount }}</p>
+  </div>
+</sc-if>
+
+<header style="position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 clamp(12px,3vw,24px);pointer-events:none">
+  <div style="pointer-events:auto;width:100%;max-width:1180px;height:60px;padding:0 8px 0 20px;border-radius:999px;display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);background:{{ nvBg }};border:1px solid {{ nvBd }};box-shadow:{{ nvSh }};backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);transition:background 300ms cubic-bezier(.2,0,0,1),border-color 300ms,box-shadow 300ms">
+    <a href="#top" aria-label="Liminal Math — home" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;white-space:nowrap"><svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter','Courier New',monospace;font-size:13px;letter-spacing:.3em;color:{{ nvFg }};transition:color 300ms">LIMINAL MATH</span></a>
+    <nav aria-label="Primary" style="flex:1 1 auto;min-width:0;height:36px;overflow:hidden;display:{{ nvLinksD }};justify-content:center;align-items:center;gap:2px;flex-wrap:wrap;row-gap:36px;white-space:nowrap">
+      <a href="Liminal App.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:500;font-size:14.5px;color:{{ nl1c }};background:{{ nl1b }};transition:background 200ms cubic-bezier(.2,0,0,1),color 200ms" style-hover="background:rgba(127,127,127,.14)">Learn</a>
+      <a href="Liminal App.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:500;font-size:14.5px;color:{{ nl2c }};background:{{ nl2b }};transition:background 200ms cubic-bezier(.2,0,0,1),color 200ms" style-hover="background:rgba(127,127,127,.14)">Practice</a>
+      <a href="Liminal POD.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:500;font-size:14.5px;color:{{ nl3c }};background:{{ nl3b }};transition:background 200ms cubic-bezier(.2,0,0,1),color 200ms" style-hover="background:rgba(127,127,127,.14)">Problem of the Day</a>
+      <a href="Liminal Community.dc.html" style="height:36px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:500;font-size:14.5px;color:{{ nl4c }};background:{{ nl4b }};transition:background 200ms cubic-bezier(.2,0,0,1),color 200ms" style-hover="background:rgba(127,127,127,.14)">Community</a>
+    </nav>
+    <div style="flex:0 0 auto;margin-left:auto;display:flex;align-items:center;gap:8px;white-space:nowrap">
+      <button type="button" aria-label="Search" style="height:36px;padding:0 8px 0 12px;border-radius:999px;border:1px solid {{ nvBd }};background:transparent;color:{{ nvMu }};display:{{ nvDeskD }};align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-size:14px;cursor:pointer;transition:color 300ms,border-color 300ms" style-hover="background:rgba(127,127,127,.12)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><span style="font-family:'CM Typewriter',monospace;font-size:11px;padding:1px 6px;border-radius:6px;border:1px solid {{ nvBd }}">⌘K</span></button>
+      <a href="Liminal App.dc.html" style="height:36px;padding:0 12px;display:{{ nvDeskD }};align-items:center;font-family:'Figtree',sans-serif;font-weight:500;font-size:14.5px;color:{{ nvFg }};transition:color 300ms">Log in</a>
+      <a href="Liminal App.dc.html" style="height:44px;padding:0 20px;border-radius:999px;display:{{ nvDeskD }};align-items:center;gap:8px;font-family:'Figtree',sans-serif;font-weight:600;font-size:14.5px;background:{{ nvCtaBg }};color:{{ nvCtaFg }};transition:background 300ms,color 300ms,opacity 120ms" style-hover="opacity:.88">Chapter Zero <span aria-hidden="true">→</span></a>
+      <button type="button" onClick="{{ openMenu }}" aria-label="Open menu" style="width:44px;height:44px;border-radius:999px;border:1px solid {{ nvBd }};background:transparent;color:{{ nvFg }};display:{{ nvMobD }};align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 9h16M4 15h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Menu" style="position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.94);backdrop-filter:blur(12px);display:flex;flex-direction:column;padding:22px clamp(16px,5vw,32px) 32px;color:#ECE8DF">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:60px">
+      <span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.3em;color:#ECE8DF">LIMINAL MATH</span>
+      <button type="button" onClick="{{ closeMenu }}" aria-label="Close menu" style="width:44px;height:44px;border-radius:999px;border:1px solid #333844;background:transparent;color:#ECE8DF;font-size:22px;cursor:pointer">×</button>
+    </div>
+    <nav aria-label="Mobile" style="display:flex;flex-direction:column;margin-top:32px;border-top:1px solid #242831">
+      <a href="Liminal App.dc.html" onClick="{{ closeMenu }}" style="display:flex;align-items:baseline;gap:16px;padding:18px 0;border-bottom:1px solid #242831;color:#ECE8DF"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#4C98F0">01</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:30px;letter-spacing:-.02em">Learn</span></a>
+      <a href="Liminal App.dc.html" onClick="{{ closeMenu }}" style="display:flex;align-items:baseline;gap:16px;padding:18px 0;border-bottom:1px solid #242831;color:#ECE8DF"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#4C98F0">02</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:30px;letter-spacing:-.02em">Practice</span></a>
+      <a href="Liminal POD.dc.html" onClick="{{ closeMenu }}" style="display:flex;align-items:baseline;gap:16px;padding:18px 0;border-bottom:1px solid #242831;color:#ECE8DF"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#4C98F0">03</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:30px;letter-spacing:-.02em">Problem of the Day</span></a>
+      <a href="Liminal Community.dc.html" onClick="{{ closeMenu }}" style="display:flex;align-items:baseline;gap:16px;padding:18px 0;border-bottom:1px solid #242831;color:#ECE8DF"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#4C98F0">04</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:30px;letter-spacing:-.02em">Community</span></a>
+    </nav>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+      <a href="Liminal App.dc.html" onClick="{{ closeMenu }}" style="height:52px;border-radius:999px;background:#ECE8DF;color:#000000;display:flex;align-items:center;justify-content:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px">Start Chapter Zero →</a>
+      <a href="Liminal App.dc.html" onClick="{{ closeMenu }}" style="height:52px;border-radius:999px;border:1px solid #333844;color:#ECE8DF;display:flex;align-items:center;justify-content:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px">Log in</a>
+    </div>
+  </div>
+</sc-if>
+
+
+<div style="position:fixed;left:24px;bottom:24px;z-index:40;opacity:{{ pillOp }};transform:translateY({{ pillY }});pointer-events:{{ pillPe }};transition:opacity 300ms cubic-bezier(.2,0,0,1),transform 300ms cubic-bezier(.2,0,0,1)">
+  <a href="#top" aria-label="Back to top" style="display:flex;align-items:center;gap:12px;height:48px;padding:0 20px 0 7px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid #E2E5EA;box-shadow:0 8px 28px rgba(18,20,24,.07);color:#121418;backdrop-filter:blur(8px)">
+    <span style="width:34px;height:34px;border-radius:999px;border:1px solid #E2E5EA;display:grid;place-items:center"><svg viewBox="0 0 133 128" width="18" height="17" aria-hidden="true" style="display:block"><path d="M78 2L93 74L99 125L55 60Z" fill="{{ pf0 }}" style="transition:fill 300ms"></path><path d="M78 2L2 88L55 60Z" fill="{{ pf1 }}" style="transition:fill 300ms"></path><path d="M2 88L55 60L99 125Z" fill="{{ pf2 }}" style="transition:fill 300ms"></path><path d="M93 74L129 69L98 108Z" fill="{{ pf3 }}" style="transition:fill 300ms"></path><path d="M129 69L99 125L98 108Z" fill="{{ pf4 }}" style="transition:fill 300ms"></path></svg></span>
+    <span style="display:flex;flex-direction:column;gap:5px">
+      <span style="display:flex;align-items:baseline;gap:8px;line-height:1"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#0B5BC4">{{ chNum }}</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:15px;color:#121418">{{ chName }}</span></span>
+      <span style="display:block;width:112px;height:2px;background:#E2E5EA;border-radius:2px;overflow:hidden"><i ref="{{ pillBarRef }}" style="display:block;height:100%;width:100%;background:#0B5BC4;transform-origin:left center;transform:scaleX(0)"></i></span>
+    </span>
+  </a>
+</div>
+
+<sc-if value="{{ heroSpace }}" hint-placeholder-val="{{ true }}">
+<section id="top" ref="{{ heroRef }}" data-chapter="1" data-dark="1" data-screen-label="01 Hero (space)" style="position:relative;min-height:100vh;padding-bottom:32px;display:flex;flex-direction:column;background:#000000;color:#ECE8DF;overflow:hidden">
+  <canvas ref="{{ heroMeshRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(236,232,223,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(236,232,223,.035) 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 60% 45%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 80% 70% at 60% 45%,#000 0%,transparent 100%)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 65% at 55% 45%,rgba(0,0,0,0) 0%,rgba(0,0,0,.5) 70%,#000000 100%)"></div>
+  <div data-hero="" style="position:relative;z-index:1;flex:1;width:100%;max-width:1440px;margin:0 auto;padding:clamp(112px,11vw,144px) clamp(16px,5vw,72px) clamp(40px,5vw,64px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(32px,4vw,64px);pointer-events:none">
+    <div style="flex:1.3 1 540px;min-width:0;display:flex;flex-direction:column;gap:28px;pointer-events:auto">
+      <p data-reveal="fade" data-delay="0" style="margin:0;font-family:'CM Typewriter','Courier New',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E828C"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#4C98F0"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#333844"></path><path d="M2 88L55 60L99 125Z" fill="#333844"></path><path d="M93 74L129 69L98 108Z" fill="#333844"></path><path d="M129 69L99 125L98 108Z" fill="#333844"></path></svg>§01</span> — Olympiad mathematics, on the threshold</p>
+      <sc-if value="{{ hA }}" hint-placeholder-val="{{ true }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#ECE8DF">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">There is more</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">to mathematics</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">than <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#4C98F0">the answer.</em></span></span>
+        </h1>
+      </sc-if>
+      <sc-if value="{{ hB }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#ECE8DF">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">Enter the space</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">between knowing</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">and <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#4C98F0">discovering.</em></span></span>
+        </h1>
+      </sc-if>
+      <sc-if value="{{ hC }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#ECE8DF">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">A place for</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">people who</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">think in <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#4C98F0">mathematics.</em></span></span>
+        </h1>
+      </sc-if>
+      <p data-reveal="up" data-delay="420" style="margin:0;max-width:50ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#A7AAB2;text-wrap:pretty">Liminal is where curious students learn olympiad mathematics by doing it: one real problem every day, figures you can move, and a community that argues about approaches, not answers.</p>
+      <div data-reveal="up" data-delay="520" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <a href="Liminal App.dc.html" style="height:52px;padding:0 26px;border-radius:999px;background:#0B5BC4;color:#FFFFFF;display:flex;align-items:center;gap:10px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1766D1;color:#FFFFFF" style-active="background:#0852B0">Start Chapter Zero <span aria-hidden="true">→</span></a>
+        <a href="Liminal POD.dc.html" style="height:52px;padding:0 24px;border-radius:999px;background:rgba(236,232,223,.04);border:1px solid #333844;color:#ECE8DF;display:flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:rgba(236,232,223,.1);color:#ECE8DF">Try today’s problem</a>
+      </div>
+    </div>
+    <figure data-reveal="scale" data-delay="300" style="flex:1 1 420px;min-width:0;margin:0;display:flex;flex-direction:column;gap:16px;pointer-events:auto">
+      <div style="position:relative;width:100%;max-width:600px;margin:0 auto;aspect-ratio:1/1">
+        <canvas ref="{{ canvasRef }}" role="img" aria-label="A 24-cell rotating in four dimensions. Drag to turn it; scrolling turns it too." style="position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none"></canvas>
+        <span aria-hidden="true" style="position:absolute;top:0;left:0;width:18px;height:18px;border-top:1px solid #7E828C;border-left:1px solid #7E828C;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;top:0;right:0;width:18px;height:18px;border-top:1px solid #7E828C;border-right:1px solid #7E828C;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;left:0;width:18px;height:18px;border-bottom:1px solid #7E828C;border-left:1px solid #7E828C;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;right:0;width:18px;height:18px;border-bottom:1px solid #7E828C;border-right:1px solid #7E828C;pointer-events:none"></span>
+        <span style="position:absolute;top:14px;left:28px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C;pointer-events:none">FIG. 0</span>
+        <span style="position:absolute;top:12px;right:28px;font-family:'CM Roman','Times New Roman',serif;font-size:15px;color:#A7AAB2;pointer-events:none">ℝ<sup style="font-size:10px">4</sup> → ℝ<sup style="font-size:10px">2</sup></span>
+        <div aria-hidden="true" style="position:absolute;top:13%;right:-2%;display:flex;flex-direction:column;align-items:flex-start;pointer-events:none">
+          <span style="font-family:'Caveat',cursive;font-size:26px;line-height:1;color:#D9B26A;transform:translateX(18px)">drag to turn it</span>
+          <svg viewBox="0 0 120 60" style="width:96px;height:48px;overflow:visible"><path data-reveal="draw" data-delay="1200" d="{{ arrowPath }}" fill="none" stroke="#D9B26A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path data-reveal="draw" data-delay="1500" d="{{ arrowHead }}" fill="none" stroke="#D9B26A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <span style="position:absolute;bottom:14px;left:28px;display:flex;align-items:center;gap:8px;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.06em;color:#4C98F0;pointer-events:none"><i style="display:block;width:6px;height:6px;border-radius:50%;background:#4C98F0"></i>{{ vtxLabel }}</span>
+      </div>
+      <figcaption style="width:100%;max-width:600px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:baseline">
+        <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#ECE8DF">The 24-cell</span>
+        <span style="font-family:'Figtree',sans-serif;font-size:14px;line-height:1.5;color:#A7AAB2;text-wrap:pretty">A regular solid that exists only in four dimensions: 24 vertices, 96 edges, 24 octahedral cells, and no twin in three. Scroll, and it turns.</span>
+      </figcaption>
+    </figure>
+  </div>
+  <a href="Liminal POD.dc.html" data-hero="" style="position:relative;z-index:1;display:block;border-top:1px solid #242831;background:rgba(0,0,0,.72);color:#ECE8DF;backdrop-filter:blur(6px)" style-hover="background:rgba(23,26,32,.9);color:#ECE8DF">
+    <div data-reveal="up" data-delay="700" style="max-width:1440px;margin:0 auto;padding:18px clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E828C">Problem of the Day · {{ today }}</span>
+      <span style="flex:1 1 320px;font-family:'CM Roman','Times New Roman',serif;font-size:20px;color:#ECE8DF">How many positive divisors does 2026 have?</span>
+      <span style="display:flex;align-items:center;gap:8px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#ECE8DF;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#ECE8DF;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#333844;border-radius:1px"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#7E828C">MEDIUM</span></span>
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.08em;color:#A7AAB2">SOLUTION IN {{ countdown }}</span>
+      <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#4C98F0">Solve →</span>
+    </div>
+  </a>
+</section>
+</sc-if>
+<sc-if value="{{ heroPaper }}" hint-placeholder-val="{{ false }}">
+<section id="top" ref="{{ heroRef }}" data-chapter="1" data-screen-label="01 Hero" style="position:relative;min-height:100vh;display:flex;flex-direction:column;background:#FFFFFF;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(#EAEEF3 1px,transparent 1px),linear-gradient(90deg,#EAEEF3 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 70%,transparent 100%)"></div>
+  <div aria-hidden="true" ref="{{ crossRef }}" style="position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 200ms cubic-bezier(.2,0,0,1)">
+    <i data-x="" style="position:absolute;top:0;bottom:0;left:0;width:1px;background:rgba(11,91,196,.2);transition:transform 120ms cubic-bezier(.2,0,0,1)"></i>
+    <i data-y="" style="position:absolute;left:0;right:0;top:0;height:1px;background:rgba(11,91,196,.2);transition:transform 120ms cubic-bezier(.2,0,0,1)"></i>
+    <i data-d="" style="position:absolute;top:-3px;left:-3px;width:7px;height:7px;border-radius:50%;background:#0B5BC4;transition:transform 120ms cubic-bezier(.2,0,0,1)"></i>
+    <span data-l="" style="position:absolute;top:0;left:0;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.06em;color:#0B5BC4;background:#FFFFFF;padding:2px 6px;border:1px solid #D2D7DE;border-radius:4px;white-space:nowrap;transition:transform 120ms cubic-bezier(.2,0,0,1)">(0, 0)</span>
+  </div>
+
+  <div data-hero="" style="position:relative;z-index:1;flex:1;width:100%;max-width:1440px;margin:0 auto;padding:clamp(112px,11vw,144px) clamp(16px,5vw,72px) clamp(40px,5vw,64px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(32px,4vw,64px)">
+    <div style="flex:1.3 1 540px;min-width:0;display:flex;flex-direction:column;gap:28px">
+      <p data-reveal="fade" data-delay="0" style="margin:0;font-family:'CM Typewriter','Courier New',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#D2D7DE"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§01</span> — Olympiad mathematics, on the threshold</p>
+
+      <sc-if value="{{ hA }}" hint-placeholder-val="{{ true }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#121418">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">There is more</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">to mathematics</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">than <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">the answer.</em></span></span>
+        </h1>
+      </sc-if>
+      <sc-if value="{{ hB }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#121418">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">Enter the space</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">between knowing</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">and <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">discovering.</em></span></span>
+        </h1>
+      </sc-if>
+      <sc-if value="{{ hC }}" hint-placeholder-val="{{ false }}">
+        <h1 style="margin:0;font-family:'Instrument Sans','Helvetica Neue',sans-serif;font-weight:500;font-size:clamp(46px,6.2vw,100px);line-height:.95;letter-spacing:-.034em;color:#121418">
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="80" style="display:block">A place for</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .1em 0;margin-bottom:-.1em"><span data-reveal="line" data-delay="170" style="display:block">people who</span></span>
+          <span style="display:block;overflow:hidden;padding:0 .12em .16em 0;margin-bottom:-.16em"><span data-reveal="line" data-delay="260" style="display:block">think in <em style="position:relative;display:inline-block;font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#0B5BC4">mathematics.</em></span></span>
+        </h1>
+      </sc-if>
+
+      <p data-reveal="up" data-delay="420" style="margin:0;max-width:50ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">Liminal is where curious students learn olympiad mathematics by doing it: one real problem every day, figures you can move, and a community that argues about approaches, not answers.</p>
+      <div data-reveal="up" data-delay="520" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <a href="Liminal App.dc.html" style="height:52px;padding:0 26px;border-radius:999px;background:#0B5BC4;color:#FFFFFF;display:flex;align-items:center;gap:10px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1766D1;color:#FFFFFF" style-active="background:#0852B0">Start Chapter Zero <span aria-hidden="true">→</span></a>
+        <a href="Liminal POD.dc.html" style="height:52px;padding:0 24px;border-radius:999px;background:#FFFFFF;border:1px solid #D2D7DE;color:#121418;display:flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#EEF1F4;color:#121418">Try today’s problem</a>
+      </div>
+    </div>
+
+    <figure data-reveal="scale" data-delay="300" style="flex:1 1 420px;min-width:0;margin:0;display:flex;flex-direction:column;gap:16px">
+      <div style="position:relative;width:100%;max-width:600px;margin:0 auto;aspect-ratio:1/1">
+        <canvas ref="{{ canvasRef }}" role="img" aria-label="A 24-cell rotating in four dimensions. Drag to turn it; scrolling turns it too." style="position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none"></canvas>
+        <span aria-hidden="true" style="position:absolute;top:0;left:0;width:18px;height:18px;border-top:1px solid #121418;border-left:1px solid #121418;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;top:0;right:0;width:18px;height:18px;border-top:1px solid #121418;border-right:1px solid #121418;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;left:0;width:18px;height:18px;border-bottom:1px solid #121418;border-left:1px solid #121418;pointer-events:none"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:0;right:0;width:18px;height:18px;border-bottom:1px solid #121418;border-right:1px solid #121418;pointer-events:none"></span>
+        <span style="position:absolute;top:14px;left:28px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280;pointer-events:none">FIG. 0</span>
+        <span style="position:absolute;top:12px;right:28px;font-family:'CM Roman','Times New Roman',serif;font-size:15px;color:#4B4F58;pointer-events:none">ℝ<sup style="font-size:10px">4</sup> → ℝ<sup style="font-size:10px">2</sup></span>
+        <div aria-hidden="true" style="position:absolute;top:13%;right:-2%;display:flex;flex-direction:column;align-items:flex-start;pointer-events:none">
+          <span style="font-family:'Caveat',cursive;font-size:26px;line-height:1;color:#9A6B12;transform:translateX(18px)">drag to turn it</span>
+          <svg viewBox="0 0 120 60" style="width:96px;height:48px;overflow:visible"><path data-reveal="draw" data-delay="1200" d="{{ arrowPath }}" fill="none" stroke="#9A6B12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path data-reveal="draw" data-delay="1500" d="{{ arrowHead }}" fill="none" stroke="#9A6B12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <span style="position:absolute;bottom:14px;left:28px;display:flex;align-items:center;gap:8px;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.06em;color:#0B5BC4;pointer-events:none"><i style="display:block;width:6px;height:6px;border-radius:50%;background:#0B5BC4"></i>{{ vtxLabel }}</span>
+      </div>
+      <figcaption style="width:100%;max-width:600px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:baseline">
+        <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:14px;color:#121418">The 24-cell</span>
+        <span style="font-family:'Figtree',sans-serif;font-size:14px;line-height:1.5;color:#4B4F58;text-wrap:pretty">A regular solid that exists only in four dimensions: 24 vertices, 96 edges, 24 octahedral cells, and no twin in three. Scroll, and it turns.</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <a href="Liminal POD.dc.html" data-hero="" style="position:relative;z-index:1;display:block;border-top:1px solid #E2E5EA;background:rgba(255,255,255,.9);color:#121418" style-hover="background:#F6F7F9;color:#121418">
+    <div data-reveal="up" data-delay="700" style="max-width:1440px;margin:0 auto;padding:18px clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Problem of the Day · {{ today }}</span>
+      <span style="flex:1 1 320px;font-family:'CM Roman','Times New Roman',serif;font-size:20px;color:#121418">How many positive divisors does 2026 have?</span>
+      <span style="display:flex;align-items:center;gap:8px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">MEDIUM</span></span>
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.08em;color:#4B4F58">SOLUTION IN {{ countdown }}</span>
+      <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#0B5BC4">Solve →</span>
+    </div>
+  </a>
+</section>
+</sc-if>
+
+<section id="proof" data-chapter="2" data-screen-label="02 The proof" style="position:relative;z-index:2;height:340vh;margin-top:-32px;background:#FFFFFF;border-radius:32px 32px 0 0">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center">
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(#EEF1F5 1px,transparent 1px),linear-gradient(90deg,#EEF1F5 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 45% 60% at 70% 50%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 45% 60% at 70% 50%,#000 0%,transparent 100%)"></div>
+    <div style="position:relative;width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap-reverse;gap:clamp(16px,4vw,80px);align-items:center">
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:{{ proofGap }}">
+        <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#D2D7DE"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§02</span> — The proof · scroll to construct</p>
+        <h2 data-reveal="up" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:{{ proofH2 }};line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">Every proof begins as a <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">guess.</em></h2>
+        <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px">
+          <li style="grid-template-columns:44px 1fr;gap:4px 12px;display:{{ sd0 }};padding:8px 0 8px 16px;border-left:2px solid {{ sb0 }};opacity:{{ st0 }};transition:opacity 300ms cubic-bezier(.2,0,0,1),border-color 300ms"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:5px">01</span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:21px;color:#121418">Given a triangle.</b><span style="font-size:15px;color:#4B4F58;max-height:{{ dh0 }};overflow:hidden;transition:max-height 300ms cubic-bezier(.2,0,0,1)">Sharp, flat or lopsided. The result won’t care.</span></span></li>
+          <li style="grid-template-columns:44px 1fr;gap:4px 12px;display:{{ sd1 }};padding:8px 0 8px 16px;border-left:2px solid {{ sb1 }};opacity:{{ st1 }};transition:opacity 300ms cubic-bezier(.2,0,0,1),border-color 300ms"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:5px">02</span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:21px;color:#121418">Mark the midpoints.</b><span style="font-size:15px;color:#4B4F58;max-height:{{ dh1 }};overflow:hidden;transition:max-height 300ms cubic-bezier(.2,0,0,1)">Each side cut exactly in half. The ticks say which halves match.</span></span></li>
+          <li style="grid-template-columns:44px 1fr;gap:4px 12px;display:{{ sd2 }};padding:8px 0 8px 16px;border-left:2px solid {{ sb2 }};opacity:{{ st2 }};transition:opacity 300ms cubic-bezier(.2,0,0,1),border-color 300ms"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:5px">03</span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:21px;color:#121418">Join each vertex to the opposite midpoint.</b><span style="font-size:15px;color:#4B4F58;max-height:{{ dh2 }};overflow:hidden;transition:max-height 300ms cubic-bezier(.2,0,0,1)">Three lines, drawn separately. The guess: do they all pass through one point?</span></span></li>
+          <li style="grid-template-columns:44px 1fr;gap:4px 12px;display:{{ sd3 }};padding:8px 0 8px 16px;border-left:2px solid {{ sb3 }};opacity:{{ st3 }};transition:opacity 300ms cubic-bezier(.2,0,0,1),border-color 300ms"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4;padding-top:5px">04</span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:21px;color:#121418">They do. Every time.</b><span style="font-size:15px;color:#4B4F58;max-height:{{ dh3 }};overflow:hidden;transition:max-height 300ms cubic-bezier(.2,0,0,1)">The centroid <i style="font-family:'CM Roman',serif;font-size:17px">G</i> sits two-thirds of the way down each median. Now prove it.</span></span></li>
+        </ol>
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP {{ stepNum }} / 04</span>
+          <span style="flex:1;max-width:220px;height:2px;background:#E2E5EA;border-radius:2px;overflow:hidden"><i ref="{{ proofBarRef }}" style="display:block;height:100%;width:100%;background:#0B5BC4;transform-origin:left center;transform:scaleX(0)"></i></span>
+        </div>
+      </div>
+      <div style="flex:1.25 1 {{ figBasis }};min-width:0">
+        <svg viewBox="0 0 560 470" role="img" aria-label="Construction of the centroid of a triangle" style="width:100%;height:auto;display:block;max-height:{{ figMax }}">
+          <path data-seg="0,.18" pathLength="1" d="{{ triPath }}" fill="none" stroke="#121418" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <text data-seg=".08,.18" x="242" y="44" style="font-family:'CM Roman',serif;font-style:italic;font-size:24px;opacity:0" fill="#121418">A</text>
+          <text data-seg=".08,.18" x="52" y="410" style="font-family:'CM Roman',serif;font-style:italic;font-size:24px;opacity:0" fill="#121418">B</text>
+          <text data-seg=".08,.18" x="498" y="410" style="font-family:'CM Roman',serif;font-style:italic;font-size:24px;opacity:0" fill="#121418">C</text>
+          <path data-seg=".22,.36" pathLength="1" d="{{ tAB }}" fill="none" stroke="#9A6B12" stroke-width="2" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".24,.38" pathLength="1" d="{{ tBC }}" fill="none" stroke="#9A6B12" stroke-width="2" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".26,.4" pathLength="1" d="{{ tCA }}" fill="none" stroke="#9A6B12" stroke-width="2" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <g data-seg=".22,.3" style="opacity:0">
+            <circle cx="285" cy="390" r="4.5" fill="#121418"></circle><circle cx="370" cy="225" r="4.5" fill="#121418"></circle><circle cx="165" cy="225" r="4.5" fill="#121418"></circle>
+            <text x="278" y="420" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#4B4F58">D</text>
+            <text x="382" y="220" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#4B4F58">E</text>
+            <text x="134" y="220" style="font-family:'CM Roman',serif;font-style:italic;font-size:22px" fill="#4B4F58">F</text>
+          </g>
+          <path data-seg=".44,.54" pathLength="1" d="M250 60L285 390" fill="none" stroke="#4B4F58" stroke-width="1.6" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".5,.6" pathLength="1" d="M80 390L370 225" fill="none" stroke="#4B4F58" stroke-width="1.6" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".56,.66" pathLength="1" d="M490 390L165 225" fill="none" stroke="#4B4F58" stroke-width="1.6" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          
+          <path data-seg=".72,.84" pathLength="1" d="{{ gRing }}" fill="none" stroke="#0B5BC4" stroke-width="1.6" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".76,.88" pathLength="1" d="M250 60L273.3 280" fill="none" stroke="#0B5BC4" stroke-width="3.2" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <path data-seg=".84,.92" pathLength="1" d="M273.3 280L285 390" fill="none" stroke="#9A6B12" stroke-width="3.2" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+          <g data-seg=".72,.78" style="opacity:0"><circle cx="273.3" cy="280" r="13" fill="#0B5BC4" fill-opacity=".14"></circle><circle cx="273.3" cy="280" r="5" fill="#0B5BC4"></circle><text x="292" y="276" style="font-family:'CM Roman',serif;font-style:italic;font-size:24px" fill="#0B5BC4">G</text></g>
+          <g data-seg=".9,.98" style="opacity:0"><text x="280" y="458" text-anchor="middle" style="font-family:'CM Roman',serif;font-size:24px" fill="#121418"><tspan font-style="italic">AG</tspan> : <tspan font-style="italic">GD</tspan> = 2 : 1</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="today" data-chapter="3" data-screen-label="03 Today's problem" style="background:#F6F7F9;border-top:1px solid #E2E5EA;padding:clamp(64px,7vw,104px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,96px);align-items:center">
+    <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:24px">
+      <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§03</span> — Today’s problem</p>
+      <h2 data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(38px,4.6vw,60px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">One problem. Every day. <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">Everyone.</em></h2>
+      <p data-reveal="up" data-delay="160" style="margin:0;max-width:46ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">No streaks, no leaderboard. One carefully chosen problem, the same for everyone, every morning. Tomorrow the solution unlocks, along with every approach the community found.</p>
+    </div>
+    <article data-reveal="up" data-delay="200" style="flex:1 1 460px;min-width:0;max-width:600px;background:#FFFFFF;border:1px solid #E2E5EA;border-radius:14px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:20px;box-shadow:0 18px 48px rgba(18,20,24,.05)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280">Problem of the Day · {{ today }}</span>
+        <span style="display:flex;align-items:center;gap:8px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">MEDIUM</span></span>
+      </div>
+      <h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.005em;color:#121418">Divisors of the year</h3>
+      <p style="margin:0;font-family:'CM Roman','Times New Roman',serif;font-size:22px;line-height:1.5;color:#121418">How many positive divisors does <i>n</i> = 2026 have?</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;border:1px solid #E2E5EA;border-radius:999px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:#4B4F58"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.1em;color:#121418">NT</b>Number theory</span>
+      </div>
+      <form onSubmit="{{ onCheck }}" novalidate="" style="display:flex;flex-direction:column;gap:14px;padding-top:20px;border-top:1px solid #E2E5EA">
+        <label for="ans" style="font-family:'Figtree',sans-serif;font-weight:500;font-size:14px;color:#4B4F58">Your answer</label>
+        <div style="display:flex;gap:10px">
+          <input id="ans" value="{{ ans }}" onChange="{{ onAns }}" inputmode="numeric" autocomplete="off" placeholder="A whole number" style="flex:1;min-width:0;height:44px;padding:0 16px;border-radius:10px;border:1px solid {{ ansBorder }};background:#FFFFFF;font-family:'CM Roman','Times New Roman',serif;font-size:19px;color:#121418;outline:none;transition:border-color 200ms">
+          <button type="submit" style="height:44px;padding:0 22px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1766D1" style-active="background:#0852B0">Check</button>
+        </div>
+        <div aria-live="polite" style="min-height:48px;display:flex;gap:12px;align-items:flex-start;font-family:'Figtree',sans-serif;font-size:15px;line-height:1.5;color:#4B4F58">
+          <sc-if value="{{ fbIdle }}" hint-placeholder-val="{{ true }}"><span>Answer with a whole number. Take as many tries as you need.</span></sc-if>
+          <sc-if value="{{ fbEmpty }}" hint-placeholder-val="{{ false }}"><span>Enter a whole number first.</span></sc-if>
+          <sc-if value="{{ fbOk }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 28 22" style="flex:0 0 28px;width:28px;height:22px;margin-top:1px" aria-hidden="true"><path pathLength="1" d="{{ tickPath }}" fill="none" stroke="#127A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1 1;animation:lmDraw 320ms cubic-bezier(.65,0,.35,1) both"></path></svg>
+            <span><b style="color:#121418">Correct.</b> 2026 = 2 · 1013, and 1013 is prime, so the divisors are 1, 2, 1013 and 2026.</span>
+          </sc-if>
+          <sc-if value="{{ fbBad }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 28 22" style="flex:0 0 28px;width:28px;height:22px;margin-top:1px" aria-hidden="true"><path pathLength="1" d="{{ strikePath }}" fill="none" stroke="#C23B56" stroke-width="2.2" stroke-linecap="round" style="stroke-dasharray:1 1;animation:lmDraw 320ms cubic-bezier(.65,0,.35,1) both"></path></svg>
+            <span><b style="color:#121418">Not quite.</b> Start by factoring 2026. Is 1013 prime?</span>
+          </sc-if>
+        </div>
+      </form>
+    </article>
+  </div>
+</section>
+
+<section id="method" data-chapter="4" data-dark="1" data-screen-label="04 The method" style="background:#F6F7F9;padding:0 clamp(8px,1.4vw,20px)">
+ <div style="position:relative;background:#000000;border-radius:28px;overflow:hidden;color:#ECE8DF">
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 70% at 35% 50%,rgba(0,0,0,.2) 0%,rgba(0,0,0,.75) 70%,#000000 100%)"></div>
+  <div style="position:relative;border-bottom:1px solid #242831;padding:18px 0">
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px 36px;padding:0 24px">
+      <sc-for list="{{ topics }}" as="tp" hint-placeholder-count="12"><span style="display:flex;align-items:center;gap:10px;white-space:nowrap"><b style="font-family:'CM Typewriter',monospace;font-weight:400;font-size:11px;letter-spacing:.12em;color:#4C98F0">{{ tp.c }}</b><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:17px;color:#A7AAB2">{{ tp.t }}</span></span></sc-for>
+    </div>
+  </div>
+  <div style="position:relative;padding:clamp(64px,7vw,96px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap-reverse;gap:clamp(40px,6vw,96px);align-items:center">
+    <figure data-reveal="scale" style="flex:1.2 1 460px;min-width:0;margin:0;display:flex;flex-direction:column;gap:12px">
+      <svg viewBox="0 0 520 400" tabindex="0" role="img" aria-label="Drag P around the circle; the angle APB stays 90 degrees." onPointerDown="{{ tDown }}" onPointerMove="{{ tMove }}" onPointerUp="{{ tUp }}" onKeyDown="{{ tKey }}" style="width:100%;height:auto;display:block;touch-action:none;cursor:pointer;border-radius:14px">
+        <path data-reveal="draw" d="{{ circlePath }}" fill="none" stroke="#ECE8DF" stroke-width="1.6" stroke-linecap="round"></path>
+        <line x1="110" y1="210" x2="410" y2="210" stroke="#ECE8DF" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="110" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#4C98F0" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="410" y1="210" x2="{{ px }}" y2="{{ py }}" stroke="#4C98F0" stroke-width="2" stroke-linecap="round"></line>
+        <path d="{{ rightMark }}" fill="none" stroke="#74C9A0" stroke-width="1.8" stroke-linejoin="round"></path>
+        <circle cx="260" cy="210" r="3" fill="#ECE8DF"></circle>
+        <circle cx="110" cy="210" r="3.5" fill="#ECE8DF"></circle>
+        <circle cx="410" cy="210" r="3.5" fill="#ECE8DF"></circle>
+        <text x="92" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#ECE8DF">A</text>
+        <text x="416" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#ECE8DF">B</text>
+        <text x="254" y="236" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:20px" fill="#A7AAB2">O</text>
+        <text x="{{ plx }}" y="{{ ply }}" text-anchor="middle" dominant-baseline="middle" style="font-family:'CM Roman','Times New Roman',serif;font-style:italic;font-size:22px" fill="#4C98F0">P</text>
+        <circle cx="{{ px }}" cy="{{ py }}" r="22" fill="#4C98F0" fill-opacity=".14"></circle>
+        <circle cx="{{ px }}" cy="{{ py }}" r="7" fill="#000000" stroke="#4C98F0" stroke-width="2.4"></circle>
+      </svg>
+      <figcaption style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #242831">
+        <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E828C">Fig. 4 — Drag <span style="text-transform:none;font-family:'CM Roman',serif;font-style:italic;font-size:15px;letter-spacing:0;color:#4C98F0">P</span></span>
+        <span style="font-family:'CM Roman','Times New Roman',serif;font-size:18px;color:#ECE8DF">∠<i>APB</i> = {{ angle }}°</span>
+      </figcaption>
+    </figure>
+    <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:28px">
+      <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E828C"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#4C98F0"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#333844"></path><path d="M78 2L2 88L55 60Z" fill="#333844"></path><path d="M2 88L55 60L99 125Z" fill="#333844"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#333844"></path></svg>§04</span> — The method</p>
+      <h2 data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(38px,4.6vw,60px);line-height:1;letter-spacing:-.025em;color:#ECE8DF;text-wrap:balance">Don’t memorise it. <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">Move it.</em></h2>
+      <p data-reveal="up" data-delay="120" style="margin:0;max-width:46ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#A7AAB2;text-wrap:pretty">Every lesson is built around a figure you can touch. You find the pattern first; the proof arrives when you’re ready for it.</p>
+      <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid #242831">
+        <li data-reveal="up" data-delay="160" style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #242831"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#4C98F0;padding-top:4px">01</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#ECE8DF">Drag <i style="font-family:'CM Roman',serif;font-size:18px">P</i> anywhere on the circle.</span></li>
+        <li data-reveal="up" data-delay="240" style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #242831"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#4C98F0;padding-top:4px">02</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#ECE8DF">Watch the angle at <i style="font-family:'CM Roman',serif;font-size:18px">P</i>. It never changes.</span></li>
+        <li data-reveal="up" data-delay="320" style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #242831"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#4C98F0;padding-top:4px">03</span><span style="font-family:'Figtree',sans-serif;font-size:16px;color:#ECE8DF">That’s Thales’ theorem. You just found it yourself.</span></li>
+      </ol>
+      <a data-reveal="fade" data-delay="400" href="Liminal App.dc.html" style="font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:#4C98F0">See how lessons work →</a>
+    </div>
+  </div>
+  </div>
+ </div>
+</section>
+
+<section id="pathway" data-chapter="5" data-screen-label="05 Pathway" style="background:#F6F7F9;padding:clamp(64px,7vw,104px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:clamp(40px,5vw,64px)">
+    <div style="display:flex;flex-direction:column;gap:24px;max-width:760px">
+      <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#D2D7DE"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>§05</span> — Pathway</p>
+      <h2 data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(38px,4.6vw,60px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">From first proof to <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">olympiad.</em></h2>
+      <p data-reveal="up" data-delay="160" style="margin:0;max-width:52ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">A clear route from your first olympiad paper to the national round, with the right problems waiting at every step.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:end;gap:24px">
+        <div data-reveal="up" data-delay="0" style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 1</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(52px,6.4vw,88px);line-height:.95;letter-spacing:-.03em;color:#121418">IOQM</span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Indian Olympiad Qualifier in Mathematics</span></div>
+        <div data-reveal="up" data-delay="220" style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 2</span><span style="display:flex;align-items:baseline;gap:20px"><span style="font-family:'CM Roman','Times New Roman',serif;font-size:clamp(40px,4.5vw,60px);line-height:1;color:#0B5BC4">⇒</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(52px,6.4vw,88px);line-height:.95;letter-spacing:-.03em;color:#121418">RMO</span></span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Regional Mathematical Olympiad</span></div>
+        <div data-reveal="up" data-delay="440" style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">STEP 3</span><span style="display:flex;align-items:baseline;gap:20px"><span style="font-family:'CM Roman','Times New Roman',serif;font-size:clamp(40px,4.5vw,60px);line-height:1;color:#0B5BC4">⇒</span><span style="font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(52px,6.4vw,88px);line-height:.95;letter-spacing:-.03em;color:#121418">INMO</span></span><span style="font-family:'Figtree',sans-serif;font-size:15px;color:#4B4F58">Indian National Mathematical Olympiad</span></div>
+      </div>
+      <svg viewBox="0 0 1000 12" preserveAspectRatio="none" aria-hidden="true" style="width:100%;height:12px;display:block;overflow:visible"><path data-reveal="draw" data-delay="300" d="{{ chainLine }}" fill="none" stroke="#0B5BC4" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div data-reveal="up" data-delay="0" style="padding:0 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">LIVE</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Live classes</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">Small groups, led by mentors who have sat these papers themselves.</p></div>
+      <div data-reveal="up" data-delay="120" style="padding:0 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">TIMED</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Mock tests</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">Full papers under real conditions, with written feedback on every proof.</p></div>
+      <div data-reveal="up" data-delay="240" style="padding:0 28px 0 0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#0B5BC4">DAILY</span><h3 style="margin:0;font-family:'Figtree',sans-serif;font-weight:600;font-size:20px;color:#121418">Problem of the Day</h3><p style="margin:0;font-size:16px;color:#4B4F58;max-width:36ch">The daily habit that keeps you sharp between classes and tests.</p></div>
+    </div>
+
+    <div data-reveal="up" data-delay="100" style="border:1px solid #D2D7DE;border-radius:14px;background:#FFFFFF;overflow:hidden;box-shadow:0 28px 72px rgba(18,20,24,.07)">
+      <div style="height:52px;padding:0 16px;border-bottom:1px solid #E2E5EA;display:flex;align-items:center;gap:16px;background:#FFFFFF">
+        <svg viewBox="0 0 133 128" style="width:18px;height:17px;display:block;flex:0 0 auto" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+        <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280;white-space:nowrap">PRACTICE / RMO TRACK</span>
+        <div style="margin-left:auto;flex:0 1 340px;min-width:0;height:34px;border:1px solid #E2E5EA;border-radius:999px;background:#F6F7F9;display:flex;align-items:center;gap:8px;padding:0 6px 0 12px;color:#6B7280;font-size:13px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><span style="flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">Search problems, topics, contests…</span><span style="font-family:'CM Typewriter',monospace;font-size:11px;border:1px solid #D2D7DE;border-radius:6px;padding:1px 6px;background:#FFFFFF">⌘K</span></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap">
+        <aside style="flex:0 0 220px;border-right:1px solid #E2E5EA;background:#F6F7F9;padding:16px 12px;display:{{ deskFlex }};flex-direction:column;gap:2px">
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;color:#4B4F58">Home</span>
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;color:#4B4F58">Learn</span>
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;font-weight:600;color:#121418;background:#E6E9EE">Practice</span>
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;color:#4B4F58">Problem of the Day</span>
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;color:#4B4F58">Mock tests</span>
+          <span style="padding:8px 12px;border-radius:8px;font-size:14px;color:#4B4F58">Community</span>
+          <span style="margin-top:auto;padding:16px 12px 4px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">RMO TRACK · WEEK 04</span>
+        </aside>
+        <div style="flex:1 1 280px;min-width:0;padding:clamp(18px,4vw,28px);display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">PRACTICE · SECTIONAL 3</span><span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:22px;color:#121418">Functional equations</span></div>
+            <span style="height:36px;padding:0 16px;border-radius:999px;background:#121418;color:#FFFFFF;display:flex;align-items:center;font-weight:600;font-size:14px">Continue</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span style="flex:1;height:6px;border-radius:6px;background:#EEF1F4;overflow:hidden"><i data-reveal="grow" data-w="60%" data-delay="500" style="display:block;height:100%;width:60%;background:#0B5BC4;border-radius:6px"></i></span>
+            <span style="font-size:13px;font-weight:500;color:#4B4F58;white-space:nowrap">12 of 20 solved</span>
+          </div>
+          <div style="display:flex;flex-direction:column;border-top:1px solid #E2E5EA">
+            <div style="display:grid;grid-template-columns:64px 1fr auto 28px;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#6B7280">FE-11</span><span style="font-size:15px;color:#121418">Cauchy’s equation on <span style="font-family:'CM Roman',serif;font-size:16px">ℚ</span></span><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#D2D7DE;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><svg viewBox="0 0 28 22" style="width:22px;height:18px"><path d="{{ tickPath }}" fill="none" stroke="#127A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display:grid;grid-template-columns:64px 1fr auto 28px;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid #E2E5EA"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#6B7280">FE-12</span><span style="font-size:15px;color:#121418"><span style="font-family:'CM Roman',serif;font-size:16px"><i>f</i>(<i>x</i> + <i>y</i>) = <i>f</i>(<i>x</i>)<i>f</i>(<i>y</i>)</span></span><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><svg viewBox="0 0 28 22" style="width:22px;height:18px"><path d="{{ tickPath }}" fill="none" stroke="#127A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display:grid;grid-template-columns:64px 1fr auto 28px;gap:16px;align-items:center;padding:14px 12px;margin:0 -12px;border-bottom:1px solid #E2E5EA;background:#F6F7F9;border-radius:8px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#0B5BC4">FE-13</span><span style="font-size:15px;font-weight:600;color:#121418">Additive and multiplicative</span><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#D2D7DE;border-radius:1px"></i></span><span style="font-size:13px;font-weight:600;color:#0B5BC4">Next</span></div>
+            <div style="display:grid;grid-template-columns:64px 1fr auto 28px;gap:16px;align-items:center;padding:14px 0"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#6B7280">FE-14</span><span style="font-size:15px;color:#6B7280">Jensen’s equation</span><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><i style="display:block;width:4px;height:6px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:10px;background:#121418;border-radius:1px"></i><i style="display:block;width:4px;height:14px;background:#121418;border-radius:1px"></i></span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B7280" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></div>
+          </div>
+        </div>
+        <div style="flex:0 1 260px;min-width:220px;padding:28px 28px 28px 0;display:{{ deskFlex }};flex-direction:column;gap:16px">
+          <div style="border:1px solid #E2E5EA;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">MOCK TEST · RMO PAPER 2</span>
+            <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:#121418">Saturday, 10:00</span>
+            <span style="font-family:'CM Typewriter',monospace;font-size:22px;color:#121418">03:00:00</span>
+            <span style="font-size:13px;color:#4B4F58">Six problems. Full proofs, marked by a mentor.</span>
+            <span style="height:34px;border:1px solid #D2D7DE;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#121418">Set a reminder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div><a href="Liminal App.dc.html" style="height:44px;padding:0 20px;border-radius:999px;border:1px solid #D2D7DE;background:#FFFFFF;display:inline-flex;align-items:center;font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#121418" style-hover="background:#EEF1F4;color:#121418">Explore programmes</a></div>
+  </div>
+</section>
+
+<div aria-hidden="true" style="background:#FFFFFF;padding:0 clamp(16px,5vw,72px)"><div style="max-width:1176px;margin:0 auto;display:flex;align-items:center;gap:20px;padding-top:clamp(40px,5vw,64px)"><span style="flex:1;height:1px;background:#E2E5EA"></span><span style="display:flex;gap:6px"><svg viewBox="55 2 44 123" style="display:block;height:14px;width:auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path></svg><svg viewBox="2 2 76 86" style="display:block;height:14px;width:auto"><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path></svg><svg viewBox="2 60 97 65" style="display:block;height:14px;width:auto"><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path></svg><svg viewBox="93 69 36 39" style="display:block;height:14px;width:auto"><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path></svg><svg viewBox="98 69 31 56" style="display:block;height:14px;width:auto"><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg></span><span style="flex:1;height:1px;background:#E2E5EA"></span></div></div>
+<section id="community" data-chapter="6" data-screen-label="06 Community" style="background:#FFFFFF;padding:clamp(40px,5vw,64px) 0 clamp(64px,7vw,104px)">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;justify-content:space-between">
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:720px">
+        <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#D2D7DE"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§06</span> — Community</p>
+        <h2 data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(38px,4.6vw,60px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">Better questions come from <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">better company.</em></h2>
+        <p data-reveal="up" data-delay="160" style="margin:0;max-width:52ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">Every problem has more than one way in. Read how others cracked it, vote for the cleanest idea, and post your own.</p>
+      </div>
+      <a data-reveal="fade" data-delay="200" href="Liminal Community.dc.html" style="font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:#0B5BC4">Visit the community →</a>
+    </div>
+    <div data-reveal="up" data-delay="120" style="padding:24px 0;border-top:1px solid #E2E5EA;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline">
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">ALG · FE · YESTERDAY</span>
+      <p style="margin:0;flex:1 1 420px;font-family:'CM Roman','Times New Roman',serif;font-size:20px;line-height:1.5;color:#121418">Find all <i>f</i> : ℝ → ℝ with <i>f</i>(<i>x</i> + <i>y</i>) = <i>f</i>(<i>x</i>) + <i>f</i>(<i>y</i>) and <i>f</i>(<i>xy</i>) = <i>f</i>(<i>x</i>)<i>f</i>(<i>y</i>) for all real <i>x</i>, <i>y</i>.</p>
+    </div>
+    <div role="tablist" aria-label="Thread" style="display:flex;gap:28px;border-bottom:1px solid #E2E5EA;margin-top:-24px">
+      <button type="button" role="tab" aria-selected="{{ tabA }}" onClick="{{ setTabA }}" style="height:46px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tabAB }};color:{{ tabAC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:color 200ms,border-color 200ms">Approaches <span style="font-weight:500;color:#6B7280">3</span></button>
+      <button type="button" role="tab" aria-selected="{{ tabD }}" onClick="{{ setTabD }}" style="height:46px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tabDB }};color:{{ tabDC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:color 200ms,border-color 200ms">Discussion <span style="font-weight:500;color:#6B7280">12</span></button>
+      <button type="button" role="tab" aria-selected="{{ tabS }}" onClick="{{ setTabS }}" style="height:46px;padding:0;margin-bottom:-1px;border:0;background:none;border-bottom:2px solid {{ tabSB }};color:{{ tabSC }};font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:color 200ms,border-color 200ms">Solution <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></button>
+    </div>
+    <sc-if value="{{ tabA }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+        <article data-reveal="up" data-delay="0" data-spot="" style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;background:radial-gradient(360px circle at var(--mx,-400px) var(--my,-400px),rgba(11,91,196,.07),transparent 70%),#FFFFFF">
+          <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">AR</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Ananya R.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 1</span></header>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Put <span style="font-family:'CM Roman',serif;font-size:17px"><i>y</i> = 1</span> in the second: <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i>)(1 − <i>f</i>(1)) = 0</span>. So either <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i> ≡ 0</span>, or <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(1) = 1</span>.</p>
+          <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>31 votes</span><span>4 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">SPLIT CASES</span></footer>
+        </article>
+        <article data-reveal="up" data-delay="120" data-spot="" style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;background:radial-gradient(360px circle at var(--mx,-400px) var(--my,-400px),rgba(11,91,196,.07),transparent 70%),#FFFFFF">
+          <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">IM</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Ishaan M.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 2</span></header>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Put <span style="font-family:'CM Roman',serif;font-size:17px"><i>y</i> = <i>x</i></span>: <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i><sup>2</sup>) = <i>f</i>(<i>x</i>)<sup>2</sup> ≥ 0</span>. So <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i></span> is non-negative on non-negatives, and additivity makes it increasing.</p>
+          <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>42 votes</span><span>7 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">MONOTONICITY</span></footer>
+        </article>
+        <article data-reveal="up" data-delay="240" data-spot="" style="border:1px solid #E2E5EA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;background:radial-gradient(360px circle at var(--mx,-400px) var(--my,-400px),rgba(11,91,196,.07),transparent 70%),#FFFFFF">
+          <header style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px;color:#121418">KS</span><b style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px">Kabir S.</b><span style="margin-left:auto;font-size:13px;color:#6B7280">Approach 3</span></header>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#121418">Additivity gives <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>q</i>) = <i>q</i></span> on the rationals. An increasing function that agrees with <span style="font-family:'CM Roman',serif;font-size:17px"><i>x</i></span> on ℚ must be <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i>) = <i>x</i></span>.</p>
+          <footer style="margin-top:auto;display:flex;gap:16px;align-items:center;font-size:13px;color:#6B7280"><span>27 votes</span><span>3 replies</span><span style="margin-left:auto;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.1em;color:#121418;border:1px solid #E2E5EA;border-radius:999px;padding:3px 10px">DENSITY</span></footer>
+        </article>
+      </div>
+    </sc-if>
+    <sc-if value="{{ tabD }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;max-width:860px">
+        <div style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:18px 0;border-bottom:1px solid #E2E5EA"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px">MP</span><div style="display:flex;flex-direction:column;gap:4px"><b style="font-weight:600;font-size:15px">Meera P.</b><p style="margin:0;font-size:16px;color:#121418">Do we need continuity here, or is monotonicity enough?</p></div><span style="font-size:13px;color:#6B7280">3h</span></div>
+        <div style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:18px 0 18px 32px;border-bottom:1px solid #E2E5EA"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px">IM</span><div style="display:flex;flex-direction:column;gap:4px"><b style="font-weight:600;font-size:15px">Ishaan M.</b><p style="margin:0;font-size:16px;color:#121418">Monotonicity is enough, and the second equation hands it to you for free.</p></div><span style="font-size:13px;color:#6B7280">2h</span></div>
+        <div style="display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:18px 0 18px 32px;border-bottom:1px solid #E2E5EA"><span style="width:32px;height:32px;border-radius:999px;background:#EEF1F4;display:grid;place-items:center;font-family:'CM Typewriter',monospace;font-size:11px">RD</span><div style="display:flex;flex-direction:column;gap:4px"><b style="font-weight:600;font-size:15px">Rohan D.</b><p style="margin:0;font-size:16px;color:#121418">So the wild additive solutions all die because <span style="font-family:'CM Roman',serif;font-size:17px"><i>f</i>(<i>x</i><sup>2</sup>) ≥ 0</span>. Neat.</p></div><span style="font-size:13px;color:#6B7280">1h</span></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ tabS }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px dashed #D2D7DE;border-radius:14px;padding:clamp(32px,5vw,56px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:#F6F7F9">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#4B4F58" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+        <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:18px;color:#121418">The official solution unlocks in <span style="font-family:'CM Typewriter',monospace;font-weight:400">{{ countdown }}</span></span>
+        <span style="font-size:15px;color:#4B4F58;max-width:44ch">Until then, compare approaches and argue it out in the discussion.</span>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<section id="mentors" data-chapter="7" data-screen-label="07 Mentors" style="background:#FFFFFF;border-top:1px solid #E2E5EA;padding:clamp(64px,7vw,104px) 0">
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;justify-content:space-between">
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:720px">
+        <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#D2D7DE"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§07</span> — Mentors</p>
+        <h2 data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(38px,4.6vw,60px);line-height:1;letter-spacing:-.025em;color:#121418;text-wrap:balance">Taught by people who have <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">sat the paper.</em></h2>
+        <p data-reveal="up" data-delay="160" style="margin:0;max-width:52ch;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;line-height:1.55;color:#4B4F58;text-wrap:pretty">Every mentor has competed in the olympiads they teach. They mark your proofs by hand and tell you where the argument breaks.</p>
+      </div>
+      <span data-reveal="fade" style="display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px;border:1px dashed #C23B56;border-radius:999px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#C23B56">PLACEHOLDER · REPLACE WITH REAL MENTORS</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
+        <article data-reveal="up" data-delay="0" style="display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;width:100%;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#F6F7F9;border:1px solid #E2E5EA;filter:grayscale(1) contrast(1.05)">
+            <image-slot id="mentor-1" shape="rect" placeholder="Mentor portrait"></image-slot>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:17px;color:#121418">[Mentor name]</span>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#0B5BC4">[INMO 20XX · IMO CAMP]</span>
+            <span style="font-size:14px;color:#4B4F58">[Teaches — e.g. Geometry, RMO track]</span>
+          </div>
+        </article>
+        <article data-reveal="up" data-delay="100" style="display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;width:100%;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#F6F7F9;border:1px solid #E2E5EA;filter:grayscale(1) contrast(1.05)">
+            <image-slot id="mentor-2" shape="rect" placeholder="Mentor portrait"></image-slot>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:17px;color:#121418">[Mentor name]</span>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#0B5BC4">[INMO 20XX · IMO CAMP]</span>
+            <span style="font-size:14px;color:#4B4F58">[Teaches — e.g. Geometry, RMO track]</span>
+          </div>
+        </article>
+        <article data-reveal="up" data-delay="200" style="display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;width:100%;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#F6F7F9;border:1px solid #E2E5EA;filter:grayscale(1) contrast(1.05)">
+            <image-slot id="mentor-3" shape="rect" placeholder="Mentor portrait"></image-slot>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:17px;color:#121418">[Mentor name]</span>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#0B5BC4">[INMO 20XX · IMO CAMP]</span>
+            <span style="font-size:14px;color:#4B4F58">[Teaches — e.g. Geometry, RMO track]</span>
+          </div>
+        </article>
+        <article data-reveal="up" data-delay="300" style="display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;width:100%;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#F6F7F9;border:1px solid #E2E5EA;filter:grayscale(1) contrast(1.05)">
+            <image-slot id="mentor-4" shape="rect" placeholder="Mentor portrait"></image-slot>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'Figtree',sans-serif;font-weight:600;font-size:17px;color:#121418">[Mentor name]</span>
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.12em;color:#0B5BC4">[INMO 20XX · IMO CAMP]</span>
+            <span style="font-size:14px;color:#4B4F58">[Teaches — e.g. Geometry, RMO track]</span>
+          </div>
+        </article>
+    </div>
+    <div data-reveal="up" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px 40px;padding-top:28px;border-top:1px solid #E2E5EA">
+      <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280">THE LIMINAL INITIATIVE</span>
+      <span style="flex:1 1 360px;font-size:16px;color:#121418">Backed by <b style="font-weight:600">[organisation or institution]</b>. <span style="color:#4B4F58">[One sentence on who runs it and why that matters to parents.]</span></span>
+      <a href="#letter" style="font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;color:#0B5BC4">Read the founders’ letter →</a>
+    </div>
+  </div>
+</section>
+
+<section id="letter" data-chapter="8" data-screen-label="08 The letter" style="position:relative;z-index:2;margin-bottom:-32px;border-radius:0 0 32px 32px;background:#FFFFFF;border-top:1px solid #E2E5EA;padding:clamp(72px,8vw,120px) 0;background-image:linear-gradient(#EAEEF3 1px,transparent 1px),linear-gradient(90deg,#EAEEF3 1px,transparent 1px);background-size:32px 32px">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,5vw,72px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,88px);align-items:center">
+   <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:32px">
+    <p data-reveal="fade" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#0B5BC4"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#D2D7DE"></path><path d="M78 2L2 88L55 60Z" fill="#D2D7DE"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#D2D7DE"></path><path d="M129 69L99 125L98 108Z" fill="#D2D7DE"></path></svg>§08</span> — Why we built <span style="text-transform:none">Liminal</span></p>
+    <p data-reveal="up" data-delay="80" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(34px,4.2vw,52px);line-height:1.05;letter-spacing:-.02em;color:#121418;text-wrap:balance">We didn’t build a coaching centre. We built the room we <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#0B5BC4">wished</em> we’d had.</p>
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:62ch;font-family:'Baskervville',Georgia,serif;font-size:21px;line-height:1.6;color:#4B4F58">
+      <p data-reveal="up" data-delay="200" style="margin:0">Most of us met olympiad mathematics alone, with a borrowed book and nobody to ask. The hard part was never the problems. It was having no one to think out loud with.</p>
+      <p data-reveal="up" data-delay="320" style="margin:0">Liminal is that room: a problem worth a morning, people who care how you got there, and the patience to stay in the in-between until it makes sense.</p>
+    </div>
+    <div data-reveal="fade" data-delay="480" style="display:flex;align-items:center;gap:16px;padding-top:8px">
+      <svg viewBox="0 0 133 128" width="26" height="25" aria-hidden="true" style="display:block"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg>
+      <span style="font-family:'Caveat',cursive;font-size:30px;color:#121418">The founders</span>
+      <span style="width:32px;height:1px;background:#D2D7DE"></span>
+      <span style="font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;color:#6B7280">THE LIMINAL INITIATIVE</span>
+    </div>
+  </div>
+   <figure data-reveal="up" data-delay="200" style="flex:0 1 420px;min-width:280px;margin:0;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#FFFFFF;border:1px solid #E2E5EA;border-radius:14px;box-shadow:0 24px 60px rgba(18,20,24,.07);background-image:linear-gradient(#EEF1F5 1px,transparent 1px),linear-gradient(90deg,#EEF1F5 1px,transparent 1px);background-size:24px 24px;background-position:-1px -1px">
+     <svg viewBox="0 0 400 480" role="img" aria-label="A handwritten note: the medians of a triangle meet at the centroid G = (A + B + C) / 3" style="width:100%;height:auto;display:block">
+      <text data-reveal="fade" data-delay="100" x="36" y="62" style="font-family:'Caveat',cursive;font-size:32px" fill="#121418">why the medians meet</text>
+      <path data-reveal="draw" data-delay="300" d="{{ nTri }}" fill="none" stroke="#121418" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path data-reveal="draw" data-delay="800" d="{{ nM1 }}" fill="none" stroke="#4B4F58" stroke-width="1.7" stroke-linecap="round"></path>
+      <path data-reveal="draw" data-delay="1000" d="{{ nM2 }}" fill="none" stroke="#4B4F58" stroke-width="1.7" stroke-linecap="round"></path>
+      <path data-reveal="draw" data-delay="1200" d="{{ nM3 }}" fill="none" stroke="#4B4F58" stroke-width="1.7" stroke-linecap="round"></path>
+      <path data-reveal="draw" data-delay="1400" d="{{ nTicks }}" fill="none" stroke="#9A6B12" stroke-width="2" stroke-linecap="round"></path>
+      <path data-reveal="draw" data-delay="1600" d="{{ nRing }}" fill="none" stroke="#0B5BC4" stroke-width="1.8" stroke-linecap="round"></path>
+      <circle data-reveal="fade" data-delay="1700" cx="200" cy="253.3" r="11" fill="#0B5BC4" fill-opacity=".14"></circle><circle data-reveal="fade" data-delay="1700" cx="200" cy="253.3" r="4.5" fill="#0B5BC4"></circle>
+      <text data-reveal="fade" data-delay="1700" x="214" y="250" style="font-family:'Caveat',cursive;font-size:26px" fill="#0B5BC4">G</text>
+      <text data-reveal="fade" data-delay="300" x="192" y="90" style="font-family:'Caveat',cursive;font-size:24px" fill="#121418">A</text>
+      <text data-reveal="fade" data-delay="300" x="38" y="352" style="font-family:'Caveat',cursive;font-size:24px" fill="#121418">B</text>
+      <text data-reveal="fade" data-delay="300" x="348" y="352" style="font-family:'Caveat',cursive;font-size:24px" fill="#121418">C</text>
+      <text data-reveal="fade" data-delay="1900" x="36" y="412" style="font-family:'Caveat',cursive;font-size:30px" fill="#0B5BC4">G = (A + B + C) / 3</text>
+      <text data-reveal="fade" data-delay="2100" x="36" y="452" style="font-family:'Caveat',cursive;font-size:25px" fill="#4B4F58">same point on every median</text>
+      <path data-reveal="draw" data-delay="2300" d="{{ nCheck }}" fill="none" stroke="#127A50" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+     </svg>
+    </div>
+    <figcaption style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#6B7280"><span>FIG. 8 — FROM THE FOUNDERS’ NOTEBOOK</span><span style="color:#C23B56">SAMPLE · SWAP FOR A REAL STYLUS PAGE</span></figcaption>
+   </figure>
+  </div>
+</section>
+
+<section id="zero" data-chapter="9" data-dark="1" data-screen-label="09 Chapter Zero + footer" style="position:relative;z-index:1;background:#000000;color:#ECE8DF;overflow:hidden">
+  <canvas ref="{{ spaceRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 55% at 50% 28%,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 70%,#000000 100%)"></div>
+  <div style="position:relative;max-width:760px;margin:0 auto;padding:clamp(96px,10vw,152px) clamp(16px,5vw,72px) clamp(72px,8vw,112px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;pointer-events:none">
+    <div data-mark-anchor="" aria-hidden="true" style="width:132px;height:127px"></div>
+    <p data-reveal="fade" data-delay="80" style="margin:0;font-family:'CM Typewriter',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E828C"><span style="display:inline-flex;align-items:center;gap:8px;vertical-align:-2px;color:#4C98F0"><svg viewBox="0 0 133 128" width="15" height="14" aria-hidden="true" style="display:block;flex:0 0 auto"><path d="M78 2L93 74L99 125L55 60Z" fill="#333844"></path><path d="M78 2L2 88L55 60Z" fill="#333844"></path><path d="M2 88L55 60L99 125Z" fill="#333844"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#333844"></path></svg>§09</span> — Chapter Zero</p>
+    <h2 data-reveal="up" data-delay="140" style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;font-size:clamp(42px,5.6vw,76px);line-height:.98;letter-spacing:-.03em;color:#ECE8DF;text-wrap:balance">Every mathematician starts at <em style="font-family:'Baskervville',Georgia,serif;font-style:italic;font-weight:400;color:#4C98F0">zero.</em></h2>
+    <p data-reveal="up" data-delay="220" style="margin:0;font-family:'Figtree',sans-serif;font-weight:500;font-size:18px;color:#A7AAB2">A short first chapter: one idea, one figure and your first real proof. No experience needed.</p>
+    <form data-reveal="up" data-delay="300" onSubmit="{{ onBegin }}" style="width:100%;max-width:460px;display:flex;gap:10px;flex-wrap:wrap;pointer-events:auto">
+      <input type="email" placeholder="you@example.com" aria-label="Email" style="flex:1 1 220px;min-width:0;height:48px;padding:0 18px;border-radius:999px;border:1px solid #333844;background:rgba(236,232,223,.04);font-family:'Figtree',sans-serif;font-size:16px;color:#ECE8DF;outline:none">
+      <button type="submit" style="height:48px;padding:0 26px;border-radius:999px;border:0;background:#0B5BC4;color:#FFFFFF;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background 120ms cubic-bezier(.2,0,0,1)" style-hover="background:#1766D1" style-active="background:#0852B0">{{ beginLabel }}</button>
+    </form>
+  </div>
+
+  <footer style="position:relative;z-index:1;isolation:isolate;border-top:1px solid #242831">
+    <svg aria-hidden="true" viewBox="0 0 133 128" style="position:absolute;z-index:-1;right:-7%;bottom:-26%;width:clamp(380px,46vw,700px);height:auto;pointer-events:none"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC" fill-opacity=".1" stroke="#333844" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC" fill-opacity=".1" stroke="#333844" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8" fill-opacity=".1" stroke="#333844" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE" fill-opacity=".1" stroke="#333844" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8" fill-opacity=".1" stroke="#333844" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path></svg>
+    <div style="max-width:1320px;margin:0 auto;padding:56px clamp(16px,5vw,72px) 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:40px">
+      <div style="display:flex;flex-direction:column;gap:14px;grid-column:1/-1;min-width:0">
+        <span style="display:flex;align-items:center;gap:12px"><svg viewBox="0 0 133 128" style="width:22px;height:21px;display:block" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter',monospace;font-size:13px;letter-spacing:.32em;color:#ECE8DF">LIMINAL MATH</span></span>
+        <span style="font-size:14px;color:#A7AAB2">by the Liminal Initiative</span>
+        <span style="font-size:14px;color:#7E828C;max-width:32ch">Olympiad mathematics for curious students, one problem at a time.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">LEARN</span><a href="Liminal App.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Chapter Zero</a><a href="Liminal App.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Lessons</a><a href="Liminal POD.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Problem of the Day</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">PRACTICE</span><a href="Liminal App.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Sectionals</a><a href="Liminal App.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Mock tests</a><a href="Liminal POD.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Archive</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">COMMUNITY</span><a href="Liminal Community.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Forum</a><a href="Liminal Community.dc.html" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Approaches</a><a href="#letter" style="font-size:15px;color:#A7AAB2" style-hover="color:#ECE8DF">Founders’ letter</a></div>
+    </div>
+    <div aria-hidden="true" style="max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px);overflow:hidden">
+      <div data-reveal="up" style="font-family:'CM Typewriter',monospace;font-size:clamp(28px,9vw,150px);line-height:1;letter-spacing:.16em;white-space:nowrap;color:#000000;-webkit-text-stroke:1px #2A2E36;padding:24px 0 8px">LIMINAL MATH</div>
+    </div>
+    <div style="max-width:1320px;margin:0 auto;padding:20px clamp(16px,5vw,72px) 32px;display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;border-top:1px solid #242831">
+      <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:#7E828C">© 2026 THE LIMINAL INITIATIVE</span>
+      <span style="display:flex;gap:24px;font-size:13px"><a href="#top" style="color:#A7AAB2" style-hover="color:#ECE8DF">Privacy</a><a href="#top" style="color:#A7AAB2" style-hover="color:#ECE8DF">Terms</a><a href="#top" style="color:#A7AAB2" style-hover="color:#ECE8DF">Back to top ↑</a></span>
+    </div>
+  </footer>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Space&quot;,&quot;Paper&quot;],&quot;default&quot;:&quot;Space&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;headline&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Answer&quot;,&quot;Discovering&quot;,&quot;Mathematics&quot;],&quot;default&quot;:&quot;Answer&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;playIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Intro&quot;}}">
+class Component extends DCLogic {
+  state = { p: 0, intro: true, vtx: null, ans: '', fb: null, theta: -2.1, now: Date.now(), begun: false, step: 0, chapter: 1, tab: 'A' };
+  LSTEPS = ['Opening your notebook', 'Ruling the graph paper', 'Choosing your first problem', 'Drawing the first figure', 'Chapter Zero is ready'];
+  TOPICS = [['ALG', 'Functional equations'], ['COMB', 'Pigeonhole principle'], ['GEO', 'Cyclic quadrilaterals'], ['NT', 'Modular arithmetic'], ['ALG', 'Inequalities'], ['COMB', 'Invariants'], ['ALG', 'Vieta’s formulas'], ['COMB', 'Graph theory'], ['GEO', 'Power of a point'], ['NT', 'Diophantine equations'], ['COMB', 'Generating functions'], ['GEO', 'Similar triangles']];
+  startLoader() {
+    (this.lt || []).forEach(clearTimeout);
+    this.setState({ loader: 0, loaderShown: false });
+    this.lt = [setTimeout(() => this.setState({ loaderShown: true }), 20)];
+    for (let i = 1; i <= 4; i++) this.lt.push(setTimeout(() => this.setState({ loader: i }), 300 + i * 1000));
+    this.lt.push(setTimeout(() => this.closeLoader(), 300 + 4 * 1000 + 1400));
+  }
+  closeLoader = () => {
+    (this.lt || []).forEach(clearTimeout);
+    this.setState({ loaderShown: false, begun: true });
+    this.lt = [setTimeout(() => this.setState({ loader: null }), 320)];
+  };
+  HREFS = ['#top', '#proof', '#today', '#method', '#pathway', '#community', '#letter', '#zero'];
+  navVals(chapter) {
+    const dark = chapter === 4, acc = dark ? '#4C98F0' : '#0B5BC4', fg = dark ? '#ECE8DF' : '#121418', mu = dark ? '#7E828C' : '#6B7280', fa = dark ? '#333844' : '#D2D7DE';
+    return {
+      navBg: dark ? 'rgba(0,0,0,.72)' : 'rgba(255,255,255,.94)', navBd: dark ? '#242831' : '#E2E5EA', navTrack: dark ? '#242831' : '#E2E5EA', navAccent: acc,
+      navY: -((chapter - 1) * 40) + 'px',
+      navSteps: this.CH.map((t, i) => { const c = i + 1, done = c < chapter, act = c === chapter; return { t, href: this.HREFS[i], n: String(c).padStart(2, '0'), op: act ? 1 : done ? .6 : .35, fill: done ? acc : 'transparent', stroke: done || act ? acc : fa, tick: done ? 1 : 0, tickCol: dark ? '#000000' : '#FFFFFF', dot: act ? 1 : 0, col: act ? fg : mu, numCol: act ? acc : mu }; })
+    };
+  }
+  topNav() {
+    const d = this.state.navDark ?? ((this.props.heroStyle ?? 'Space') === 'Space'), sc = this.state.scrolled, ch = this.state.chapter;
+    const fg = d ? '#ECE8DF' : '#121418', mu = d ? '#A7AAB2' : '#4B4F58';
+    const o = { nvBg: d ? (sc ? 'rgba(12,13,16,.72)' : 'rgba(12,13,16,.4)') : (sc ? 'rgba(255,255,255,.86)' : 'rgba(255,255,255,.6)'), nvBd: d ? 'rgba(236,232,223,.12)' : 'rgba(18,20,24,.1)', nvSh: sc ? (d ? '0 12px 40px rgba(0,0,0,.4)' : '0 12px 40px rgba(18,20,24,.08)') : 'none', nvFg: fg, nvMu: mu, nvCtaBg: d ? '#ECE8DF' : '#121418', nvCtaFg: d ? '#000000' : '#FFFFFF' };
+    [[1, 4], [2, 5], [3, 3], [4, 6]].forEach(([i, c]) => { const a = ch === c; o['nl' + i + 'c'] = a ? fg : mu; o['nl' + i + 'b'] = a ? (d ? 'rgba(236,232,223,.1)' : 'rgba(18,20,24,.06)') : 'transparent'; });
+    return o;
+  }
+  CH = ['Threshold', 'The proof', 'Today’s problem', 'The method', 'Pathway', 'Community', 'Mentors', 'The letter', 'Chapter Zero'];
+  reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  canvasRef = el => { if (el && el !== this._cv) { this.teardownCell(); this._cv = el; this.initCell(); } };
+  spaceRef = el => this.bindMesh('foot', el, 1, { mark: true });
+  heroMeshRef = el => this.bindMesh('hero', el, .7, { still: true });
+  methodMeshRef = el => this.bindMesh('method', el, .5);
+  introMeshRef = el => this.bindMesh('intro', el, .6);
+  bindMesh(key, el, density, opts) { this._m = this._m || {}; const m = this._m[key]; if (el && (!m || m.cv !== el)) { m && m.stop(); this._m[key] = this.initSpace(el, density, opts); } }
+  teardownSpace() { Object.values(this._m || {}).forEach(m => m.stop()); this._m = {}; }
+  pillBarRef = el => { this._pillBar = el; };
+  proofBarRef = el => { this._proofBar = el; };
+  crossRef = el => { this._cross = el; };
+  heroRef = el => {
+    if (!el || el === this._hero) return; this._hero = el;
+    el.addEventListener('mousemove', e => {
+      const c = this._cross; if (!c) return;
+      if (e.target.tagName === 'CANVAS' || e.target.closest('a,button,input,nav')) { c.style.opacity = '0'; return; }
+      const r = el.getBoundingClientRect(), gx = Math.round((e.clientX - r.left) / 32), gy = Math.round((e.clientY - r.top) / 32), X = gx * 32 - 1, Y = gy * 32 - 1;
+      c.style.opacity = '1';
+      c.querySelector('[data-x]').style.transform = `translateX(${X}px)`;
+      c.querySelector('[data-y]').style.transform = `translateY(${Y}px)`;
+      c.querySelector('[data-d]').style.transform = `translate(${X}px,${Y}px)`;
+      const l = c.querySelector('[data-l]'); l.style.transform = `translate(${X + 10}px,${Y + 8}px)`; l.textContent = `(${gx}, ${gy})`;
+    });
+    el.addEventListener('mouseleave', () => { if (this._cross) this._cross.style.opacity = '0'; });
+  };
+
+  rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  rough(pts, amp = 1.1, seed = 1) {
+    const r = this.rng(seed), f = n => n.toFixed(1);
+    let d = `M${f(pts[0][0] + (r() - .5) * amp)} ${f(pts[0][1] + (r() - .5) * amp)}`;
+    for (let i = 1; i < pts.length; i++) {
+      const [x1, y1] = pts[i - 1], [x2, y2] = pts[i];
+      const len = Math.hypot(x2 - x1, y2 - y1) || 1, n = Math.max(1, Math.round(len / 34));
+      const nx = -(y2 - y1) / len, ny = (x2 - x1) / len;
+      for (let j = 1; j <= n; j++) {
+        const t = j / n, tm = (j - .5) / n, co = (r() - .5) * amp * 2, eo = (r() - .5) * amp * (j === n ? .6 : 1.4);
+        d += ` Q${f(x1 + (x2 - x1) * tm + nx * co)} ${f(y1 + (y2 - y1) * tm + ny * co)} ${f(x1 + (x2 - x1) * t + nx * eo)} ${f(y1 + (y2 - y1) * t + ny * eo)}`;
+      }
+    }
+    return d;
+  }
+  roughCircle(cx, cy, R, amp = 1.2, seed = 1) {
+    const r = this.rng(seed), n = 36, pts = [], f = x => x.toFixed(1);
+    for (let i = 0; i <= n; i++) { const a = -1.9 + i / n * Math.PI * 2 * 1.03, rr = R + (r() - .5) * amp * 2; pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
+    let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+    for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; d += ` Q${f(pts[i][0])} ${f(pts[i][1])} ${f(mx)} ${f(my)}`; }
+    return d;
+  }
+  ticks(P, Q, count) {
+    let d = ''; const L = Math.hypot(Q[0] - P[0], Q[1] - P[1]), ux = (Q[0] - P[0]) / L, uy = (Q[1] - P[1]) / L, nx = -uy * 8, ny = ux * 8;
+    for (const t of [.25, .75]) for (let k = 0; k < count; k++) {
+      const off = (k - (count - 1) / 2) * 6, mx = P[0] + (Q[0] - P[0]) * t + ux * off, my = P[1] + (Q[1] - P[1]) * t + uy * off;
+      d += `M${(mx - nx).toFixed(1)} ${(my - ny).toFixed(1)}L${(mx + nx).toFixed(1)} ${(my + ny).toFixed(1)}`;
+    }
+    return d;
+  }
+
+  componentDidMount() {
+    if (!(this.props.playIntro ?? true) || this.reduce) { this.setState({ intro: false }); this._heroTimer = setTimeout(() => this.revealHero(), 60); }
+    else {
+      this.timers = [[60, 1], [760, 2], [1250, 3], [1850, 4]].map(([t, p]) => setTimeout(() => this.setState({ p }), t));
+      this.timers.push(setTimeout(() => { this.setState({ p: 5 }); this.revealHero(); }, 2350));
+      this.timers.push(setTimeout(() => this.setState({ intro: false }), 2850));
+      this.onKey = () => this.skipIntro();
+      addEventListener('keydown', this.onKey, { once: true });
+    }
+    this.clock = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.onScroll = () => { if (this._sf) return; this._sf = requestAnimationFrame(() => { this._sf = 0; this.updateScroll(); }); };
+    addEventListener('scroll', this.onScroll, { passive: true, capture: true });
+    addEventListener('resize', this.onScroll);
+    this.onSpot = e => { const el = e.target.closest && e.target.closest('[data-spot]'); if (!el) return; const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); };
+    addEventListener('mousemove', this.onSpot, { passive: true });
+    this.setupReveal();
+    this.revealTimers = [300, 1000, 2500].map(t => setTimeout(() => { this.setupReveal(); this.updateScroll(); }, t));
+    this.updateScroll();
+  }
+  componentDidUpdate() { if (this._needsReveal) return; this._needsReveal = true; requestAnimationFrame(() => { this._needsReveal = false; this.setupReveal(); }); }
+  componentWillUnmount() {
+    [...(this.timers || []), ...(this.revealTimers || [])].forEach(clearTimeout); clearTimeout(this._heroTimer); clearInterval(this.clock);
+    this.teardownCell(); this.teardownSpace(); this.io && this.io.disconnect();
+    removeEventListener('scroll', this.onScroll, { capture: true }); removeEventListener('resize', this.onScroll);
+    this.onKey && removeEventListener('keydown', this.onKey);
+    removeEventListener('mousemove', this.onSpot); (this.lt || []).forEach(clearTimeout);
+  }
+  skipIntro = () => {
+    if (!this.state.intro) return;
+    (this.timers || []).forEach(clearTimeout);
+    this.setState({ p: 5 }); this.revealHero();
+    this.timers = [setTimeout(() => this.setState({ intro: false }), 500)];
+  };
+
+  hideEl(el) {
+    const k = el.dataset.reveal, d = +(el.dataset.delay || 0), E = 'cubic-bezier(.2,0,0,1)';
+    if (k === 'draw') { el.setAttribute('pathLength', '1'); el.style.strokeDasharray = '1 1'; el.style.strokeDashoffset = '1'; el.style.transition = `stroke-dashoffset 1000ms cubic-bezier(.65,0,.35,1) ${d}ms`; return; }
+    if (k === 'grow') { el.style.width = '0%'; el.style.transition = `width 1400ms ${E} ${d}ms`; return; }
+    el.style.transition = `opacity 700ms ${E} ${d}ms, transform 900ms ${E} ${d}ms`;
+    if (k === 'line') el.style.transform = 'translateY(110%)';
+    else { el.style.opacity = '0'; el.style.transform = k === 'up' ? 'translateY(32px)' : k === 'scale' ? 'scale(.96)' : k === 'left' ? 'translateX(-28px)' : ''; }
+  }
+  showEl(el) {
+    const k = el.dataset.reveal;
+    if (k === 'draw') el.style.strokeDashoffset = '0';
+    else if (k === 'grow') el.style.width = el.dataset.w;
+    else { el.style.opacity = ''; el.style.transform = ''; }
+  }
+  setupReveal() {
+    if (this.reduce || typeof IntersectionObserver === 'undefined' || document.visibilityState !== 'visible') return;
+    if (!this.io) this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { this.showEl(e.target); this.io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    this._heroEls = this._heroEls || [];
+    document.querySelectorAll('[data-reveal]:not([data-rv])').forEach(el => {
+      el.setAttribute('data-rv', '1'); this.hideEl(el);
+      if (el.closest('[data-hero]')) { if (this._heroShown) setTimeout(() => this.showEl(el), 40); else this._heroEls.push(el); }
+      else this.io.observe(el);
+    });
+  }
+  revealHero() {
+    if (!this._formStart) this._formStart = performance.now() + 250;
+    this._heroShown = true; this.setupReveal();
+    const els = this._heroEls || []; this._heroEls = [];
+    setTimeout(() => els.forEach(el => this.showEl(el)), 40);
+  }
+  updateScroll() {
+    const vh = innerHeight, pr = document.getElementById('proof');
+    if (pr) {
+      const r = pr.getBoundingClientRect(), p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      pr.querySelectorAll('[data-seg]').forEach(el => {
+        const [a, b] = el.dataset.seg.split(',').map(Number), k = Math.min(1, Math.max(0, (p - a) / (b - a)));
+        if (el.tagName === 'path') el.style.strokeDashoffset = String(1 - k); else el.style.opacity = String(k);
+      });
+      if (this._proofBar) this._proofBar.style.transform = `scaleX(${p})`;
+      const step = p < .2 ? 0 : p < .42 ? 1 : p < .7 ? 2 : 3;
+      if (step !== this.state.step) this.setState({ step });
+    }
+    const compact = innerWidth < 900 || vh < 760, mob = innerWidth < 1080;
+    if (mob !== this.state.mob) this.setState({ mob });
+    if (compact !== this.state.compact) this.setState({ compact });
+    let nd = false; document.querySelectorAll('[data-chapter]').forEach(sec => { const r = sec.getBoundingClientRect(); if (r.top <= 44 && r.bottom > 44) nd = sec.getAttribute('data-dark') === '1'; });
+    const sc = (document.scrollingElement || document.documentElement).scrollTop > 24;
+    if (nd !== this.state.navDark || sc !== this.state.scrolled) this.setState({ navDark: nd, scrolled: sc });
+    let ch = 1; document.querySelectorAll('[data-chapter]').forEach(s => { if (s.getBoundingClientRect().top <= vh * .45) ch = +s.dataset.chapter; });
+    if (ch !== this.state.chapter) this.setState({ chapter: ch });
+    const se = document.scrollingElement || document.documentElement, tot = se.scrollHeight - vh;
+    if (this._pillBar) this._pillBar.style.transform = `scaleX(${tot > 0 ? Math.min(1, se.scrollTop / tot) : 0})`;
+  }
+
+  teardownCell() { cancelAnimationFrame(this.raf); this.raf = 0; this.ro && this.ro.disconnect(); this.cio && this.cio.disconnect(); }
+  initCell() {
+    const cv = this._cv; if (!cv) return;
+    const reduce = this.reduce, ctx = cv.getContext('2d'), dark = (this.props.heroStyle ?? 'Space') === 'Space', SKY = dark ? '76,152,240' : '11,91,196', CH = dark ? '236,232,223' : '18,20,24';
+    const V = []; for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) for (const a of [1, -1]) for (const b of [1, -1]) { const v = [0, 0, 0, 0]; v[i] = a; v[j] = b; V.push(v); }
+    const E = []; for (let i = 0; i < V.length; i++) for (let j = i + 1; j < V.length; j++) { let d = 0; for (let k = 0; k < 4; k++) d += (V[i][k] - V[j][k]) ** 2; if (d === 2) E.push([i, j]); }
+    const rot = (v, p, q, a) => { const c = Math.cos(a), s = Math.sin(a), x = v[p], y = v[q]; v[p] = x * c - y * s; v[q] = x * s + y * c; };
+    let W = 0, H = 0, dpr = 1, S = 1, t = 0, last = performance.now(), hover = -1, down = null, P = [], stars = [], visible = true, scatter = [];
+    const drag = { x: 0, y: 0 };
+    const scrollY0 = () => (document.scrollingElement || document.documentElement).scrollTop || 0;
+    const resize = () => {
+      const r = cv.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); S = Math.min(W, H) * .17;
+      const rr = this.rng(7); stars = [];
+      for (let i = 0; i < Math.round(W * H / 2600); i++) stars.push([rr() * W, rr() * H, rr()]);
+      const r3 = this.rng(33); scatter = V.map(() => [r3() * W, r3() * H]);
+      draw();
+    };
+    const draw = () => {
+      if (!W) return;
+      const sc = scrollY0();
+      P = V.map(v0 => {
+        const v = v0.slice();
+        rot(v, 0, 1, .42); rot(v, 0, 3, t * .00011 + drag.x * .006 + sc * .0022); rot(v, 1, 2, t * .00007 + .2 + sc * .0011); rot(v, 1, 3, drag.y * .006 + .3); rot(v, 2, 3, t * .00005);
+        const s4 = 4 / (4 - v[3]), x = v[0] * s4, y = v[1] * s4, z = v[2] * s4, s3 = 5 / (5 - z);
+        return { x: W / 2 + x * s3 * S, y: H / 2 + y * s3 * S, d: Math.min(1, Math.max(0, (v[3] + z) / 4 + .5)) };
+      });
+      const fs = this._formStart, fp = reduce ? 1 : fs ? Math.min(1, (performance.now() - fs) / 2200) : 0, fe = 1 - Math.pow(1 - fp, 3), ea = Math.max(0, (fe - .3) / .7);
+      if (fe < 1 && scatter.length) P = P.map((p, i) => ({ x: scatter[i][0] + (p.x - scatter[i][0]) * fe, y: scatter[i][1] + (p.y - scatter[i][1]) * fe, d: p.d * (.4 + .6 * fe) }));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = `rgba(${CH},.1)`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(24, H / 2); ctx.lineTo(W - 24, H / 2); ctx.moveTo(W / 2, 24); ctx.lineTo(W / 2, H - 24); ctx.stroke();
+      ctx.strokeStyle = `rgba(${CH},.18)`; ctx.beginPath();
+      for (let k = -6; k <= 6; k++) { if (!k) continue; const o = k * S * .5; if (Math.abs(o) > W / 2 - 30) continue; ctx.moveTo(W / 2 + o, H / 2 - 3); ctx.lineTo(W / 2 + o, H / 2 + 3); ctx.moveTo(W / 2 - 3, H / 2 + o); ctx.lineTo(W / 2 + 3, H / 2 + o); }
+      ctx.stroke();
+      ctx.fillStyle = `rgba(${CH},.45)`; ctx.font = 'italic 15px "CM Roman", serif'; ctx.fillText('x', W - 36, H / 2 - 8); ctx.fillText('y', W / 2 + 8, 40);
+      for (const [x, y, z] of stars) { ctx.fillStyle = z > .88 ? `rgba(${SKY},${(.2 + z * .3).toFixed(2)})` : `rgba(${CH},${(.05 + z * .18).toFixed(2)})`; const s = z > .94 ? 1.6 : 1; ctx.fillRect(x, y, s, s); }
+      for (const [a, b] of E) {
+        const A = P[a], B = P[b], hi = hover === a || hover === b;
+        ctx.strokeStyle = hi ? `rgba(${SKY},.95)` : `rgba(${SKY},${((.08 + .5 * (A.d + B.d) / 2) * ea).toFixed(3)})`;
+        ctx.lineWidth = hi ? 1.5 : 1.1; ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+      }
+      P.forEach((p, i) => {
+        const r = 1.5 + 2.6 * p.d;
+        ctx.fillStyle = `rgba(${SKY},${(.07 + .15 * p.d).toFixed(3)})`; ctx.beginPath(); ctx.arc(p.x, p.y, r * 3.2, 0, 7); ctx.fill();
+        ctx.fillStyle = i === hover ? `rgb(${CH})` : `rgba(${SKY},${(.5 + .5 * p.d).toFixed(3)})`; ctx.beginPath(); ctx.arc(p.x, p.y, i === hover ? r + 1.4 : r, 0, 7); ctx.fill();
+      });
+      if (hover >= 0) { const p = P[hover]; ctx.strokeStyle = `rgb(${CH})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, 7); ctx.stroke(); }
+    };
+    const loop = now => { this.raf = 0; if (!cv.isConnected || !visible) return; t += Math.min(64, now - last); last = now; draw(); this.raf = requestAnimationFrame(loop); };
+    const kick = () => { if (!this.raf && visible) { last = performance.now(); this.raf = requestAnimationFrame(loop); } };
+    const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    cv.addEventListener('pointerdown', e => { down = pos(e); cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing'; });
+    cv.addEventListener('pointerup', () => { down = null; cv.style.cursor = 'grab'; });
+    cv.addEventListener('pointerleave', () => { if (!down) { hover = -1; this.setState({ vtx: null }); draw(); } });
+    cv.addEventListener('pointermove', e => {
+      const [x, y] = pos(e);
+      if (down) { drag.x += x - down[0]; drag.y += y - down[1]; down = [x, y]; draw(); return; }
+      let best = -1, bd = 16; P.forEach((p, i) => { const d = Math.hypot(p.x - x, p.y - y); if (d < bd) { bd = d; best = i; } });
+      if (best !== hover) { hover = best; this.setState({ vtx: best >= 0 ? '(' + V[best].map(n => n < 0 ? '−1' : n > 0 ? '1' : '0').join(', ') + ')' : null }); draw(); }
+    });
+    if (reduce) addEventListener('scroll', () => draw(), { passive: true, capture: true });
+    this.ro = new ResizeObserver(resize); this.ro.observe(cv); resize(); setTimeout(resize, 60); setTimeout(resize, 600);
+    this.cio = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (!W) resize(); if (!reduce) kick(); }); this.cio.observe(cv);
+    if (!reduce) kick();
+  }
+
+  initSpace(cv, density = 1, opts = {}) {
+    let sraf = 0, sro, sio, mk = [], mT = [], mprog = 0;
+    const MV = [[78, 2], [93, 74], [99, 125], [55, 60], [2, 88], [129, 69], [98, 108]];
+    const MF = [[[0, 1, 2, 3], '78,204,252'], [[0, 4, 3], '0,168,252'], [[4, 3, 2], '6,102,216'], [[1, 5, 6], '42,78,174'], [[5, 2, 6], '6,102,216']];
+    const ME = []; MF.forEach(([f]) => f.forEach((a, i) => { const b = f[(i + 1) % f.length], k = a < b ? a + '-' + b : b + '-' + a; if (!ME.some(e => e[2] === k)) ME.push([a, b, k]); }));
+    const markTargets = () => {
+      const an = opts.mark && cv.parentElement.querySelector('[data-mark-anchor]'); if (!an) return [];
+      const cr = cv.getBoundingClientRect(), ar = an.getBoundingClientRect(), sc = ar.width / 133, ox = ar.left - cr.left, oy = ar.top - cr.top;
+      const V = MV.map(([x, y]) => [ox + x * sc, oy + y * sc]), T = V.map(v => ({ x: v[0], y: v[1], v: 1 }));
+      ME.forEach(([a, b]) => { const L = Math.hypot(V[b][0] - V[a][0], V[b][1] - V[a][1]), n = Math.floor(L / 13); for (let j = 1; j < n; j++) T.push({ x: V[a][0] + (V[b][0] - V[a][0]) * j / n, y: V[a][1] + (V[b][1] - V[a][1]) * j / n, v: 0 }); });
+      return T;
+    };
+    const drawMark = dt => {
+      if (!mT.length) return;
+      mprog = this.reduce ? 1 : Math.min(1, mprog + dt / 2800);
+      const e = 1 - Math.pow(1 - mprog, 3);
+      for (const p of mk) { p.fx += p.vx * dt * .06; p.fy += p.vy * dt * .06; if (p.fx < -20) p.fx = W + 20; if (p.fx > W + 20) p.fx = -20; if (p.fy < -20) p.fy = H + 20; if (p.fy > H + 20) p.fy = -20; }
+      const P = mk.map((p, i) => [p.fx + (mT[i].x - p.fx) * e, p.fy + (mT[i].y - p.fy) * e]);
+      const fa = Math.max(0, (e - .75) / .25);
+      if (fa > 0) MF.forEach(([f, c]) => { ctx.fillStyle = `rgba(${c},${(fa * .92).toFixed(3)})`; ctx.beginPath(); f.forEach((vi, j) => j ? ctx.lineTo(P[vi][0], P[vi][1]) : ctx.moveTo(P[vi][0], P[vi][1])); ctx.closePath(); ctx.fill(); });
+      const ea = Math.max(0, (e - .35) / .65);
+      if (ea > 0) { ctx.strokeStyle = `rgba(${CHK},${(ea * .7).toFixed(3)})`; ctx.lineWidth = 1.2; ctx.beginPath(); ME.forEach(([a, b]) => { ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); }); ctx.stroke(); }
+      P.forEach((q, i) => { const v = mT[i].v; ctx.fillStyle = v ? `rgba(${SKY},.95)` : `rgba(${CHK},${(.6 * (1 - fa * .7)).toFixed(3)})`; ctx.beginPath(); ctx.arc(q[0], q[1], v ? 2.6 : 1.4, 0, 7); ctx.fill(); if (v) { ctx.fillStyle = `rgba(${SKY},.16)`; ctx.beginPath(); ctx.arc(q[0], q[1], 8, 0, 7); ctx.fill(); } });
+    };
+    const ctx = cv.getContext('2d'), sec = cv.parentElement, SKY = '76,152,240', CHK = '236,232,223', reduce = this.reduce;
+    let W = 0, H = 0, dpr = 1, pts = [], stars = [], mouse = null, visible = false, last = performance.now();
+    const resize = () => {
+      const r = cv.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      const rr = this.rng(17), n = Math.max(40, Math.min(120, Math.round(W * H / 15000 * density)));
+      pts = []; for (let i = 0; i < n; i++) pts.push({ x: rr() * W, y: rr() * H, vx: (rr() - .5) * .14, vy: (rr() - .5) * .14, s: rr() > .82 });
+      stars = []; for (let i = 0; i < Math.round(W * H / 1700); i++) stars.push([rr() * W, rr() * H, rr()]);
+      mT = markTargets();
+      if (mk.length !== mT.length) { const r2 = this.rng(29); mk = mT.map(() => ({ fx: r2() * W, fy: r2() * H, vx: (r2() - .5) * .14, vy: (r2() - .5) * .14 })); }
+      draw(0);
+    };
+    const draw = dt => {
+      if (!W) return;
+      const sp = opts.still ? 0 : 1;
+      for (const p of pts) { p.x += p.vx * dt * .06 * sp; p.y += p.vy * dt * .06 * sp; if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20; if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20; }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      for (const [x, y, z] of stars) { ctx.fillStyle = z > .9 ? `rgba(${SKY},${(.25 + z * .35).toFixed(2)})` : `rgba(${CHK},${(.05 + z * .22).toFixed(2)})`; const s = z > .96 ? 1.6 : 1; ctx.fillRect(x, y, s, s); }
+      const R = 150; ctx.lineWidth = 1;
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < R) { ctx.strokeStyle = `rgba(${SKY},${((1 - d / R) * .32).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      if (mouse) for (const p of pts) { const d = Math.hypot(p.x - mouse[0], p.y - mouse[1]); if (d < 200) { ctx.strokeStyle = `rgba(${CHK},${((1 - d / 200) * .5).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse[0], mouse[1]); ctx.stroke(); } }
+      drawMark(dt);
+      for (const p of pts) { ctx.fillStyle = p.s ? `rgba(${SKY},.95)` : `rgba(${CHK},.6)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.s ? 2.2 : 1.5, 0, 7); ctx.fill(); if (p.s) { ctx.fillStyle = `rgba(${SKY},.14)`; ctx.beginPath(); ctx.arc(p.x, p.y, 7, 0, 7); ctx.fill(); } }
+    };
+    const loop = now => { sraf = 0; if (!cv.isConnected || !visible) return; const dt = Math.min(64, now - last); last = now; draw(dt); sraf = requestAnimationFrame(loop); };
+    const kick = () => { if (!reduce && !sraf && visible) { last = performance.now(); sraf = requestAnimationFrame(loop); } };
+    sec.addEventListener('mousemove', e => { const r = cv.getBoundingClientRect(); mouse = [e.clientX - r.left, e.clientY - r.top]; if (reduce) draw(0); });
+    sec.addEventListener('mouseleave', () => { mouse = null; });
+    sro = new ResizeObserver(resize); sro.observe(cv); resize(); setTimeout(resize, 60); setTimeout(resize, 600);
+    sio = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (!visible) mprog = 0; else mT = markTargets(); if (!W) resize(); kick(); }, { threshold: .15 }); sio.observe(cv);
+    return { cv, stop: () => { cancelAnimationFrame(sraf); sraf = 0; visible = false; sro.disconnect(); sio.disconnect(); } };
+  }
+
+  clampT(th) { const s = Math.sin(th); return Math.abs(s) < .14 ? Math.atan2((s >= 0 ? 1 : -1) * .14, Math.cos(th)) : th; }
+  moveT(e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width * 520, y = (e.clientY - r.top) / r.height * 400;
+    this.setState({ theta: this.clampT(Math.atan2(y - 210, x - 260)) });
+  }
+
+  renderVals() {
+    if (!this._rp) {
+      const A = [250, 60], B = [80, 390], C = [490, 390];
+      this._rp = {
+        underline: this.rough([[4, 10], [150, 6], [296, 11]], 1.6, 21),
+        arrowPath: this.rough([[96, 4], [66, 22], [22, 50]], 1.4, 5),
+        arrowHead: this.rough([[20, 36], [20, 51], [34, 50]], .8, 6),
+        tickPath: this.rough([[3, 11], [10, 18], [25, 2]], .9, 301),
+        strikePath: this.rough([[2, 12], [26, 9]], 1.2, 302),
+        circlePath: this.roughCircle(260, 210, 150, 1.3, 9),
+        triPath: this.rough([A, B, C, A], 1.2, 41),
+        tAB: this.ticks(A, B, 1), tBC: this.ticks(B, C, 2), tCA: this.ticks(C, A, 3),
+        gRing: this.roughCircle(273.3, 280, 17, 1, 44),
+        chainLine: this.rough([[0, 6], [330, 5], [660, 7], [1000, 6]], 1.4, 51)
+      };
+    }
+    if (!this._np) { const A = [200, 100], B = [60, 330], C = [340, 330]; this._np = { nTri: this.rough([A, B, C, A], 1.6, 81), nM1: this.rough([A, [200, 330]], 1.3, 82), nM2: this.rough([B, [270, 215]], 1.3, 83), nM3: this.rough([C, [130, 215]], 1.3, 84), nTicks: this.ticks(B, C, 1) + this.ticks(C, A, 2) + this.ticks(A, B, 3), nRing: this.roughCircle(200, 253.3, 16, 1.1, 85), nCheck: this.rough([[330, 438], [342, 452], [368, 420]], 1, 86) }; }
+    const { p, theta, fb, now, step, chapter, tab } = this.state;
+    const h = this.props.headline ?? 'Answer';
+    const px = 260 + 150 * Math.cos(theta), py = 210 + 150 * Math.sin(theta);
+    const ux = 110 - px, uy = 210 - py, vx = 410 - px, vy = 210 - py, lu = Math.hypot(ux, uy), lv = Math.hypot(vx, vy);
+    const a = [ux / lu, uy / lu], b = [vx / lv, vy / lv], s = 16;
+    const rightMark = `M${px + a[0] * s} ${py + a[1] * s} L${px + (a[0] + b[0]) * s} ${py + (a[1] + b[1]) * s} L${px + b[0] * s} ${py + b[1] * s}`;
+    const angle = (Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1]))) * 180 / Math.PI).toFixed(1);
+    const d = new Date(now), mid = new Date(d); mid.setHours(24, 0, 0, 0);
+    const diff = Math.max(0, Math.floor((mid - d) / 1000)), pad = n => String(n).padStart(2, '0');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const stOp = i => i === step ? 1 : i < step ? .5 : .28, stB = i => i === step ? '#0B5BC4' : '#E2E5EA';
+    const pillOn = chapter >= 2 && chapter <= 8, cp = !!this.state.compact;
+    const stD = i => (!cp || i === step) ? 'grid' : 'none', dsH = i => i === step ? '48px' : '0px';
+    const tabStyle = k => [tab === k ? '#121418' : 'transparent', tab === k ? '#121418' : '#6B7280'];
+    const [tabAB, tabAC] = tabStyle('A'), [tabDB, tabDC] = tabStyle('D'), [tabSB, tabSC] = tabStyle('S');
+    return {
+      ...this._rp, ...this._np,
+      introOn: this.state.intro, skipIntro: this.skipIntro,
+      introOpacity: p >= 5 ? 0 : 1, edgeOff: p >= 1 ? 0 : 1, edgesOp: p >= 1 ? 1 : 0, facesOp: p >= 2 ? 1 : 0,
+      wordOp: p >= 3 ? 1 : 0, byOp: p >= 4 ? 1 : 0, byY: p >= 4 ? '0px' : '8px',
+      letters: 'LIMINAL MATH'.split('').map((c, i) => ({ c, d: i * 45 + 'ms' })),
+      hA: h === 'Answer', hB: h === 'Discovering', hC: h === 'Mathematics',
+      ...this.topNav(),
+      nvLinksD: this.state.mob ? 'none' : 'flex', nvDeskD: this.state.mob ? 'none' : 'flex', nvMobD: this.state.mob ? 'flex' : 'none', deskFlex: this.state.mob ? 'none' : 'flex',
+      menuOpen: !!this.state.menu, openMenu: () => this.setState({ menu: true }), closeMenu: () => this.setState({ menu: false }),
+      canvasRef: this.canvasRef, spaceRef: this.spaceRef, heroMeshRef: this.heroMeshRef, methodMeshRef: this.methodMeshRef, introMeshRef: this.introMeshRef,
+      heroSpace: (this.props.heroStyle ?? 'Space') === 'Space', heroPaper: (this.props.heroStyle ?? 'Space') !== 'Space', heroRef: this.heroRef, crossRef: this.crossRef, pillBarRef: this.pillBarRef, proofBarRef: this.proofBarRef,
+      vtxLabel: this.state.vtx || 'Hover a vertex to read its coordinates',
+      today: d.getDate() + ' ' + months[d.getMonth()],
+      countdown: `${pad(Math.floor(diff / 3600))}:${pad(Math.floor(diff / 60) % 60)}:${pad(diff % 60)}`,
+      st0: stOp(0), st1: stOp(1), st2: stOp(2), st3: stOp(3), sb0: stB(0), sb1: stB(1), sb2: stB(2), sb3: stB(3), stepNum: pad(step + 1),
+      sd0: stD(0), sd1: stD(1), sd2: stD(2), sd3: stD(3), dh0: dsH(0), dh1: dsH(1), dh2: dsH(2), dh3: dsH(3),
+      proofH2: cp ? 'clamp(28px,6vw,40px)' : 'clamp(34px,3.8vw,52px)', proofGap: cp ? '14px' : '24px', figMax: cp ? '40vh' : '72vh', figBasis: cp ? '100%' : '460px',
+      pillOp: pillOn ? 1 : 0, pillY: pillOn ? '0px' : '12px', pillPe: pillOn ? 'auto' : 'none', chNum: pad(chapter), chName: this.CH[chapter - 1],
+      ...Object.fromEntries(['#4ECCFC', '#00A8FC', '#0666D8', '#2A4EAE', '#0666D8'].map((c, i) => ['pf' + i, i === (chapter - 1) % 5 ? c : '#D2D7DE'])),
+      tabA: tab === 'A', tabD: tab === 'D', tabS: tab === 'S', tabAB, tabAC, tabDB, tabDC, tabSB, tabSC,
+      setTabA: () => this.setState({ tab: 'A' }), setTabD: () => this.setState({ tab: 'D' }), setTabS: () => this.setState({ tab: 'S' }),
+      ans: this.state.ans,
+      onAns: e => this.setState({ ans: e.target.value, fb: null }),
+      onCheck: e => { e.preventDefault(); const v = this.state.ans.replace(/\s/g, ''); this.setState({ fb: !v ? 'empty' : v === '4' ? 'ok' : 'bad' }); },
+      fbIdle: !fb, fbEmpty: fb === 'empty', fbOk: fb === 'ok', fbBad: fb === 'bad',
+      ansBorder: fb === 'bad' ? '#C23B56' : fb === 'ok' ? '#127A50' : '#D2D7DE',
+      px: px.toFixed(1), py: py.toFixed(1),
+      plx: (260 + 176 * Math.cos(theta)).toFixed(1), ply: (210 + 176 * Math.sin(theta)).toFixed(1),
+      rightMark, angle,
+      tDown: e => { this.dragT = true; e.currentTarget.setPointerCapture(e.pointerId); this.moveT(e); },
+      tMove: e => { if (this.dragT) this.moveT(e); },
+      tUp: () => { this.dragT = false; },
+      tKey: e => { const k = { ArrowLeft: -.06, ArrowDown: -.06, ArrowRight: .06, ArrowUp: .06 }[e.key]; if (k) { e.preventDefault(); this.setState(st => ({ theta: this.clampT(st.theta + k) })); } },
+      onBegin: e => { e.preventDefault(); this.startLoader(); },
+      closeLoader: this.closeLoader,
+      loaderOn: this.state.loader != null, loaderOp: this.state.loaderShown ? 1 : 0, loaderY: -(Math.min(this.state.loader || 0, 4) * 56) + 'px',
+      loaderCount: String(Math.min((this.state.loader || 0) + 1, 5)).padStart(2, '0') + ' / 05',
+      loaderSteps: this.LSTEPS.map((t, i) => { const L = this.state.loader || 0, done = i < L || (i === 4 && L >= 4); return { t, op: i === L ? 1 : i < L ? .45 : .2, fill: done ? '#4C98F0' : 'transparent', stroke: done ? '#4C98F0' : i === L ? '#ECE8DF' : '#333844', tick: done ? 1 : 0, col: i === L ? '#ECE8DF' : '#A7AAB2' }; }),
+      topics: this.TOPICS.map(([c, t]) => ({ c, t })),
+      beginLabel: this.state.begun ? 'Check your inbox' : 'Begin'
+    };
+  }
+}
+</script>
+</body>
+</html>

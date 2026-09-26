@@ -1,0 +1,6 @@
+.DS_Store
+.vercel
+_ds/
+uploads/
+.thumbnail
+.image-slots.state.json
