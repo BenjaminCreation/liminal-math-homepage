@@ -1,7 +1,19 @@
 .DS_Store
 .vercel
-_ds/
+#_ds/
 uploads/
 .thumbnail
 .image-slots.state.json
 .env*
+
+# Moret font files used by Home v3 (the rest of _ds stays untracked)
+!_ds/
+_ds/*
+!_ds/*/
+_ds/*/*
+!_ds/*/tokens/
+_ds/*/tokens/*
+!_ds/*/tokens/fonts.css
+!_ds/*/assets/
+_ds/*/assets/*
+!_ds/*/assets/fonts/

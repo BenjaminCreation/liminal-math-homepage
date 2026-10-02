@@ -1,0 +1,15 @@
+/* Only two faces in this system: Roboto (all UI/body) and Moret (display serif).
+   Roboto loads from Google Fonts; Moret is the real uploaded face (@font-face below). */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,700&display=swap');
+
+/* Moret — the real display serif (uploaded by the user). Full weight range. */
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-RegularOblique.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-Book.otf") format("opentype");font-weight:350;font-style:normal;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-BookOblique.otf") format("opentype");font-weight:350;font-style:italic;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-Semibold.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-SemiboldOblique.otf") format("opentype");font-weight:600;font-style:italic;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-BoldOblique.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-Extrabold.otf") format("opentype");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"Moret";src:url("../assets/fonts/Moret-ExtraboldOblique.otf") format("opentype");font-weight:800;font-style:italic;font-display:swap}

@@ -2,6 +2,10 @@
   "cleanUrls": false,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/Liminal Home v2.dc.html" }
+    { "source": "/", "destination": "/Liminal Home v2.dc.html" },
+    { "source": "/v1", "destination": "/Liminal Home v1.dc.html" },
+    { "source": "/v2", "destination": "/Liminal Home v2.dc.html" },
+    { "source": "/v3", "destination": "/Liminal Home v3.dc.html" },
+    { "source": "/versions", "destination": "/versions.html" }
   ]
 }

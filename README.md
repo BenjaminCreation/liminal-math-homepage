@@ -12,6 +12,17 @@ Static, self-contained pages for the Liminal Math site: homepage, product app, L
 | Problem of the Day | `Liminal POD.dc.html` |
 | Community | `Liminal Community.dc.html` |
 
+## Versions
+
+| Route | Version | File |
+| --- | --- | --- |
+| `/versions` | Index of all versions | `versions.html` |
+| `/v1` | Version 1: first homepage concept | `Liminal Home v1.dc.html` |
+| `/v2` | Version 2: previous live site (still served at `/`) | `Liminal Home v2.dc.html` |
+| `/v3` | Version 3: homepage v18 + Chapter Zero + registration flow | `Liminal Home v3.dc.html`, `Chapter Zero.dc.html`, `Limi.dc.html` |
+
+Version 3's "Take Chapter Zero" buttons open `Chapter Zero.dc.html#register` (the registration flow); "How Chapter Zero works" opens the Chapter Zero page. All versions share the same App, POD and Community pages. To make a different version the default, change the `/` rewrite in `vercel.json`.
+
 ## Local development
 
 ```bash

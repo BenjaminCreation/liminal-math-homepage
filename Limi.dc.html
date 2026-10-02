@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<div ref="{{ rootRef }}" data-limi="" role="img" aria-label="Limi" style="position:relative; width:100%; height:100%; container-type:size; user-select:none; -webkit-user-select:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent">
+  <div style="position:absolute; left:50%; top:50%; width:min(100cqw, 100cqh); height:min(100cqw, 100cqh); transform:translate(-50%, -50%)">
+    <div ref="{{ atmRef }}" style="position:absolute; left:30%; top:-10%; width:40%; height:116%; opacity:0; background:radial-gradient(closest-side, rgba(74,205,255,0.40), rgba(1,169,255,0.22) 40%, rgba(7,103,220,0.07) 70%, rgba(7,103,220,0) 100%); transform-origin:50% 55%; will-change:transform, opacity; pointer-events:none"></div>
+    <div ref="{{ streamRef }}" style="position:absolute; left:30%; top:-10%; width:40%; height:116%; opacity:0; background:repeating-linear-gradient(180deg, rgba(74,205,255,0) 0px, rgba(74,205,255,0.22) 40px, rgba(1,169,255,0) 90px); -webkit-mask-image:radial-gradient(closest-side, #000 30%, transparent 100%); mask-image:radial-gradient(closest-side, #000 30%, transparent 100%); pointer-events:none"></div>
+    <div ref="{{ shadowRef }}" style="position:absolute; left:28.72%; top:85.58%; width:42.31%; height:5.9%; background:radial-gradient(closest-side, rgba(11,31,92,0.9), rgba(11,31,92,0.42) 45%, rgba(11,31,92,0) 100%); opacity:0.24; will-change:transform, opacity; pointer-events:none"></div>
+    <svg viewBox="-152 -91 1560 1560" style="position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none">
+      <g ref="{{ flyRef }}"></g>
+      <g ref="{{ bodyRef }}">
+        <defs><linearGradient id="{{ trailId }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4ACDFF" stop-opacity="0.95"></stop><stop offset="0.35" stop-color="#01A9FF" stop-opacity="0.45"></stop><stop offset="0.7" stop-color="#0767DC" stop-opacity="0.1"></stop><stop offset="1" stop-color="#0767DC" stop-opacity="0"></stop></linearGradient><filter id="{{ trailBlurId }}" x="-40%" y="-20%" width="180%" height="150%"><feGaussianBlur stdDeviation="22"></feGaussianBlur></filter></defs>
+        <polygon ref="{{ trailRef }}" points="0,0 0,0 0,0" fill="{{ trailFill }}" filter="{{ trailFilter }}" opacity="0"></polygon>
+        <polygon ref="{{ f0 }}" points="628.5,83 1191,649 489.8,805.6" style="fill:#4ACDFF; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f1 }}" points="628.5,83 489.8,805.6 65,591" style="fill:#01A9FF; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f2 }}" points="620,1177 489.8,805.6 1191,649" style="fill:#0767DC; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f3 }}" points="620,1177 65,591 489.8,805.6" style="fill:#072F95; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f4 }}" points="628.5,83 762.4,444.4 1191,649" style="visibility:hidden; fill:#0767DC; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f5 }}" points="628.5,83 65,591 762.4,444.4" style="visibility:hidden; fill:#0767DC; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f6 }}" points="620,1177 1191,649 762.4,444.4" style="visibility:hidden; fill:#0767DC; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ f7 }}" points="620,1177 762.4,444.4 65,591" style="visibility:hidden; fill:#0767DC; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <polygon ref="{{ hullRef }}" points="628.5,83 1191,649 620,1177 65,591" style="visibility:hidden; fill:none; stroke:#0B1F5C; stroke-width:6.5; stroke-linejoin:round"></polygon>
+        <g ref="{{ eyeG }}">
+          <g ref="{{ eyeL }}" transform="translate(413.3 498.1) rotate(2.95)">
+            <clipPath id="{{ clipL }}"><ellipse ref="{{ clipLE }}" cx="0" cy="0" rx="92" ry="106"></ellipse></clipPath>
+            <clipPath id="{{ lidClipL }}"><ellipse ref="{{ lidPolyL }}" cx="0" cy="0" rx="100" ry="114"></ellipse></clipPath>
+            <g ref="{{ openL }}">
+              <ellipse ref="{{ fillL }}" cx="0" cy="0" rx="92" ry="106" style="fill:#FFFFFF"></ellipse>
+              <g style="clip-path:{{ clipUrlL }}">
+                <g ref="{{ pupL }}"><circle cx="0" cy="0" r="45" style="fill:#0B1F5C"></circle><circle data-hl="" cx="-15" cy="-17" r="11" style="fill:#FFFFFF"></circle></g>
+              </g>
+              <ellipse ref="{{ lineL }}" cx="0" cy="0" rx="92" ry="106" style="fill:none; stroke:#0B1F5C; stroke-width:16"></ellipse>
+            </g>
+            <g style="clip-path:{{ lidUrlL }}"><path ref="{{ lidEdgeL }}" d="M0,0" style="display:none; fill:#4ACDFF; stroke:#0B1F5C; stroke-width:16; stroke-linejoin:round"></path></g>
+            <path ref="{{ arcL }}" d="M-80,22 Q0,-66 80,22" opacity="0" style="fill:none; stroke:#0B1F5C; stroke-width:22; stroke-linecap:round"></path>
+          </g>
+          <g ref="{{ eyeR }}" transform="translate(682.9 512.1) rotate(2.95)">
+            <clipPath id="{{ clipR }}"><ellipse ref="{{ clipRE }}" cx="0" cy="0" rx="92" ry="106"></ellipse></clipPath>
+            <clipPath id="{{ lidClipR }}"><ellipse ref="{{ lidPolyR }}" cx="0" cy="0" rx="100" ry="114"></ellipse></clipPath>
+            <g ref="{{ openR }}">
+              <ellipse ref="{{ fillR }}" cx="0" cy="0" rx="92" ry="106" style="fill:#FFFFFF"></ellipse>
+              <g style="clip-path:{{ clipUrlR }}">
+                <g ref="{{ pupR }}"><circle cx="0" cy="0" r="45" style="fill:#0B1F5C"></circle><circle data-hl="" cx="-15" cy="-17" r="11" style="fill:#FFFFFF"></circle></g>
+              </g>
+              <ellipse ref="{{ lineR }}" cx="0" cy="0" rx="92" ry="106" style="fill:none; stroke:#0B1F5C; stroke-width:16"></ellipse>
+            </g>
+            <g style="clip-path:{{ lidUrlR }}"><path ref="{{ lidEdgeR }}" d="M0,0" style="display:none; fill:#4ACDFF; stroke:#0B1F5C; stroke-width:16; stroke-linejoin:round"></path></g>
+            <path ref="{{ arcR }}" d="M-80,22 Q0,-66 80,22" opacity="0" style="fill:none; stroke:#0B1F5C; stroke-width:22; stroke-linecap:round"></path>
+          </g>
+        </g>
+      </g>
+      <g ref="{{ fxRef }}"></g>
+      <ellipse ref="{{ hitRef }}" cx="626" cy="630" rx="600" ry="610" style="fill:none; pointer-events:all; cursor:pointer" onPointerEnter="{{ onEnter }}" onPointerLeave="{{ onLeave }}" onPointerDown="{{ onDown }}" onPointerUp="{{ onUp }}" onPointerCancel="{{ onCancel }}"></ellipse>
+    </svg>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:360},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;states&quot;,&quot;hero&quot;],&quot;default&quot;:&quot;states&quot;,&quot;tsType&quot;:&quot;'states' | 'hero'&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;hover&quot;,&quot;thinking&quot;,&quot;click&quot;,&quot;incorrect&quot;,&quot;success&quot;,&quot;excited&quot;,&quot;hop&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;'idle' | 'hover' | 'thinking' | 'click' | 'incorrect' | 'success' | 'excited' | 'hop'&quot;},&quot;loop&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;atmosphere&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;eyes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;interactive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;reducedMotion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;on&quot;,&quot;off&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto' | 'on' | 'off'&quot;},&quot;displacement&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto' | 'desktop' | 'tablet' | 'mobile' | number&quot;},&quot;surface&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;paper&quot;,&quot;field&quot;],&quot;default&quot;:&quot;paper&quot;,&quot;tsType&quot;:&quot;'paper' | 'field'&quot;},&quot;timeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;},&quot;paused&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;turnDuration&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0.6,&quot;max&quot;:2.5,&quot;step&quot;:0.05,&quot;unit&quot;:&quot;s&quot;,&quot;default&quot;:1.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;pauseInterval&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:2,&quot;max&quot;:10,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;default&quot;:5.5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;edgeWidth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:25,&quot;max&quot;:100,&quot;step&quot;:1,&quot;unit&quot;:&quot;%&quot;,&quot;default&quot;:50,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;bank&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:30,&quot;step&quot;:1,&quot;unit&quot;:&quot;°&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;maxVelocity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:400,&quot;max&quot;:1600,&quot;step&quot;:20,&quot;unit&quot;:&quot;°/s&quot;,&quot;default&quot;:900,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;floatAmplitude&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:5,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;default&quot;:2.6,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Idle&quot;},&quot;squashAmount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:6,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;default&quot;:2.2,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Idle&quot;},&quot;eyeSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0.6,&quot;max&quot;:1.4,&quot;step&quot;:0.05,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Eyes&quot;},&quot;params&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Partial&lt;LimiParams&gt;&quot;},&quot;cue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;'hero' | 'heroFirst' | 'click' | 'success' | 'incorrect' | 'excited' | 'hop'&quot;},&quot;cueKey&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;heroSeek&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;seekFirst&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;heroSkipFirst&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;replayKey&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;onStateChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(state: string, priority: number) =&gt; void&quot;},&quot;onReady&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(api: LimiApi) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  // Geometry: a true octahedron fitted to the source artwork (viewBox units). Axis 0 = up, 1 = right, 2 = front.
+  static GEO = {
+    C: [626.1, 625.0], A: [4.25, -547], B: [563, 29], V: [-136.3, 180.6], DL: [-1.85, 5.0],
+    H: 1094, PIVOT: [626.1, 818], VB: 1560, VIEW: [0.3163, 0.2209, 0.9226], LIGHT: [0.54975, 0.29987, 0.77965],
+    FACES: [[1, 1, 1], [1, -1, 1], [-1, 1, 1], [-1, -1, 1], [1, 1, -1], [1, -1, -1], [-1, 1, -1], [-1, -1, -1]],
+    EYE_MID: [0.4125, 0, 0.585], EYE_OFF: 0.2395, EYE_FLOAT: 0.02, PLATE_T2: [0.8173, 0, -0.5763],
+    MINI: [[0.005, -0.985], [1.027, 0.044], [-0.011, 1.004], [-1.02, -0.062], [-0.248, 0.328]],
+  };
+  // Character palette. Ramp maps light·normal to colour; at rest the four stops land exactly on the four facet colours.
+  static PAL = {
+    outline: '#0B1F5C', pupil: '#0B1F5C', facets: ['#4ACDFF', '#01A9FF', '#0767DC', '#072F95'],
+    ramp: [[-0.30, [11, 31, 92]], [-0.0404, [7, 47, 149]], [0.13, [42, 83, 177]], [0.30586, [7, 103, 220]], [0.5944, [1, 169, 255]], [0.94066, [74, 205, 255]], [1.3, [196, 238, 255]]],
+    redRamp: [[-0.30, [74, 8, 20]], [-0.0404, [128, 18, 34]], [0.30586, [200, 40, 52]], [0.5944, [232, 82, 84]], [0.94066, [250, 140, 132]], [1.3, [255, 205, 198]]],
+    greenRamp: [[-0.30, [8, 64, 36]], [-0.0404, [18, 110, 56]], [0.30586, [36, 160, 80]], [0.5944, [74, 196, 106]], [0.94066, [140, 222, 146]], [1.3, [206, 245, 208]]],
+    avgUpper: 0.7675, avgLower: 0.1327,
+    tokens: { '--limi-blue-primary': '#0767DC', '--limi-blue-bright': '#01A9FF', '--limi-cyan': '#4ACDFF', '--limi-blue-deep': '#2A53B1', '--limi-blue-dark': '#072F95', '--limi-background': '#FCFBF7', '--limi-ink': '#0B1F5C', '--limi-shadow': 'rgba(11,31,92,0.24)' },
+    shPaper: 'radial-gradient(closest-side, rgba(11,31,92,0.9), rgba(11,31,92,0.42) 45%, rgba(11,31,92,0) 100%)',
+    shField: 'radial-gradient(closest-side, rgba(0,0,0,0.95), rgba(0,0,0,0.5) 45%, rgba(0,0,0,0) 100%)',
+  };
+  // Motion tokens: duration category + default easing per category.
+  static MOTION = {
+    micro: { dur: 0.16, ease: 'out' }, interaction: { dur: 0.4, ease: 'expo' }, reaction: { dur: 0.55, ease: 'out' },
+    celebration: { dur: 1.0, ease: 'io' }, hero: { dur: 1.6, ease: 'sine' }, fade: 0.14,
+  };
+  // Spring constants [angular frequency, damping ratio] per channel.
+  static SPRING = {
+    y: [24, 0.75], squash: [20, 0.42], widen: [22, 0.55], scale: [18, 0.7], tilt: [7, 0.6], hover: [7, 1], think: [3.2, 1], side: [2.2, 1],
+    pupil: [26, 0.8], head: [8, 0.85], headThink: [4, 0.85], headNoEyes: [13, 0.78], lid: [30, 0.55], expr: [16, 0.9], squeeze: [28, 0.9], bank: [8, 0.42],
+  };
+  static PRIO = { intro: 100, success: 90, excited: 85, incorrect: 70, click: 65, hop: 60, thinking: 50, hover: 30, idle: 0 };
+  static ONE = { intro: 'intro', active: 'click', click: 'click', success: 'success', incorrect: 'incorrect', excited: 'excited', hop: 'hop' };
+  // Spin velocity profiles, in units of the acceleration time: a = accel curve, plat = plateau, dec = deceleration time, b = decel curve.
+  static SPIN = {
+    click: { a: 1.25, plat: 0.1, dec: 1.35, b: 2.1 }, success: { a: 2.0, plat: 0.16, dec: 1.2, b: 2.4 },
+    excited: { a: 1.7, plat: 0.12, dec: 1.1, b: 2.3 }, excitedLong: { a: 1.5, plat: 7.0, dec: 1.6, b: 2 }, intro: { a: 2.6, plat: 0.2, dec: 1.15, b: 2.6 },
+    flex: 1.1, flexW: 19, flexZ: 0.36, brakeDecel: 2600,
+  };
+  static TIMING = { sleepyAfter: 12000, fragLife: 1.5, fragStagger: 0.32, fragGap: 0.7, queueTTL: 2.5, doubleBlink: 0.3 };
+  static TUNE = {
+    floatAmplitude: 2.6, floatDuration: 4.2, rotationDrift: 2.4, squashAmount: 2.2,
+    hoverLift: 1.6, clickSpin: 1, clickDuration: 0.62,
+    thinkingSpeed: 0.55, fragmentCount: 3, fragmentSpacing: 1,
+    successSpins: 2, spinVelocity: 1800, hopHeight: 8, celebrationDuration: 1.0, particleIntensity: 1,
+    introDelay: 0.4, introSpins: 3, peakVelocity: 1900, deceleration: 1, landingSquash: 3,
+    eyeSize: 1, eyeSpacing: 1, pupilTravel: 1, eyeMovement: 6, cursorTracking: 1, blinkFrequency: 8, blinkDuration: 170, expressionIntensity: 1,
+    shadowScale: 1, shadowOpacity: 0.24, springStrength: 1,
+    turnDuration: 1.25, pauseInterval: 5.5, turnAngle: 360, turnAccel: 2.2, maxVelocity: 900, turnDecel: 1, edgeWidth: 50, depthScale: 6,
+    anticipation: 1, heroLandSquash: 3.5, atmosphere: 1, shadowResponse: 1, bank: 20,
+    openSpins: 4, openDuration: 1.2, trailIntensity: 1, trailLength: 1, clickDelay: 250,
+  };
+  // LimiHeroCharacter: the hero's own choreography. Independent of the state machine; shares only the renderer and springs.
+  static HERO = {
+    restDur: 0.55, firstScale: 0.8, firstOpacity: 0.9, anticDur: 0.15, anticDrop: 0.012, windup: 7, liftLead: 0.05, liftY: 0.035, expand: 0.05,
+    plateau: 0.08, decelDur: 1.3, decelCurve: 2.2, landDip: 0.014, landOvershoot: 0.02, landWobble: 2.5, settle: 1.8, viewHold: 0.7,
+    pauseJitter: 1.5, reentryDelay: 0.8, idleFloat: 0.7, idleDrift: 0.6, atmBase: 0.04, atmGain: 0.5, lookUp: 0.85,
+    openGap: 0.12, openHop: 0.04, fastShape: { a: 2.0, plat: 0.16, dec: 1.2, b: 2.4 }, trailTaper: 0.18, trailRest: 0.6, flyCount: 10, flySpeed: 380, flyOpacity: 0.45, streamSpeed: 70, trailRise: 9, trailSwing: 0.28, trailFloor: 1760,
+    cursorAt: 0.9, cursorDur: 1.5, beatTilt: 15, squintChance: 0.7, squintDur: 1.0, headlineChance: 0.75, headlineLead: 1.6, headlineDur: 0.9, blinkLead: 0.3,
+  };
+  static EASE = {
+    lin: u => u, io: u => u * u * (3 - 2 * u), sine: u => 0.5 - 0.5 * Math.cos(Math.PI * u),
+    out: u => 1 - Math.pow(1 - u, 3), out2: u => 1 - (1 - u) * (1 - u), in: u => u * u * u, expo: u => (u >= 1 ? 1 : 1 - Math.pow(2, -10 * u)),
+  };
+  static kf(t, K, def) {
+    if (t <= K[0][0]) return K[0][1];
+    for (let i = 1; i < K.length; i++) if (t <= K[i][0]) {
+      const a = K[i - 1], b = K[i], d = b[0] - a[0], u = d > 0 ? (t - a[0]) / d : 1;
+      return a[1] + (b[1] - a[1]) * Component.EASE[b[2] || def || 'io'](u);
+    }
+    return K[K.length - 1][1];
+  }
+  static hop(t, t0, d, h) { const x = (t - t0) / d; return x <= 0 || x >= 1 ? 0 : h * 4 * x * (1 - x); }
+  static ss(a, b, x) { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); }
+  static c01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+  // Hero timing plan: rest (first only) → anticipation → lift + turn → landing → settle. Duration is the target; maxVelocity caps the peak.
+  // Eye expressions. Per-eye pairs are [left, right]. lid = share of the eye covered from the top; tilt in degrees, positive = inner corner down.
+  static NOD = { dur: 0.5, keys: [[0, 0], [0.12, -14, 'out'], [0.24, 4, 'io'], [0.36, -10, 'io'], [0.5, 0, 'io']] };
+  static EXPR = {
+    curious: { dur: 1.6, lid: [0.18, 0], tilt: [6, 0], sy: [1.04, 1.12], lift: [0, -9], pupil: 1.15 },
+    focused: { dur: 1.8, lid: [0.38, 0.38], tilt: [14, 14], sy: [0.92, 0.92], pupil: 0.85 },
+    surprised: { dur: 0.9, attack: 0.07, sy: [1.18, 1.18], sx: [0.95, 0.95], lift: [-6, -6], pupil: 0.66 },
+    sleepy: { dur: 2.6, attack: 0.4, lid: [0.5, 0.5], tilt: [-7, -7] },
+    wink: { dur: 0.45 }, dizzy: { dur: 1.2, rev: 2.4, radius: 30 }, proud: { dur: 0.9 },
+    pool: ['focused', 'surprised', 'sleepy'], heroChance: 0.6, idleEvery: [9, 18], smooth: 16, converge: 6,
+  };
+  static heroPlan(P, first) {
+    const C = Component, H = C.HERO, R = first ? H.restDur : 0, an = Math.max(0.3, P.anticipation), tA1 = R + H.anticDur * an;
+    const nF = first ? Math.max(0, Math.round(P.openSpins)) : 0, TF = nF ? Math.max(0.4, P.openDuration) : 0, tF0 = tA1 + 0.03, tF1 = tF0 + TF;
+    const tS = nF ? tF1 + H.openGap : tA1 + H.liftLead;
+    const shape = { a: Math.max(1, P.turnAccel), plat: H.plateau, dec: H.decelDur * Math.max(0.4, P.turnDecel), b: H.decelCurve };
+    const turns = Math.max(1, Math.round(P.turnAngle / 360)), dist = 360 * turns, sig = C.Spin.sig(shape), tu = 1 + shape.plat + shape.dec;
+    const T = Math.max(P.turnDuration * turns, dist * tu / (Math.max(60, P.maxVelocity) * sig)), tE = tS + T, fs = H.fastShape;
+    const fpeak = nF ? 360 * nF * (1 + fs.plat + fs.dec) / (C.Spin.sig(fs) * TF) : 0;
+    return { first, R, an, tA1, nF, TF, tF0, tF1, tS, T, tE, total: tE + H.settle, shape, turns, peak: dist * tu / (sig * T), fpeak };
+  }
+  // Hero channel keyframes (targets; springs smooth them). Units: y in body heights (up +), scale/sq/sx as deltas, angles in degrees.
+  static heroOut(pl, P, t, o, w, dir, disp) {
+    const H = Component.HERO, K = Component.kf, { R, an, tA1, nF, tF0, tF1, tS, T, tE, first } = pl, base = first ? H.firstScale - 1 : 0, ls = P.heroLandSquash / 100, sr = P.shadowResponse;
+    const yK = [[0, 0], [R, 0], [tA1, -H.anticDrop * an, 'out']], scK = [[0, base], [R, base], [tA1, base - 0.03 * an, 'out']], sqK = [[0, 0], [R, 0], [tA1, -0.031 * an, 'out']];
+    if (nF) { yK.push([tF0 + 0.4, H.liftY * 0.7, 'io'], [tS, H.liftY * 0.7]); scK.push([tF1, 0.02, 'io']); sqK.push([tF0 + 0.12, 0, 'io'], [tS - 0.02, 0]); }
+    yK.push([tS + 0.4 * T, H.liftY, 'io'], [tE - 0.1, H.liftY * 0.5, 'io'], [tE + 0.06, -H.landDip, 'in'], [tE + 0.26, H.landDip * 0.3, 'io'], [tE + 0.55, 0, 'io']);
+    scK.push([tS + 0.5 * T, H.expand, 'io'], [tE, 0, 'io'], [tE + 0.12, H.landOvershoot, 'out'], [tE + 0.45, 0, 'io']);
+    sqK.push([tS + 0.1, 0.02, 'out'], [tS + 0.3, 0, 'io'], [tE - 0.02, 0.006], [tE + 0.07, -ls, 'in'], [tE + 0.2, ls * 0.35, 'out'], [tE + 0.42, 0, 'io']);
+    o.y += w * disp * K(t, yK); o.scale += w * K(t, scK); o.sq += w * K(t, sqK);
+    const rel = nF ? tF0 + 0.12 : tS + 0.12;
+    o.sx += w * K(t, [[0, 0], [R, 0], [tA1, -0.017 * an, 'out'], [rel, 0, 'io']]);
+    o.yaw += w * dir * K(t, [[0, 0], [R, 0], [tA1, -H.windup * an, 'out'], [rel + 0.06, 0, 'io']]);
+    if (nF) {
+      const hT = tF1 - 0.06;
+      o.y += w * disp * Component.hop(t, hT, 0.34, H.openHop);
+      o.sq += w * K(t, [[tF0, 0], [tF0 + 0.08, 0.035, 'out'], [tF0 + 0.3, 0, 'io'], [hT - 0.02, -0.04, 'in'], [hT + 0.06, 0.035, 'out'], [hT + 0.28, -0.03, 'in'], [hT + 0.42, 0, 'io']]);
+      o.arc = Math.max(o.arc, w * K(t, [[tF0, 0], [tF0 + 0.1, 1, 'out'], [tF1, 1], [tF1 + 0.25, 0, 'io']]));
+    }
+    o.tilt += w * dir * K(t, [[tE, 0], [tE + 0.1, -H.landWobble, 'out'], [tE + 0.3, H.landWobble * 0.45, 'io'], [tE + 0.55, 0, 'io']]);
+    const lead = K(t, [[nF ? tF1 : R, 0], [nF ? tS : tA1, 1, 'out'], [tS + 0.25 * T, 1], [tS + 0.45 * T, 0, 'io']]);
+    const view = K(t, [[tE - 0.12, 0], [tE + 0.08, 1, 'out'], [tE + H.viewHold, 1], [tE + H.viewHold + 0.3, 0, 'io']]);
+    o.gx += w * lead * 0.6 * dir; o.gy += w * (lead * 0.08 + view * 0.04); o.gw += w * Math.min(1, lead + view);
+    o.wide += w * K(t, [[tE, 0], [tE + 0.12, 0.12, 'out'], [tE + 0.6, 0, 'io']]);
+    const pr = K(t, [[tE + 0.75, 0], [tE + 0.9, 1, 'out'], [tE + 1.45, 1], [tE + 1.7, 0, 'io']]);
+    o.arc = Math.max(o.arc, w * pr); o.soft = Math.max(o.soft, w * pr);
+    o.floatW += w * K(t, [[0, 0], [R, -0.6], [tA1, -1], [tE, -1], [tE + 0.9, 0, 'io']]);
+    o.shSc += w * sr * K(t, [[tE, 0], [tE + 0.1, 0.1, 'out'], [tE + 0.5, 0, 'io']]);
+    if (first) { o.shOp += w * sr * K(t, [[0, -0.5], [R, -0.5], [tE, 0, 'io']]); o.op += w * K(t, [[0, H.firstOpacity - 1], [R, H.firstOpacity - 1], [tA1 + 0.1, 0, 'io']]); }
+    o.blinkBlock = Math.max(o.blinkBlock, t > R && t < tE + 0.2 ? w : 0);
+  }
+  // Projected silhouette width at a hero yaw angle with front-back depth scaled by s2 (viewBox units).
+  static silhouetteWidth(deg, s2) {
+    const G = Component.GEO, a = deg * Math.PI / 180, cy = Math.cos(a), sy = Math.sin(a), cols = [[1, 0, 0], [0, cy, -sy], [0, sy * s2, cy * s2]];
+    let lo = 1e9, hi = -1e9;
+    for (const c of cols) for (const sg of [1, -1]) {
+      const v0 = sg * c[0], v1 = sg * c[1], v2 = sg * c[2], x = G.A[0] * v0 + G.B[0] * v1 + G.V[0] * v2 + G.DL[0] * (v0 * v0 - v1 * v1);
+      lo = Math.min(lo, x); hi = Math.max(hi, x);
+    }
+    return hi - lo;
+  }
+  // Deterministic samples of the hero performance, for charts and the spec.
+  static sampleHero(P, first, dt) {
+    const C = Component, pl = C.heroPlan(P, first), sp = new C.Spin(), h = dt || 1 / 120, W0 = C.silhouetteWidth(0, 1), out = [];
+    let started = false, fastOn = false, prev = 0, wrap = 0;
+    for (let t = 0; t <= pl.total + 1e-9; t += h) {
+      if (pl.nF && !fastOn && t >= pl.tF0) { sp.start(t, pl.nF, 1, C.HERO.fastShape, 0, pl.TF); fastOn = true; }
+      if (!started && t >= pl.tS) { sp.start(t, pl.turns, 1, pl.shape, 0, pl.T); started = true; }
+      sp.update(t, h, C.SPIN);
+      let ang = sp.angle + wrap; if (ang - prev < -180) { const k = Math.round((prev - ang) / 360); wrap += 360 * k; ang += 360 * k; } prev = ang;
+      const o = C.prototype.zero(); C.heroOut(pl, P, t, o, 1, 1, 1);
+      const sa = t >= pl.tS ? Math.abs(Math.sin(sp.angle * Math.PI / 180)) : 0, s2 = 1 - (1 - P.edgeWidth / 100) * sa, dS = 1 - P.depthScale / 100 * sa;
+      out.push({ t, angle: ang, vel: sp.vel, scale: (1 + o.scale) * dS, sq: o.sq, y: o.y, width: C.silhouetteWidth(sp.angle, s2) / W0 * (1 + o.scale) * dS });
+    }
+    return { plan: pl, samples: out };
+  }
+
+  // SpinController: unwrapped yaw with velocity-continuous programs, braking to whole turns, and a torsional flex that gives a small overshoot.
+  static Spin = class {
+    constructor() { this.reset(); }
+    reset() { this.p = null; this.th = 0; this.om = 0; this.pom = 0; this.w = 0; this.wv = 0; this.angle = 0; this.vel = 0; }
+    static sig(s) { return 1 / (s.a + 1) + s.plat + s.dec / (s.b + 1); }
+    static dur(dist, peak, s) { return dist / (Math.max(60, peak) * this.sig(s)) * (1 + s.plat + s.dec); }
+    get busy() { return !!this.p; }
+    start(t, turns, dir, s, peak, dur) {
+      const th = this.th;
+      let L = 360 * Math.round((th + dir * turns * 360) / 360);
+      if (dir * (L - th) < 240) L += dir * 360;
+      const sg = this.constructor.sig(s), tu = 1 + s.plat + s.dec, dist = Math.abs(L - th);
+      const T = dur > 0 ? dur : dist / (Math.max(60, peak) * sg) * tu;
+      this.p = { t0: t, T, th0: th, om0: this.om, L, s, sg, tu };
+      return T;
+    }
+    brake(t, decel) {
+      if (!this.p) return;
+      const th = this.th, om = this.om, dir = Math.sign(om) || Math.sign(this.p.L - th) || 1, stop = om * om / (2 * decel);
+      const L = dir > 0 ? 360 * Math.ceil((th + stop) / 360) : 360 * Math.floor((th - stop) / 360), dist = Math.abs(L - th);
+      const T = Math.abs(om) > 300 ? Math.max(0.2, 2 * dist / Math.abs(om)) : Math.min(0.9, Math.max(0.28, 2 * dist / 300));
+      this.p = { t0: t, T, th0: th, om0: om, L, brake: true };
+    }
+    E(x, s) {
+      if (x <= 1) return Math.pow(Math.max(0, x), s.a + 1) / (s.a + 1);
+      if (x <= 1 + s.plat) return 1 / (s.a + 1) + (x - 1);
+      const w = Math.min(1, (x - 1 - s.plat) / s.dec);
+      return 1 / (s.a + 1) + s.plat + s.dec / (s.b + 1) * (1 - Math.pow(1 - w, s.b + 1));
+    }
+    f(x, s) {
+      if (x <= 1) return Math.pow(Math.max(0, x), s.a);
+      if (x <= 1 + s.plat) return 1;
+      return Math.pow(Math.max(0, 1 - (x - 1 - s.plat) / s.dec), s.b);
+    }
+    update(t, h, SP) {
+      if (!(h > 0)) return;
+      const p = this.p;
+      if (p) {
+        const u = Math.min(1, Math.max(0, (t - p.t0) / p.T));
+        if (p.brake) {
+          const u2 = u * u, u3 = u2 * u;
+          this.th = (2 * u3 - 3 * u2 + 1) * p.th0 + (u3 - 2 * u2 + u) * p.T * p.om0 + (3 * u2 - 2 * u3) * p.L;
+          this.om = ((6 * u2 - 6 * u) * p.th0 + (3 * u2 - 4 * u + 1) * p.T * p.om0 + (6 * u - 6 * u2) * p.L) / p.T;
+        } else {
+          const x = u * p.tu, d = p.L - p.th0, q = 1 - u;
+          this.th = p.th0 + d * this.E(x, p.s) / p.sg + p.om0 * p.T * u * q * q * q * q;
+          this.om = d * this.f(x, p.s) * p.tu / (p.sg * p.T) + p.om0 * q * q * q * (1 - 5 * u);
+        }
+        if (u >= 1) { this.th = p.L; this.om = 0; this.p = null; }
+      }
+      const acc = (this.om - this.pom) / h; this.pom = this.om;
+      this.wv += (-SP.flexW * SP.flexW * this.w - 2 * SP.flexZ * SP.flexW * this.wv - acc * SP.flex) * h;
+      this.w += this.wv * h;
+      if (!Number.isFinite(this.w) || !Number.isFinite(this.wv)) { this.w = 0; this.wv = 0; }
+      if (!Number.isFinite(this.th) || !Number.isFinite(this.om)) { this.p = null; this.th = 0; this.om = 0; this.pom = 0; }
+      if (!this.p) this.th -= 360 * Math.round(this.th / 360);
+      this.angle = this.th + this.w; this.vel = this.om + this.wv;
+    }
+  };
+
+  rootRef = React.createRef(); bodyRef = React.createRef(); shadowRef = React.createRef(); hitRef = React.createRef();
+  atmRef = React.createRef(); trailRef = React.createRef(); flyRef = React.createRef(); streamRef = React.createRef(); hullRef = React.createRef(); fxRef = React.createRef();
+  fr = Array.from({ length: 8 }, () => React.createRef());
+  er = Object.fromEntries(['eyeG', 'eyeL', 'eyeR', 'clipLE', 'clipRE', 'openL', 'openR', 'fillL', 'fillR', 'pupL', 'pupR', 'lineL', 'lineR', 'arcL', 'arcR', 'lidPolyL', 'lidPolyR', 'lidEdgeL', 'lidEdgeR'].map(n => [n, React.createRef()]));
+  uid = 'lm' + Math.random().toString(36).slice(2, 9);
+  FI = Component.GEO.FACES.map(([a, b, c]) => { const i1 = a > 0 ? 0 : 1, i2 = b > 0 ? 2 : 3, i3 = c > 0 ? 4 : 5; return a * b * c < 0 ? [i1, i3, i2] : [i1, i2, i3]; });
+
+  renderVals() {
+    const f = this.fr;
+    return {
+      rootRef: this.rootRef, bodyRef: this.bodyRef, shadowRef: this.shadowRef, hitRef: this.hitRef, atmRef: this.atmRef, hullRef: this.hullRef, fxRef: this.fxRef,
+      f0: f[0], f1: f[1], f2: f[2], f3: f[3], f4: f[4], f5: f[5], f6: f[6], f7: f[7],
+      ...this.er, trailRef: this.trailRef, flyRef: this.flyRef, streamRef: this.streamRef, trailId: this.uid + 'T', lidClipL: this.uid + 'KL', lidClipR: this.uid + 'KR', lidUrlL: 'url(#' + this.uid + 'KL)', lidUrlR: 'url(#' + this.uid + 'KR)', trailFill: 'url(#' + this.uid + 'T)', trailBlurId: this.uid + 'B', trailFilter: 'url(#' + this.uid + 'B)', clipL: this.uid + 'L', clipR: this.uid + 'R', clipUrlL: 'url(#' + this.uid + 'L)', clipUrlR: 'url(#' + this.uid + 'R)',
+      onEnter: this.onEnter, onLeave: this.onLeave, onDown: this.onDown, onUp: this.onUp, onCancel: this.onCancel,
+    };
+  }
+
+  // ---------- parameters ----------
+  flag(k, d) { const v = this.props[k] ?? (this.props.params || {})[k]; return v === undefined || v === null ? d : (v === true || v === 'true' || v === ''); }
+  P() {
+    const p = this.props, q = p.params || {}, T = Component.TUNE, o = {};
+    for (const k in T) {
+      const alt = k === 'rotationDrift' ? (p.rotationAmount ?? q.rotationAmount) : undefined;
+      const x = parseFloat(p[k] ?? q[k] ?? alt);
+      o[k] = Number.isFinite(x) ? x : T[k];
+    }
+    o.amp = o.floatAmplitude / 100; o.sq = o.squashAmount / 100; o.hop = o.hopHeight / 100; o.lift = o.hoverLift / 100; o.landSq = o.landingSquash / 100;
+    o.blinkD = Math.max(0.06, o.blinkDuration / 1000); o.k = Math.max(0.2, o.springStrength); o.floatDuration = Math.max(0.8, o.floatDuration);
+    o.eyes = this.flag('eyes', true);
+    return o;
+  }
+  reduced() { const r = this.props.reducedMotion; return r === 'on' || r === true ? true : r === 'off' ? false : !!(this.mq && this.mq.matches); }
+  dispFactor() {
+    const d = this.props.displacement, M = { desktop: 1, tablet: 0.85, mobile: 0.7 };
+    if (typeof d === 'number') return d;
+    if (M[d]) return M[d];
+    const w = this.vw || 1280; return w >= 1024 ? 1 : w >= 640 ? 0.85 : 0.7;
+  }
+  sp(s, target, w, z, h) { const a = w * w * (target - s.x) - 2 * z * w * s.v; s.v += a * h; s.x += s.v * h; }
+  spr(s, target, key, h, k) { const c = Component.SPRING[key]; this.sp(s, target, c[0] * k, c[1], h); }
+
+  // ---------- lifecycle ----------
+  componentDidMount() {
+    const rnd = () => Math.random() * 6.2832, v = (x = 0) => ({ x, v: 0 }), self = this;
+    this.spin = new Component.Spin();
+    this.S = this.initState();
+    this.o = this.zero();
+    if (!window.__limiPtr) {
+      const Pt = window.__limiPtr = { x: 0, y: 0, t: -1e9 };
+      window.addEventListener('pointermove', e => { Pt.x = e.clientX; Pt.y = e.clientY; Pt.t = performance.now(); }, { passive: true });
+    }
+    this.mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    this.vis = true;
+    if (window.IntersectionObserver && this.rootRef.current) {
+      this.io = new IntersectionObserver(es => {
+        const on = es[es.length - 1].isIntersecting, Hd = this.S && this.S.hero;
+        if (on && !this.vis && Hd && !Hd.perf && !this.S.seek) Hd.next = Math.min(Hd.next, this.S.t + Component.HERO.reentryDelay);
+        this.vis = on;
+      }, { rootMargin: '120px' });
+      this.io.observe(this.rootRef.current);
+    }
+    this.vw = window.innerWidth;
+    this.onScroll = () => { this.rc = null; };
+    this.onResize = () => { this.rc = null; this.vw = window.innerWidth; };
+    window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
+    window.addEventListener('resize', this.onResize);
+    const G = Component.GEO, a = G.B[0], b = G.B[1], c = G.PLATE_T2[0] * G.A[0] + G.PLATE_T2[2] * G.V[0], d = G.PLATE_T2[0] * G.A[1] + G.PLATE_T2[2] * G.V[1], det = a * d - b * c;
+    this.J0i = [d / det, -c / det, -b / det, a / det];
+    this.disp = this.dispFactor();
+    this.buildFx();
+    if (window.ResizeObserver && this.rootRef.current) { this.ro = new ResizeObserver(() => this.applySize()); this.ro.observe(this.rootRef.current); }
+    this.applySize();
+    this.api = {
+      trigger: (n, o) => (n === 'hero' || n === 'heroFirst' ? this.heroPlay(n === 'heroFirst') : this.trigger(n, Object.assign({ queue: true, snap: Component.ONE[n] === 'intro' }, o))),
+      playHero: first => this.heroPlay(!!first),
+      express: kind => this.express(kind),
+      get state() { return self.S ? self.S.vis : 'idle'; },
+      tokens: { EXPR: Component.EXPR, PAL: Component.PAL, MOTION: Component.MOTION, SPRING: Component.SPRING, SPIN: Component.SPIN, HERO: Component.HERO, PRIO: Component.PRIO, TIMING: Component.TIMING, TUNE: Component.TUNE },
+      sampleHero: (params, first) => Component.sampleHero(Object.assign(this.P(), params || {}), !!first),
+      silhouetteWidth: Component.silhouetteWidth,
+    };
+    if (this.rootRef.current) this.rootRef.current.limi = this.api;
+    if (typeof this.props.onReady === 'function') this.props.onReady(this.api);
+    if (this.seekT() != null) this.runSeek();
+    else if (this.isHero()) this.heroInit(!this.flag('heroSkipFirst', false));
+    else {
+      this.enter(this.props.state || 'idle');
+      if (this.flag('introOnMount', false) && (this.props.state || 'idle') !== 'intro') this.trigger('intro', { snap: true, force: true });
+    }
+    this.last = performance.now();
+    this.frame(this.last, true);
+    const loop = now => { this.raf = requestAnimationFrame(loop); this.frame(now); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  initState() {
+    const rnd = () => Math.random() * 6.2832, v = (x = 0) => ({ x, v: 0 });
+    return {
+      t: 0, r: Array.from({ length: 12 }, rnd), ph: [Math.random(), Math.random(), Math.random()], yfp: null, yvp: 0, dInit: 0,
+      Y: v(), SQ: v(), SX: v(), SC: v(1), TL: v(), yaw: v(), pitch: v(), pupX: v(), pupY: v(),
+      oL: v(1), oR: v(1), sqz: v(), arc: v(), wor: v(), sleepy: v(), hov: v(), think: v(), side: v(1),
+      sideT: Math.random() < 0.5 ? -1 : 1, hold: 1, pauseUntil: 0, pauseNext: 3, thinkNext: 0,
+      R: null, F: [], queued: null, loopAt: -1, parts: [], frags: [null, null, null, null, null], fragNext: 0,
+      glints: [], blinks: [], glance: null, nextGlance: 2.5 + Math.random() * 5, nextBlink: 1 + Math.random() * 4, sacc: [0, 0], saccNext: 0,
+      pin: false, pressed: false, pressDir: 1, wasOn: false, leaveAt: -9, lastG: [0, 0], widenUntil: 0, actAt: performance.now(),
+      Ytot: 0, shH: 0, Xl: 0, tiltF: 0, yawO: 0, op: 1, fw: 1, vis: '', BK: v(), hero: null, seek: false, ex: null, exNext: 6 + Math.random() * 8, eP: null,
+    };
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect(); if (this.ro) this.ro.disconnect(); clearTimeout(this.dblT);
+    window.removeEventListener('scroll', this.onScroll, true); window.removeEventListener('resize', this.onResize);
+  }
+  componentDidUpdate(prev) {
+    if (!this.S) return;
+    if (this.seekT() != null) { if (prev.heroSeek !== this.props.heroSeek || prev.params !== this.props.params || prev.seekFirst !== this.props.seekFirst) this.runSeek(); return; }
+    const hero = this.isHero();
+    if ((prev.mode === 'hero') !== hero) { if (hero) this.heroInit(false); else { this.S.hero = null; if (this.spin.busy) this.spin.brake(this.S.t, Component.SPIN.brakeDecel); } }
+    const st = this.props.state || 'idle';
+    if (!hero && (st !== (prev.state || 'idle') || this.props.replayKey !== prev.replayKey)) this.enter(st);
+    if (this.props.cueKey !== prev.cueKey && this.props.cue) {
+      const c = this.props.cue;
+      if (c.indexOf('expr:') === 0) this.express(c.slice(5));
+      else if (c === 'hero' || c === 'heroFirst') this.heroPlay(c === 'heroFirst');
+      else if (!hero) this.trigger(c, { queue: true, snap: Component.ONE[c] === 'intro' });
+    }
+    if (this.rootRef.current) this.rootRef.current.limi = this.api;
+  }
+  enter(st) { const one = Component.ONE[st]; if (one) this.trigger(one, { snap: one === 'intro', force: true }); }
+
+  // ---------- StateController ----------
+  trigger(name, opts = {}) {
+    const C = Component, S = this.S; if (!S) return false;
+    name = C.ONE[name] || name;
+    const prio = C.PRIO[name];
+    if (prio == null || name === 'thinking' || name === 'hover' || name === 'idle') return false;
+    const cur = S.R;
+    if (cur && !opts.force) {
+      const tau = S.t - cur.t0;
+      if (cur.prio > prio || (cur.prio === prio && !(cur.reAt != null && tau >= cur.reAt))) {
+        if (opts.queue) S.queued = { name, opts: Object.assign({}, opts, { queue: false }), at: S.t };
+        return false;
+      }
+    }
+    const P = this.P(), red = this.reduced();
+    if (opts.snap) { this.spin.reset(); S.parts = []; S.frags = [null, null, null, null, null]; S.F = []; }
+    else {
+      if (cur) { cur.fadeT0 = S.t; S.F.push(cur); }
+      if (this.spin.busy) this.spin.brake(S.t, C.SPIN.brakeDecel);
+    }
+    S.pressed = false;
+    let prog = this.build(name, P, red, opts);
+    if (name === 'success') prog = this.withNod(prog, red);
+    prog.name = name; prog.prio = prio; prog.t0 = S.t;
+    S.R = prog; S.actAt = performance.now();
+    if (opts.snap) this.snap(prog);
+    return true;
+  }
+  afterReaction() {
+    const S = this.S, q = S.queued; S.queued = null;
+    if (q && S.t - q.at < Component.TIMING.queueTTL && this.trigger(q.name, q.opts)) return;
+    if (Component.ONE[this.props.state || 'idle'] && this.flag('loop', false)) S.loopAt = S.t + 1.6 + Math.random() * 0.8;
+  }
+  snap(prog) {
+    const S = this.S, C = Component, o = this.zero(); prog.out(0, o, 1);
+    S.Y.x = o.y; S.Y.v = 0; S.SQ.x = o.sq; S.SQ.v = 0; S.SX.x = o.sx; S.SX.v = 0; S.SC.x = 1 + o.scale + o.rm; S.SC.v = 0;
+    S.oL.x = S.oR.x = C.c01(1 + o.open); S.oL.v = S.oR.v = 0; S.op = C.c01(1 + o.op); S.shH = o.y;
+  }
+  zero() { return { y: 0, sq: 0, sx: 0, tilt: 0, x: 0, yaw: 0, scale: 0, op: 0, floatW: 0, shOp: 0, shSc: 0, atm: 0, open: 0, wide: 0, arc: 0, wor: 0, sqz: 0, gx: 0, gy: 0, gw: 0, blinkBlock: 0, rm: 0, soft: 0, tintR: 0, tintG: 0, nod: 0 }; }
+  collect(o, t) {
+    for (const k in o) o[k] = 0;
+    const S = this.S, fd = Component.MOTION.fade;
+    if (S.R) S.R.out(t - S.R.t0, o, 1);
+    for (const F of S.F) { const w = 1 - Component.ss(0, fd, t - F.fadeT0); if (w > 0.001) F.out(t - F.t0, o, w); }
+    const Hd = S.hero;
+    if (Hd) {
+      if (Hd.perf) Hd.perf.out(t - Hd.perf.t0, o, 1);
+      for (const b of Hd.beats) { const u = t - b.t0; if (u >= 0 && u <= b.dur) this.heroBeatOut(b, u, o); }
+    }
+    const ex = S.ex;
+    if (ex && (ex.kind === 'focused' || ex.kind === 'proud')) {
+      const env = Component.kf(t - ex.t0, [[0, 0], [0.2, 1, 'out'], [ex.dur - 0.3, 1], [ex.dur, 0, 'io']]);
+      if (ex.kind === 'proud') { o.arc = Math.max(o.arc, env); o.soft = Math.max(o.soft, env); }
+      else { const g = this.ptrGaze(false, this._P || this.P()); if (g[0] || g[1]) { o.gx += env * g[0]; o.gy += env * g[1]; o.gw += env; } }
+    }
+  }
+
+  // Reaction programs. out() adds weighted channel contributions: y/x in body heights (up = +), sq = stretch, deltas for multiplicative channels.
+  build(name, P, red, opts) {
+    const C = Component, K = C.kf, hop = C.hop, ss = C.ss, S = this.S, sp = this.spin, SP = C.SPIN, M = C.MOTION, disp = this.disp || 1, I = P.expressionIntensity;
+    if (name === 'click') {
+      const D = Math.max(0.35, P.clickDuration), a0 = opts.pressed ? 0 : 0.1, dir = opts.dir || (Math.random() < 0.5 ? -1 : 1), turns = Math.round(P.clickSpin), E = M.reaction.ease;
+      const rmK = opts.pressed ? [[0, -0.025], [0.3, 0, 'io']] : [[0, 0], [0.08, -0.025, 'out'], [0.15, -0.025], [0.4, 0, 'io']];
+      const rsK = opts.pressed ? [[0, 1], [0.12, 0, 'io']] : [[0, 0], [0.05, 1, 'out'], [0.12, 1], [0.24, 0, 'io']];
+      return {
+        dur: a0 + D, reAt: a0 + 0.72 * D,
+        ev: red || turns < 1 ? [] : [{ at: a0, fn: () => sp.start(S.t, turns, dir, SP.click, 0, 0.9 * D) }],
+        out: (t, o, w) => {
+          if (red) { o.rm += w * K(t, rmK, E); o.sqz = Math.max(o.sqz, w * K(t, rsK, E)); return; }
+          const u = t - a0;
+          if (u < 0) { o.y += w * K(t, [[0, 0], [a0, -0.012 * disp]], E); o.sq += w * K(t, [[0, 0], [a0, -0.06]], E); o.sqz = Math.max(o.sqz, w); return; }
+          o.y += w * (hop(u, 0, 0.58 * D, 0.035 * disp) + K(u, [[0.58 * D, 0], [0.66 * D, -0.008 * disp], [D, 0, 'io']], E));
+          o.sq += w * K(u, [[0, 0.05], [0.12 * D, 0.025], [0.3 * D, 0, 'io'], [0.54 * D, 0.004], [0.62 * D, -0.035, 'in'], [0.76 * D, 0.012], [D, 0, 'io']], E);
+          o.tilt += w * dir * K(u, [[0, 0], [0.2 * D, 2.5], [0.7 * D, 0, 'io']], E);
+          o.sqz = Math.max(o.sqz, w * K(u, [[0, 1], [0.1 * D, 0, 'io']], E));
+          o.wide += w * K(u, [[0.55 * D, 0], [0.7 * D, 0.1], [D, 0, 'io']], E);
+        },
+      };
+    }
+    if (name === 'hop') {
+      const Hh = (opts.height ?? 0.2) * disp, E = M.interaction.ease, dir = opts.dir || 1;
+      return {
+        dur: 0.78, reAt: 0.7, ev: [],
+        out: (t, o, w) => {
+          if (red) { o.rm += w * K(t, [[0, 0], [0.2, 0.03, 'out'], [0.5, 0, 'io']], E); return; }
+          o.y += w * (hop(t, 0.1, 0.44, Hh) + K(t, [[0, 0], [0.1, -0.012 * disp, 'out'], [0.14, 0]], E) + K(t, [[0.54, 0], [0.6, -0.012 * disp, 'out'], [0.78, 0, 'io']], E));
+          o.sq += w * K(t, [[0, 0], [0.09, -0.07, 'out'], [0.1, -0.07], [0.16, 0.06, 'out'], [0.3, 0], [0.5, 0.01], [0.57, -0.06, 'in'], [0.66, 0.02, 'out'], [0.78, 0, 'io']], E);
+          o.tilt += w * dir * K(t, [[0.1, 0], [0.3, 6], [0.5, -2, 'io'], [0.7, 0, 'io']], E);
+        },
+      };
+    }
+    if (name === 'success') {
+      const D = Math.max(0.6, P.celebrationDuration), ta = 0.14 * D, hd = 0.5 * D, ld = ta + hd, ap = ta + 0.25 * D, H = P.hop * disp, dip = -0.018 * disp, E = M.celebration.ease;
+      const turns = Math.max(1, Math.round(P.successSpins));
+      return {
+        dur: D + 0.75, spinGate: true,
+        ev: red ? [{ at: 0.08, fn: () => this.glint(0.8) }] : [
+          { at: ta, fn: () => sp.start(S.t, turns, 1, SP.success, P.spinVelocity) },
+          { at: ap, fn: () => { this.emit(Math.round(5 * P.particleIntensity), 1); this.glint(1); } },
+        ],
+        out: (t, o, w) => {
+          o.arc = Math.max(o.arc, w * K(t, [[0, 0], [0.12 * D, 1, 'out'], [D + 0.45, 1], [D + 0.72, 0]], E));
+          if (red) { o.rm += w * K(t, [[0, 0], [0.18, 0.045, 'out'], [0.6, 0]], E); return; }
+          o.y += w * (t < ta ? K(t, [[0, 0], [ta, dip, 'out']], E) : dip * (1 - ss(ta, ta + 0.12 * D, t)) + hop(t, ta, hd, H) + K(t, [[ld, 0], [ld + 0.06 * D, -0.012 * disp, 'out'], [ld + 0.2 * D, 0.004 * disp], [ld + 0.36 * D, 0]], E));
+          o.sq += w * K(t, [[0, 0], [0.8 * ta, -0.07, 'out'], [ta, -0.07], [ta + 0.05 * D, 0.065, 'out'], [ta + 0.22 * D, 0], [ld - 0.04 * D, 0.01], [ld + 0.05 * D, -0.055, 'in'], [ld + 0.16 * D, 0.022, 'out'], [ld + 0.34 * D, 0]], E);
+          o.sx += w * K(t, [[ta + 0.1 * D, 0], [ap, 0.035], [ld - 0.04 * D, 0]], E);
+        },
+      };
+    }
+    if (name === 'excited') {
+      // One long continuous spin (~2.4s), then it comes in and lands.
+      const ta = 0.12, TS = 2.4, te = ta + TS, E = M.celebration.ease;
+      return {
+        dur: te + 0.7, spinGate: true,
+        ev: red ? [{ at: 0.1, fn: () => this.glint(0.8) }] : [
+          { at: ta, fn: () => sp.start(S.t, 6, 1, SP.excitedLong, 0, TS) }, { at: 0.35, fn: () => this.glint(1) },
+          { at: te - 0.1, fn: () => this.emit(Math.round(6 * P.particleIntensity), 1.2) }, { at: te + 0.05, fn: () => this.express('dizzy') },
+        ],
+        out: (t, o, w) => {
+          o.wide += w * K(t, [[0, 0], [0.12, 0.25, 'out'], [te, 0.25], [te + 0.4, 0]], E);
+          if (red) { o.rm += w * K(t, [[0, 0], [0.15, 0.05, 'out'], [0.6, 0.02], [0.9, 0]], E); return; }
+          o.y += w * disp * K(t, [[0, 0], [ta, -0.012, 'out'], [ta + 0.35, 0.05, 'io'], [te - 0.2, 0.05], [te + 0.1, -0.012, 'in'], [te + 0.3, 0.004, 'io'], [te + 0.6, 0, 'io']], E);
+          o.sq += w * K(t, [[0, 0], [ta * 0.8, -0.05, 'out'], [ta, -0.05], [ta + 0.06, 0.05, 'out'], [ta + 0.3, 0.015], [te - 0.05, 0.015], [te + 0.1, -0.045, 'in'], [te + 0.22, 0.015, 'out'], [te + 0.45, 0, 'io']], E);
+          o.sx += w * K(t, [[ta + 0.3, 0], [ta + 0.6, 0.025], [te - 0.2, 0.025], [te, 0]], E);
+        },
+      };
+    }
+    if (name === 'incorrect') {
+      const d = opts.dir || (S.lastG[0] > 0.05 ? -1 : 1), E = M.reaction.ease;
+      return {
+        dur: 1.2, ev: [],
+        out: (t, o, w) => {
+          const e2 = K(t, [[0, 0], [0.12, 1], [0.9, 1], [1.2, 0, 'io']], E);
+          o.open += w * -0.28 * I * e2; o.wor = Math.max(o.wor, w * e2); o.tintR = Math.max(o.tintR, w * e2);
+          const gk = K(t, [[0.4, 0], [0.5, 1], [0.85, 1], [1.05, 0, 'io']], E);
+          o.gx += w * gk * -0.35 * d; o.gy += w * gk * -0.55; o.gw += w * gk;
+          if (red) { o.rm += w * K(t, [[0, 0], [0.12, -0.03], [0.45, -0.03], [0.7, 0, 'io']], E); return; }
+          const s = t - 0.18, env = s > 0 ? Math.exp(-s / 0.11) * ss(0, 0.03, s) : 0, osc = Math.sin(6.2832 * 3.4 * s);
+          o.y += w * disp * K(t, [[0, 0], [0.08, 0.006], [0.18, -0.008, 'in'], [0.46, -0.004], [0.62, 0, 'io']], E);
+          o.sq += w * K(t, [[0, 0], [0.08, 0.015], [0.18, -0.045, 'in'], [0.3, -0.02], [0.46, -0.012], [0.62, 0, 'io']], E);
+          o.tilt += w * (d * K(t, [[0, 0], [0.08, -0.6], [0.18, 3.2], [0.46, 0.8, 'io'], [0.66, 0, 'io']], E) + 1.6 * osc * env);
+          o.x += w * disp * (d * K(t, [[0, 0], [0.18, 0.006], [0.46, 0, 'io']], E) + 0.008 * osc * env);
+          o.yaw += w * 8 * osc * env;
+        },
+      };
+    }
+    // intro
+    const turns = Math.max(1, Math.round(P.introSpins)), shape = Object.assign({}, SP.intro, { dec: SP.intro.dec / Math.min(2.5, Math.max(0.4, P.deceleration)) }), E = M.hero.ease;
+    if (red) return {
+      dur: 0.9, reAt: 0.3, ev: [{ at: 0.62, fn: () => this.blink() }],
+      out: (t, o, w) => {
+        o.op += w * (K(t, [[0, 0], [0.5, 1, 'out']]) - 1); o.rm += w * K(t, [[0, -0.04], [0.5, 0, 'out']]);
+        o.open += w * (K(t, [[0, 0.05], [0.35, 0.05], [0.55, 1, 'out']]) - 1); o.blinkBlock = Math.max(o.blinkBlock, t < 0.6 ? w : 0);
+      },
+    };
+    const R0 = Math.max(0.1, P.introDelay), A1 = R0 + 0.16, S0 = R0 + 0.26, Ts = C.Spin.dur(turns * 360, P.peakVelocity, shape), L = S0 + 0.9 * Ts, LS = P.landSq;
+    return {
+      dur: L + 0.9, reAt: 0.3, spinGate: true,
+      ev: [{ at: S0, fn: () => sp.start(S.t, turns, 1, shape, P.peakVelocity) }, { at: L + 0.5, fn: () => this.blink() }],
+      out: (t, o, w) => {
+        o.y += w * disp * K(t, [[0, -0.06], [R0, -0.06], [A1, -0.078], [S0, -0.078], [S0 + 0.55 * Ts, 0.012], [L, 0.022, 'out2'], [L + 0.12, -0.012, 'io'], [L + 0.3, 0.004, 'io'], [L + 0.6, 0, 'io']], E);
+        o.scale += w * K(t, [[0, -0.24], [S0, -0.24], [S0 + 0.7 * Ts, -0.02], [L, 0, 'io']], E);
+        o.sq += w * K(t, [[0, 0], [R0, 0], [A1, -0.07], [S0, -0.07], [S0 + 0.12, 0, 'out'], [S0 + 0.45 * Ts, 0.03], [S0 + 0.8 * Ts, 0.01], [L, 0], [L + 0.12, -LS, 'in'], [L + 0.26, 0.012, 'out'], [L + 0.5, 0, 'io']], E);
+        o.sx += w * K(t, [[0, 0], [R0, 0], [A1, -0.0685], [S0, -0.0685], [S0 + 0.14, 0, 'out']], E);
+        o.op += w * (K(t, [[0, 0], [0.25, 0.9, 'out'], [S0, 0.9], [S0 + 0.4 * Ts, 1]], E) - 1);
+        o.floatW += w * (K(t, [[0, 0], [L, 0], [L + 0.9, 1]], E) - 1);
+        o.shOp += w * (K(t, [[0, 0.45], [S0, 0.45], [S0 + 0.5 * Ts, 0.6], [L, 1]], E) - 1);
+        o.shSc += w * K(t, [[L, 0], [L + 0.12, 0.08, 'out'], [L + 0.5, 0]], E);
+        o.atm += w * K(t, [[0, -0.16], [S0, -0.08], [S0 + 0.5 * Ts, 0.15], [L, 0.04], [L + 0.8, 0]], E);
+        o.open += w * (K(t, [[0, 0.05], [L - 0.05, 0.05], [L + 0.1, 1, 'out']]) - 1);
+        o.wide += w * K(t, [[L, 0], [L + 0.12, 0.14, 'out'], [L + 0.6, 0, 'io']]);
+        o.blinkBlock = Math.max(o.blinkBlock, t < L + 0.35 ? w : 0);
+        const gk = K(t, [[0, 1], [L + 0.5, 1], [L + 0.9, 0, 'io']]); o.gy += w * gk * 0.05; o.gw += w * gk;
+      },
+    };
+  }
+
+  // Success: a nod first, then the celebration spin; facets turn green throughout.
+  withNod(p, red) {
+    const C = Component, K = C.kf, N = red ? 0 : C.NOD.dur, inner = p.out, total = p.dur + N;
+    return Object.assign({}, p, {
+      dur: total, reAt: p.reAt != null ? p.reAt + N : undefined, ev: p.ev.map(e => Object.assign({}, e, { at: e.at + N })),
+      out: (t, o, w) => {
+        o.tintG = Math.max(o.tintG, w * K(t, [[0, 0], [0.2, 1, 'out'], [total - 0.4, 1], [total, 0, 'io']]));
+        if (t >= N) { inner(t - N, o, w); return; }
+        o.nod += w * K(t, C.NOD.keys); o.y += w * K(t, [[0, 0], [0.12, -0.008], [0.24, 0.002], [0.36, -0.006], [N, 0]]);
+        o.arc = Math.max(o.arc, w * K(t, [[0, 0], [0.15, 1, 'out']]));
+      },
+    });
+  }
+  notice(P) { const S = this.S; S.Y.v += 0.22 * P.k * this.disp; S.SQ.v += 0.9 * P.k; S.widenUntil = S.t + 0.45; S.actAt = performance.now(); }
+  press(dir) {
+    const S = this.S, R = S.R, pc = Component.PRIO.click;
+    if (R && (R.prio > pc || (R.prio === pc && !(S.t - R.t0 >= R.reAt)))) return;
+    S.pressed = true; S.pressDir = dir; S.actAt = performance.now();
+  }
+  release() {
+    const S = this.S; if (!S.pressed) return; S.pressed = false;
+    if (!S.hero) { this.trigger('click', { pressed: true, dir: S.pressDir }); return; }
+    // Hero: wait for a possible second click. One click → quick twirl, double-click → excited.
+    if (this.dblT) { clearTimeout(this.dblT); this.dblT = 0; if (this.trigger('excited', {})) this.after(4.45, () => this.express('wink')); return; }
+    const dir = S.pressDir;
+    this.dblT = setTimeout(() => { this.dblT = 0; if (this.S && !(this.S.hero && this.S.hero.perf)) this.trigger('click', { dir }); }, Math.max(0, this.P().clickDelay));
+  }
+  glint(g) { this.S.glints.push({ t0: this.S.t, g }); }
+  blink() { this.S.blinks.push(this.S.t); }
+
+  onEnter = () => { if (this.S && this.flag('interactive', true)) this.S.pin = true; };
+  onLeave = () => { if (this.S) this.S.pin = false; };
+  onDown = e => {
+    if (!this.S || !this.flag('interactive', true) || this.seekT() != null || (this.S.hero && this.S.hero.perf)) return;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+    const r = this.rootRef.current ? this.rootRef.current.getBoundingClientRect() : null;
+    this.S.pin = true; this.press(r && e.clientX > r.left + r.width / 2 ? 1 : -1);
+  };
+  onUp = () => { if (this.S && this.S.pressed) this.release(); };
+  onCancel = () => { if (this.S) { this.S.pressed = false; this.S.pin = false; } };
+
+  // ---------- ParticleController ----------
+  buildFx() {
+    const g = this.fxRef.current; if (!g || this.partEls) return;
+    const NS = 'http://www.w3.org/2000/svg', PAL = Component.PAL, MINI = Component.GEO.MINI;
+    const mk = (tag, at, par) => { const el = document.createElementNS(NS, tag); for (const k in at) el.setAttribute(k, at[k]); par.appendChild(el); return el; };
+    const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+    this.partEls = []; this.fragEls = [];
+    for (let i = 0; i < 6; i++) {
+      const r = [34, 42, 38][i % 3], pg = mk('g', { opacity: '0' }, g), st = { stroke: PAL.outline, 'stroke-width': '4.5', 'stroke-linejoin': 'round' };
+      mk('polygon', Object.assign({ points: pts([[0, -r], [0, r], [-0.62 * r, 0]]), fill: PAL.facets[i % 2 ? 2 : 1] }, st), pg);
+      mk('polygon', Object.assign({ points: pts([[0, -r], [0.62 * r, 0], [0, r]]), fill: PAL.facets[i % 2 ? 1 : 0] }, st), pg);
+      this.partEls.push(pg);
+    }
+    for (let i = 0; i < 5; i++) {
+      const r = 40 + 12 * i, fg = mk('g', { opacity: '0' }, g), [Tp, Rp, Bp, Lp, Fp] = MINI.map(p => [p[0] * r, p[1] * r]), st = { stroke: PAL.outline, 'stroke-width': '4', 'stroke-linejoin': 'round' };
+      mk('polygon', Object.assign({ points: pts([Tp, Rp, Fp]), fill: PAL.facets[0] }, st), fg);
+      mk('polygon', Object.assign({ points: pts([Tp, Fp, Lp]), fill: PAL.facets[1] }, st), fg);
+      mk('polygon', Object.assign({ points: pts([Bp, Fp, Rp]), fill: PAL.facets[2] }, st), fg);
+      mk('polygon', Object.assign({ points: pts([Bp, Lp, Fp]), fill: PAL.facets[3] }, st), fg);
+      this.fragEls.push(fg);
+    }
+    const fl = this.flyRef.current; this.flyEls = [];
+    if (fl) for (let i = 0; i < Component.HERO.flyCount; i++) {
+      const r = 6 + Math.random() * 7, el = mk('polygon', { points: pts([[0, -r * 1.6], [r, 0], [0, r * 1.6], [-r, 0]]), fill: i % 3 ? '#4ACDFF' : '#01A9FF', opacity: '0' }, fl);
+      this.flyEls.push({ el, x: (Math.random() * 2 - 1) * 520, y: Math.random(), sp: 0.7 + Math.random() * 0.6 });
+    }
+  }
+  emit(n, s) {
+    const S = this.S, H = Component.GEO.H; n = Math.max(0, Math.min(6, n)); S.parts = [];
+    for (let i = 0; i < n; i++) {
+      const ang = (-90 + (n > 1 ? (i / (n - 1) - 0.5) * 150 : 0) + (Math.random() - 0.5) * 14) * Math.PI / 180;
+      S.parts.push({ t0: S.t + i * 0.018, ang, r0: 520 + Math.random() * 40, dist: (150 + Math.random() * 90) * s * this.disp, dur: 0.5 + Math.random() * 0.14, rot: (Math.random() < 0.5 ? -1 : 1) * (90 + Math.random() * 90), ox: S.Xl * H, oy: -S.Ytot * H });
+    }
+  }
+
+  // ---------- EyeController: gaze ----------
+  ptrGaze(hov, P) {
+    const Pt = window.__limiPtr, el = this.rootRef.current, now = performance.now();
+    if (!(Pt && (this.S.pin || now - Pt.t < 2500)) || !el) return hov ? [0.5, 0.35] : [0, 0];
+    if (!this.rc || now - this.rcT > 400) { this.rc = el.getBoundingClientRect(); this.rcT = now; }
+    const r = this.rc, s = Math.max(60, Math.min(r.width, r.height)), gn = 2.4 * P.cursorTracking;
+    return [Math.tanh((Pt.x - (r.left + r.width / 2)) / s * gn), Math.tanh(-(Pt.y - (r.top + r.height / 2)) / s * gn)];
+  }
+  gazeTarget(t, hoverLive, th, o, P) {
+    const S = this.S; let g = [0, 0];
+    if (hoverLive) { g = this.ptrGaze(true, P); S.lastG = g; S.glance = null; }
+    else if (th) { g = [0.55 * S.sideT, 0.75]; S.glance = null; }
+    else if (t - S.leaveAt < 0.9) g = this.ptrGaze(false, P);
+    else if (!S.R) {
+      if (!S.glance && t >= S.nextGlance) {
+        const Pt = window.__limiPtr, recent = Pt && performance.now() - Pt.t < 4000;
+        let tg;
+        if (recent && Math.random() < 0.55) tg = this.ptrGaze(false, P);
+        else { const an = Math.random() * 6.2832, m = 0.35 + Math.random() * 0.35; tg = [Math.cos(an) * m, Math.sin(an) * m * 0.8]; }
+        S.glance = { g: tg, until: t + 0.8 + Math.random() * 1.4, two: Math.random() < 0.25 };
+      }
+      if (S.glance) {
+        if (t >= S.glance.until) {
+          if (S.glance.two) S.glance = { g: [-S.glance.g[0] * 0.8, S.glance.g[1] * 0.5], until: t + 0.6 + Math.random() * 0.8 };
+          else { S.glance = null; S.nextGlance = t + 5 + Math.random() * 8; }
+        } else g = S.glance.g;
+      }
+    }
+    if (o.gw > 0.001) { const w = Math.min(1, o.gw), gx = o.gx / o.gw, gy = o.gy / o.gw; g = [g[0] + (gx - g[0]) * w, g[1] + (gy - g[1]) * w]; }
+    if (g[0] || g[1]) {
+      if (t >= S.saccNext) { S.sacc = [(Math.random() - 0.5) * 0.1, (Math.random() - 0.5) * 0.08]; S.saccNext = t + 0.5 + Math.random() * 0.9; }
+      g = [g[0] + S.sacc[0], g[1] + S.sacc[1]];
+    }
+    return g;
+  }
+
+  // ---------- ExpressionController ----------
+  express(kind) {
+    const S = this.S, X = Component.EXPR[kind]; if (!S || !X) return false;
+    S.ex = { kind, t0: S.t, dur: X.dur, side: (S.lastG[0] || 0) >= 0 ? 1 : 0 };
+    if (kind === 'dizzy') this.after(X.dur - 0.08, () => this.blink());
+    return true;
+  }
+  exprStep(t, h, hv, P, o) {
+    const C = Component, X = C.EXPR, S = this.S, tiny = !!this._tiny, I = P.expressionIntensity;
+    const T = { lid: [0, 0], tilt: [0, 0], sy: [1, 1], sx: [1, 1], lift: [0, 0], wink: [0, 0], pupil: 1, dz: 0 };
+    const add = (cfg, w) => {
+      if (!(w > 0)) return;
+      for (const key of ['lid', 'tilt', 'sy', 'sx', 'lift']) if (cfg[key]) for (let i = 0; i < 2; i++) T[key][i] += (cfg[key][i] - (key === 'sy' || key === 'sx' ? 1 : 0)) * w * I;
+      if (cfg.pupil) T.pupil += (cfg.pupil - 1) * w * I;
+    };
+    const flip = cfg => ({ lid: cfg.lid && [cfg.lid[1], cfg.lid[0]], tilt: cfg.tilt && [cfg.tilt[1], cfg.tilt[0]], sy: cfg.sy && [cfg.sy[1], cfg.sy[0]], lift: cfg.lift && [cfg.lift[1], cfg.lift[0]], pupil: cfg.pupil });
+    const cursorRight = (S.lastG[0] || 0) >= 0;
+    if (!tiny) add(cursorRight ? X.curious : flip(X.curious), hv);
+    const e = S.ex;
+    let wob = 0;
+    if (e) {
+      const u = t - e.t0, cfg = X[e.kind];
+      if (u > e.dur) S.ex = null;
+      else {
+        const at = cfg.attack || 0.16, env = C.kf(u, [[0, 0], [at, 1, 'out'], [Math.max(at, e.dur - 0.3), 1], [e.dur, 0, 'io']]);
+        if (e.kind === 'wink') { T.wink[e.side] = C.kf(u, [[0, 0], [0.08, 1, 'out'], [0.3, 1], [e.dur, 0, 'io']]); T.sy[1 - e.side] += 0.06 * env; }
+        else if (e.kind === 'dizzy') { if (!tiny) { T.dz = env; T.lid[0] += 0.18 * env; T.lid[1] += 0.18 * env; const s0 = e.dur - 0.4; if (u > s0) wob = 9 * Math.sin((u - s0) * Math.PI * 10) * (1 - (u - s0) / 0.4); } }
+        else if (e.kind !== 'proud' && !tiny) {
+          add(e.kind === 'curious' && !cursorRight ? flip(cfg) : cfg, env);
+          if (e.kind === 'sleepy') { const sb = Math.max(0, Math.sin(Math.PI * 2 * u / (e.dur / 2))); T.lid[0] += 0.35 * sb * env; T.lid[1] += 0.35 * sb * env; }
+        }
+      }
+    }
+    S.yawO += wob;
+    if (!S.eP) S.eP = { lid: [0, 0], tilt: [0, 0], sy: [1, 1], sx: [1, 1], lift: [0, 0], wink: [0, 0], pupil: 1, dz: 0, dzA: 0, soft: 0 };
+    const E = S.eP, k = 1 - Math.exp(-h * X.smooth), kw = 1 - Math.exp(-h * 30);
+    for (const key of ['lid', 'tilt', 'sy', 'sx', 'lift', 'wink']) for (let i = 0; i < 2; i++) E[key][i] += (T[key][i] - E[key][i]) * (key === 'wink' ? kw : k);
+    E.pupil += (T.pupil - E.pupil) * k; E.dz += (T.dz - E.dz) * k; E.soft += (C.c01(o.soft) - E.soft) * k;
+    E.dzA += h * Math.PI * 2 * X.dizzy.rev;
+  }
+
+  // ---------- LimiHeroCharacter ----------
+  seekT() { const v = parseFloat(this.props.heroSeek); return Number.isFinite(v) ? Math.max(0, v) : null; }
+  isHero() { return this.props.mode === 'hero' || this.seekT() != null; }
+  heroState() { return { next: 0, dir: 1, count: 0, perf: null, beats: [], blinked: false, lookedUp: false }; }
+  heroInit(first) {
+    const S = this.S; S.hero = this.heroState();
+    if (first) this.heroStart(S.t, this.P(), this.reduced(), true); else S.hero.next = S.t + 0.6;
+  }
+  heroPlay(first) {
+    const S = this.S; if (!S || !this.isHero()) return false;
+    if (!S.hero) S.hero = this.heroState();
+    if (first) { this.spin.reset(); S.hero.count = 0; this._tcg = 0; }
+    this.heroStart(S.t, this.P(), this.reduced(), !!first);
+    return true;
+  }
+  heroStart(t, P, red, first) {
+    const S = this.S, Hd = S.hero;
+    if (Hd.count > 0) Hd.dir = -Hd.dir;
+    Hd.count++; Hd.beats = []; Hd.blinked = Hd.lookedUp = false; Hd.calm = false;
+    const pf = this.heroBuild(P, red, first, Hd.dir); pf.t0 = t; Hd.perf = pf;
+    if (first) { const o = this.zero(); pf.out(0, o, 1); S.SC.x = 1 + o.scale + o.rm; S.SC.v = 0; S.Y.x = o.y; S.Y.v = 0; S.op = Component.c01(1 + o.op); }
+  }
+  heroBuild(P, red, first, dir) {
+    const C = Component, K = C.kf, S = this.S;
+    if (red) return {
+      dur: first ? 1.1 : 0.9, plan: null, ev: [{ at: first ? 0.6 : 0.25, fn: () => this.blink() }],
+      out: (t, o, w) => {
+        if (first) { o.op += w * K(t, [[0, -0.15], [0.55, 0, 'out']]); o.rm += w * K(t, [[0, -0.05], [0.55, 0, 'out']]); }
+        else o.rm += w * K(t, [[0, 0], [0.25, 0.03, 'out'], [0.75, 0, 'io']]);
+        const v = K(t, [[0, 0], [0.2, 1, 'out'], [0.7, 1], [0.9, 0, 'io']]); o.gw += w * v; o.gy += w * v * 0.05;
+      },
+    };
+    const pl = C.heroPlan(P, first), sp = this.spin;
+    const ev = [{ at: pl.tS, fn: () => { if (this.S.hero) this.S.hero.calm = true; sp.start(this.S.t, pl.turns, dir, pl.shape, 0, pl.T); } }];
+    if (pl.nF) ev.push({ at: pl.tF0, fn: () => sp.start(this.S.t, pl.nF, dir, C.HERO.fastShape, 0, pl.TF) }, { at: pl.tF1 - 0.05, fn: () => { this.emit(Math.round(5 * P.particleIntensity), 1); this.glint(1); } });
+    return { dur: pl.total, plan: pl, ev, out: (t, o, w) => C.heroOut(pl, P, t, o, w, dir, this.disp || 1) };
+  }
+  heroSchedule(t, P) {
+    const H = Component.HERO, Hd = this.S.hero, pause = Math.max(2, P.pauseInterval + (Math.random() * 2 - 1) * H.pauseJitter);
+    Hd.next = t + pause; Hd.blinked = false; Hd.lookedUp = Math.random() > H.headlineChance;
+    this.heroBeat('cursor', t + H.cursorAt + Math.random() * 0.5, H.cursorDur);
+    if (pause > 3.2 && Math.random() < H.squintChance) this.heroBeat('squint', t + pause * (0.48 + Math.random() * 0.1), H.squintDur);
+    const X = Component.EXPR;
+    if (Math.random() < X.heroChance) { const kind = X.pool[Math.floor(Math.random() * X.pool.length)]; this.after(pause * (0.26 + Math.random() * 0.1), () => { const H2 = this.S.hero; if (H2 && !H2.perf && !this.S.pin) this.express(kind); }); }
+  }
+  heroBeat(kind, t0, dur) { this.S.hero.beats.push({ kind, t0, dur, g: [(Math.random() - 0.5) * 1.1, 0.1 + Math.random() * 0.3] }); }
+  heroBeatOut(b, u, o) {
+    const C = Component, H = C.HERO, e = C.kf(u, [[0, 0], [0.18, 1, 'out'], [b.dur - 0.25, 1], [b.dur, 0, 'io']]);
+    if (b.kind === 'squint') { o.arc = Math.max(o.arc, e); return; }
+    if (b.kind === 'headline') { o.gx += e * (u / b.dur - 0.5) * 0.9; o.gy += e * H.lookUp; o.gw += e; return; }
+    const pg = this.ptrGaze(false, this._P || this.P()), rec = !!(pg[0] || pg[1]), g = rec ? pg : b.g;
+    o.gx += e * g[0]; o.gy += e * g[1]; o.gw += e; o.tilt += e * H.beatTilt * g[0] * (rec ? 1 : 0.5);
+  }
+  heroStep(t, h, P, red) {
+    const H = Component.HERO, S = this.S, Hd = S.hero;
+    if (Hd.beats.length) Hd.beats = Hd.beats.filter(b => t - b.t0 <= b.dur);
+    if (Hd.perf) {
+      const pf = Hd.perf, tau = t - pf.t0;
+      for (const e of pf.ev) if (!e.done && tau >= e.at) { e.done = true; e.fn(); }
+      if (tau >= pf.dur && !this.spin.busy) { Hd.perf = null; if (!S.seek) this.heroSchedule(t, P); }
+      return;
+    }
+    if (S.seek) return;
+    if (S.pin) { Hd.next += h; return; }
+    if (!Hd.lookedUp && t >= Hd.next - H.headlineLead) { Hd.lookedUp = true; this.heroBeat('headline', t, H.headlineDur); }
+    if (!Hd.blinked && t >= Hd.next - H.blinkLead) { Hd.blinked = true; this.blink(); }
+    if (t >= Hd.next && !S.R && !this.spin.busy) this.heroStart(t, P, red, false);
+  }
+  runSeek() {
+    const P = this.P(), T = this.seekT() || 0, h = 1 / 240;
+    this.S = this.initState(); this.spin.reset();
+    const S = this.S; S.seek = true; S.r = S.r.map(() => 0); S.ph = [0, 0, 0]; S.nextBlink = S.nextGlance = S.saccNext = S.exNext = 1e9; S.sideT = 1;
+    S.hero = this.heroState(); this.heroStart(0, P, false, this.flag('seekFirst', false));
+    for (let i = 0, n = Math.round(T / h); i < n; i++) this.step(h, P, false);
+    this._P = P; this.dirty = true;
+  }
+  // Small sizes: constant-pixel outline (0.5–2px) and no pupil highlights below 56px.
+  applySize() {
+    const el = this.rootRef.current; if (!el) return;
+    const r = el.getBoundingClientRect(), s = Math.min(r.width, r.height); if (!(s > 0)) return;
+    const small = s < 56, tiny = s <= 36, sw = Math.max(0.5, Math.min(2, s / 240)) * Component.GEO.VB / s;
+    if (small === this._small && tiny === this._tiny && Math.abs(sw - (this._sw || 0)) < 0.25) return;
+    this._small = small; this._tiny = tiny; this._sw = sw;
+    // 36px and under: no outline at all, white eyes with pupils only.
+    const u = tiny ? '0' : sw.toFixed(2);
+    for (const f of this.fr) if (f.current) f.current.style.strokeWidth = u;
+    if (this.hullRef.current) this.hullRef.current.style.strokeWidth = u;
+    for (const n of ['lineL', 'lineR']) if (this.er[n].current) this.er[n].current.style.strokeWidth = tiny ? '0' : (sw * 2.4).toFixed(2);
+    for (const n of ['lidEdgeL', 'lidEdgeR']) if (this.er[n].current) this.er[n].current.style.strokeWidth = (sw * 2.4).toFixed(2);
+    el.querySelectorAll('[data-hl]').forEach(c => { c.style.display = small ? 'none' : ''; });
+    this.dirty = true;
+  }
+
+  // ---------- MotionController: one simulation step ----------
+  step(h, P, red) {
+    if (!(h > 0)) return;
+    const C = Component, S = this.S, T = C.TIMING, k = P.k, st = this.props.state || 'idle', disp = this.disp;
+    S.t += h; const t = S.t;
+    let R = S.R;
+    if (R) {
+      const tau = t - R.t0;
+      for (const e of R.ev) if (!e.done && tau >= e.at) { e.done = true; e.fn(); }
+      if (tau >= R.dur && !(R.spinGate && this.spin.busy)) { S.R = null; this.afterReaction(); R = S.R; }
+    }
+    if (S.F.length) S.F = S.F.filter(F => t - F.fadeT0 < C.MOTION.fade);
+    if (S.loopAt >= 0 && t >= S.loopAt) { S.loopAt = -1; const one = C.ONE[st]; if (one && this.flag('loop', false)) this.trigger(one, {}); R = S.R; }
+    if (S.hero) this.heroStep(t, h, P, red);
+    const o = this.o; this.collect(o, t);
+    const think = st === 'thinking', hoverOn = S.pin || st === 'hover', Rp = R ? R.prio : 0, hoverLive = hoverOn && !R && !S.pressed;
+    const thinkLive = think && Rp <= C.PRIO.thinking;
+    if (hoverOn && !S.wasOn && !R && !S.pressed) this.notice(P);
+    if (!hoverOn && S.wasOn) S.leaveAt = t;
+    S.wasOn = hoverOn;
+    this.spr(S.hov, hoverLive ? (think ? 0.3 : 1) : 0, 'hover', h, k);
+    this.spr(S.think, thinkLive ? 1 : 0, 'think', h, k);
+    const hv = C.c01(S.hov.x), tk = C.c01(S.think.x);
+    if (think) {
+      if (t >= S.pauseNext) { S.pauseUntil = t + 0.9; S.pauseNext = t + 4 + Math.random() * 2.5; }
+      if (t >= S.thinkNext) { S.sideT = -S.sideT; S.thinkNext = t + 2.8 + Math.random() * 1.8; }
+    }
+    S.hold += ((think && t < S.pauseUntil ? 0.15 : 1) - S.hold) * (1 - Math.exp(-h * 4));
+    this.spr(S.side, S.sideT, 'side', h, 1);
+
+    // Idle float: three independent low-frequency oscillators; squash follows velocity and acceleration.
+    const fw = red ? 0 : C.c01(1 + o.floatW); S.fw = fw;
+    const f0 = 1 / P.floatDuration, rate = (1 + 0.12 * hv) * (1 + (P.thinkingSpeed - 1) * tk) * S.hold * (1 - 0.3 * C.c01(S.sleepy.x));
+    S.ph[0] += h * rate * f0; S.ph[1] += h * rate * f0 * 0.613; S.ph[2] += h * rate * f0 * 1.47;
+    const q0 = S.ph[0] * 6.2832, yf = 0.6 * Math.sin(q0 - 0.25 * Math.sin(q0)) + 0.28 * Math.sin(S.ph[1] * 6.2832 + S.r[0]) + 0.12 * Math.sin(S.ph[2] * 6.2832 + S.r[1]);
+    if (S.yfp === null) S.yfp = yf;
+    let vy = (yf - S.yfp) / h, ay = (vy - S.yvp) / h;
+    if (!Number.isFinite(vy)) vy = 0;
+    if (!Number.isFinite(ay)) ay = 0;
+    S.yfp = yf; S.yvp = vy;
+    let vn = vy / (6.2832 * f0), an = Math.max(-3, Math.min(3, ay / (39.478 * f0 * f0)));
+    if (S.dInit < 2) { S.dInit++; vn = 0; an = 0; }
+    const A = P.amp * disp * fw * (S.hero ? C.HERO.idleFloat : 1) * (1 + 0.15 * hv) * (1 - 0.15 * tk) * (1 + 0.1 * Math.sin(t * 0.363 + S.r[4]));
+    const amb = P.sq * fw * (1 + 0.35 * hv) * (1 - 0.2 * tk) * ((vn > 0 ? 0.85 : 0.4) * vn - 0.55 * Math.max(0, an));
+    const pr = S.pressed && !red;
+    this.spr(S.Y, P.lift * disp * hv * (1 - 0.5 * tk) + o.y + (pr ? -0.012 * disp : 0), 'y', h, k);
+    this.spr(S.SQ, amb + o.sq + (pr ? -0.06 : 0), 'squash', h, k);
+    this.spr(S.SX, o.sx, 'widen', h, k);
+    this.spr(S.SC, 1 + (red ? 0.02 : 0.015) * hv + o.scale + o.rm + (S.pressed && red ? -0.025 : 0), 'scale', h, k);
+    S.Xl = o.x; S.tiltF = o.tilt; S.yawO = o.yaw; S.op = C.c01(1 + o.op);
+    S.Ytot = A * yf + S.Y.x;
+    S.shH += (S.Ytot - S.shH) * (1 - Math.exp(-h / 0.2));
+
+    // Gaze: pupils lead, the body follows.
+    let n = 0.6 * Math.sin(t * 0.8607 + S.r[2]) + 0.28 * Math.sin(t * 0.528 + S.r[3]) + 0.12 * Math.sin(t * 1.461 + S.r[10]);
+    n = Math.sign(n) * Math.pow(Math.abs(n), 1.5);
+    const g = this.gazeTarget(t, hoverLive, thinkLive, o, P);
+    this.spr(S.TL, red ? 0 : P.rotationDrift * n * fw * (1 - 0.6 * tk) * (S.hero ? C.HERO.idleDrift : 1) + hv * g[0] * (S.hero ? C.HERO.beatTilt * 0.8 : 1.6) + tk * 4.5 * S.side.x, 'tilt', h, k);
+    if (P.eyes) {
+      this.spr(S.pupX, g[0] * P.pupilTravel, 'pupil', h, k); this.spr(S.pupY, g[1] * P.pupilTravel, 'pupil', h, k);
+      const hk = think ? 'headThink' : 'head';
+      this.spr(S.yaw, g[0] * P.eyeMovement, hk, h, k); this.spr(S.pitch, g[1] * P.eyeMovement * 0.8, hk, h, k);
+    } else {
+      this.spr(S.yaw, g[0] * P.eyeMovement, 'headNoEyes', h, k); this.spr(S.pitch, g[1] * P.eyeMovement * 0.8, 'headNoEyes', h, k);
+    }
+    this.spin.update(t, h, C.SPIN);
+    const pk = S.hero && S.hero.perf && S.hero.calm && S.hero.perf.plan ? S.hero.perf.plan.peak : 0;
+    this.spr(S.BK, pk && !red ? P.bank * Math.max(-1, Math.min(1, this.spin.vel / pk)) : 0, 'bank', h, k);
+
+    // ExpressionController: blinks, lids, arcs, worry, squeeze, sleepiness.
+    const shut = o.arc > 0.3 || 1 + o.open < 0.3 || o.blinkBlock > 0.5 || S.pressed;
+    if (P.blinkFrequency > 0 && t >= S.nextBlink) {
+      if (P.eyes && !shut) { S.blinks.push(t); if (Math.random() < (st === 'idle' && !R ? T.doubleBlink : 0.12)) S.blinks.push(t + P.blinkD + 0.09); }
+      S.nextBlink = t + (60 / P.blinkFrequency) * (0.55 + Math.random()) * (1 + C.c01(S.sleepy.x));
+    } else if (P.blinkFrequency <= 0) S.nextBlink = t + 2;
+    if (S.blinks.length && t - S.blinks[0] > 1) S.blinks = S.blinks.filter(b => t - b <= 1);
+    if (S.glints.length && t - S.glints[0].t0 > 0.6) S.glints = S.glints.filter(G => t - G.t0 <= 0.6);
+    const Pt = window.__limiPtr, idleLong = st === 'idle' && !R && !hoverOn && !S.hero && performance.now() - Math.max(Pt ? Pt.t : 0, S.actAt) > T.sleepyAfter;
+    this.sp(S.sleepy, idleLong ? 1 : 0, idleLong ? 0.9 : 6, 1, h);
+    const I = P.expressionIntensity, wS = (S.side.x + 1) / 2, spinSq = red || (S.hero && S.hero.perf && S.hero.calm) ? 0 : 0.85 * C.ss(350, 1000, Math.abs(this.spin.vel));
+    let oT = C.c01(1 + o.open) * (1 + (hoverLive ? (t < S.widenUntil ? 0.16 : 0.05) * I : 0) + o.wide * I);
+    oT *= (1 - Math.min(0.9, 0.5 * I) * C.c01(S.sleepy.x)) * (1 - spinSq);
+    const arcT = C.c01(o.arc); oT += (0.2 - oT) * arcT;
+    const nar = Math.min(0.9, 0.38 * I) * tk, sqzOn = S.pressed ? 1 : o.sqz;
+    this.spr(S.oL, sqzOn > 0.5 ? 0.04 : oT * (1 - nar * wS), 'lid', h, k);
+    this.spr(S.oR, sqzOn > 0.5 ? 0.04 : oT * (1 - nar * (1 - wS)), 'lid', h, k);
+    this.spr(S.sqz, sqzOn, 'squeeze', h, k); this.spr(S.arc, arcT, 'expr', h, k); this.spr(S.wor, C.c01(o.wor), 'expr', h, k);
+    this.exprStep(t, h, hv, P, o);
+    const kt = 1 - Math.exp(-h * 10); this._tr = (this._tr || 0) + (C.c01(o.tintR) - (this._tr || 0)) * kt; this._tg = (this._tg || 0) + (C.c01(o.tintG) - (this._tg || 0)) * kt; S.nod = o.nod;
+    if (!S.hero && !S.seek && st === 'idle' && !R && !hoverOn && !S.ex && t >= S.exNext) {
+      const X = C.EXPR; this.express(X.pool[Math.floor(Math.random() * X.pool.length)]);
+      S.exNext = t + X.idleEvery[0] + Math.random() * (X.idleEvery[1] - X.idleEvery[0]);
+    }
+
+    // Thought fragments: staggered, close to the head, on the side Limi is looking.
+    if (thinkLive && tk > 0.6 && P.fragmentCount >= 1 && t >= S.fragNext) {
+      const nF = Math.min(5, Math.round(P.fragmentCount));
+      for (let i = 0; i < 5; i++) S.frags[i] = i < nF ? { t0: t + i * T.fragStagger, side: S.sideT } : null;
+      S.fragNext = t + T.fragStagger * (nF - 1) + T.fragLife + T.fragGap;
+    }
+    if (!think) S.fragNext = t + 0.35;
+  }
+
+  frame(now, first) {
+    const raw = (now - this.last) / 1000;
+    if (first || raw > 0) this.last = now;
+    if (!this.S || (!first && (!this.vis || document.hidden))) return;
+    const P = this.P(), red = this.reduced(); this.disp = this.dispFactor(); this._P = P;
+    if (this.seekT() != null) { if (this.dirty || first) { this.dirty = false; this.render(P, false); } return; }
+    const ts = this.flag('paused', false) ? 0 : Math.max(0, Math.min(4, parseFloat(this.props.timeScale ?? 1)));
+    const dt = (first ? 1e-4 : Math.max(0, Math.min(0.05, raw))) * (Number.isFinite(ts) ? ts : 1);
+    if (dt > 1e-6) { const n = Math.max(1, Math.ceil(dt / 0.008)), h = dt / n; for (let i = 0; i < n; i++) this.step(h, P, red); }
+    this.render(P, red); this.notify();
+  }
+  notify() {
+    const S = this.S, st = this.props.state || 'idle';
+    const vs = S.hero && S.hero.perf ? 'hero' : S.R ? S.R.name : S.pressed ? 'click' : st === 'thinking' ? 'thinking' : (S.pin || st === 'hover') ? 'hover' : 'idle';
+    if (vs === S.vis) return;
+    S.vis = vs;
+    if (this.rootRef.current) this.rootRef.current.setAttribute('data-state', vs);
+    if (typeof this.props.onStateChange === 'function') this.props.onStateChange(vs, Component.PRIO[vs] ?? 0);
+  }
+
+  blinkAmt(t, D) {
+    let b = 0; const e = u => u * u * (3 - 2 * u);
+    for (const t0 of this.S.blinks) { const x = (t - t0) / D; if (x < 0 || x > 1) continue; b = Math.max(b, x < 0.35 ? e(x / 0.35) : x < 0.45 ? 1 : 1 - e((x - 0.45) / 0.55)); }
+    return b;
+  }
+  boost(s, t, red) {
+    let b = 0;
+    for (const G of this.S.glints) {
+      const x = (t - G.t0) / 0.46; if (x < 0 || x > 1) continue;
+      if (red) { b += G.g * 0.12 * Math.sin(Math.PI * x); continue; }
+      const pos = -620 + 1350 * (x * x * (3 - 2 * x)), env = Math.min(1, x / 0.15, (1 - x) / 0.15);
+      b += G.g * 0.26 * env * Math.exp(-Math.pow((s - pos) / 230, 2));
+    }
+    return b;
+  }
+  ramp(d) {
+    const R = Component.PAL.ramp; let c;
+    if (d <= R[0][0]) c = R[0][1];
+    else if (d >= R[R.length - 1][0]) c = R[R.length - 1][1];
+    else for (let i = 1; i < R.length; i++) if (d <= R[i][0]) {
+      const [d0, c0] = R[i - 1], [d1, c1] = R[i], u = (d - d0) / (d1 - d0);
+      c = [c0[0] + (c1[0] - c0[0]) * u, c0[1] + (c1[1] - c0[1]) * u, c0[2] + (c1[2] - c0[2]) * u]; break;
+    }
+    return 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')';
+  }
+  rampC(d, R) {
+    if (d <= R[0][0]) return R[0][1];
+    for (let i = 1; i < R.length; i++) if (d <= R[i][0]) { const [d0, c0] = R[i - 1], [d1, c1] = R[i], u = (d - d0) / (d1 - d0); return [c0[0] + (c1[0] - c0[0]) * u, c0[1] + (c1[1] - c0[1]) * u, c0[2] + (c1[2] - c0[2]) * u]; }
+    return R[R.length - 1][1];
+  }
+  // Facet colour with the incorrect (red) and success (green) tints mixed in.
+  tintCol(d) {
+    const P = Component.PAL, r = this._tr || 0, g = this._tg || 0;
+    let c = this.rampC(d, P.ramp);
+    if (r > 0.002) { const b = this.rampC(d, P.redRamp); c = c.map((v, i) => v + (b[i] - v) * r); }
+    if (g > 0.002) { const b = this.rampC(d, P.greenRamp); c = c.map((v, i) => v + (b[i] - v) * g); }
+    return 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')';
+  }
+  hullIdx(px, py) {
+    const idx = [0, 1, 2, 3, 4, 5].sort((a, b) => px[a] - px[b] || py[a] - py[b]);
+    const cr = (o, a, b) => (px[a] - px[o]) * (py[b] - py[o]) - (py[a] - py[o]) * (px[b] - px[o]);
+    const lo = [], up = [];
+    for (const i of idx) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], i) <= 0) lo.pop(); lo.push(i); }
+    for (let j = idx.length - 1; j >= 0; j--) { const i = idx[j]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], i) <= 0) up.pop(); up.push(i); }
+    lo.pop(); up.pop(); return lo.concat(up);
+  }
+
+  // ---------- Renderer ----------
+  render(P, red) {
+    const C = Component, G = C.GEO, PAL = C.PAL, S = this.S, t = S.t, body = this.bodyRef.current; if (!body) return;
+    const D2R = Math.PI / 180, fw = S.fw, rs = P.rotationDrift / 2.4 * (S.hero ? C.HERO.idleDrift : 1), om = red ? 0 : this.spin.vel;
+    const calm = !!(S.hero && S.hero.perf && S.hero.calm), beta = red || calm ? 0 : 0.85 * C.ss(500, 1400, Math.abs(om)), spinB = red ? 0 : C.ss(200, 1600, Math.abs(om));
+    let yaw = 0, pitch = 0, m = 0, b = 0;
+    if (!red) {
+      yaw = (this.spin.angle + S.yaw.x + S.yawO + fw * rs * (1.1 * Math.sin(t * 0.6756 + S.r[5]) + 0.45 * Math.sin(t * 1.102 + S.r[6]))) * D2R;
+      pitch = (S.pitch.x + (S.nod || 0) + fw * rs * 0.8 * Math.sin(t * 0.5193 + S.r[7])) * D2R;
+      m = 0.45 * P.sq * fw; b = 0.8 * Math.sin(t * 1.1636 + S.r[8]) + 0.2 * Math.sin(t * 1.904 + S.r[9]);
+    }
+    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    const M = [[cp, -sp * sy, sp * cy], [0, cy, sy], [-sp, -cp * sy, cp * cy]];
+    const Dd = [1 + m * b, 1 - 0.5 * m * b, 1 - 0.5 * m * b];
+    // Hero turn: flatten front-to-back as Limi swings side-on (rest pose untouched), and shrink slightly with apparent depth.
+    const hp = calm && !red ? 1 : 0, sa = hp ? Math.abs(Math.sin(this.spin.angle * D2R)) : 0;
+    Dd[2] *= 1 - hp * (1 - P.edgeWidth / 100) * sa;
+    const dS = 1 - hp * P.depthScale / 100 * sa;
+    const [C0, C1] = G.C, A = G.A, B = G.B, V = G.V, DL = G.DL, L = G.LIGHT;
+    const px = this.px || (this.px = new Float64Array(6)), py = this.py || (this.py = new Float64Array(6));
+    let vi = 0;
+    for (let j = 0; j < 3; j++) for (let sg = 1; sg >= -1; sg -= 2) {
+      const v0 = sg * Dd[j] * M[0][j], v1 = sg * Dd[j] * M[1][j], v2 = sg * Dd[j] * M[2][j], q = v0 * v0 - v1 * v1;
+      px[vi] = C0 + A[0] * v0 + B[0] * v1 + V[0] * v2 + DL[0] * q;
+      py[vi] = C1 + A[1] * v0 + B[1] * v1 + V[1] * v2 + DL[1] * q; vi++;
+    }
+    const so = (1 - 0.75 * beta).toFixed(3);
+    for (let f = 0; f < 8; f++) {
+      const el = this.fr[f].current; if (!el) continue;
+      const [i1, i2, i3] = this.FI[f];
+      const vis = (px[i2] - px[i1]) * (py[i3] - py[i1]) - (py[i2] - py[i1]) * (px[i3] - px[i1]) > 0;
+      if (el._v !== vis) { el.style.visibility = vis ? 'visible' : 'hidden'; el._v = vis; }
+      if (!vis) continue;
+      const nv = G.FACES[f], n0 = nv[0] / Dd[0], n1 = nv[1] / Dd[1], n2 = nv[2] / Dd[2], nl = Math.sqrt(n0 * n0 + n1 * n1 + n2 * n2);
+      const d0 = ((M[0][0] * n0 + M[0][1] * n1 + M[0][2] * n2) * L[0] + (M[1][0] * n0 + M[1][1] * n1 + M[1][2] * n2) * L[1] + (M[2][0] * n0 + M[2][1] * n1 + M[2][2] * n2) * L[2]) / nl;
+      const dot = d0 + beta * ((nv[0] > 0 ? PAL.avgUpper : PAL.avgLower) - d0);
+      const s = ((px[i1] + px[i2] + px[i3]) / 3 - C0) * -0.37 + ((py[i1] + py[i2] + py[i3]) / 3 - C1) * 0.93;
+      const col = this.tintCol(dot + this.boost(s, t, red));
+      if (el._c !== col) { el.style.fill = col; el._c = col; }
+      if (el._so !== so) { el.style.strokeOpacity = so; el._so = so; }
+      const pts = px[i1].toFixed(1) + ',' + py[i1].toFixed(1) + ' ' + px[i2].toFixed(1) + ',' + py[i2].toFixed(1) + ' ' + px[i3].toFixed(1) + ',' + py[i3].toFixed(1);
+      if (el._p !== pts) { el.setAttribute('points', pts); el._p = pts; }
+    }
+    // Opening trail: a glow hanging from the left, right and bottom corners while the fast spins are fast.
+    const tr = this.trailRef.current, Hs = S.hero;
+    if (tr) {
+      const HR = C.HERO, on = !red && Hs, dtc = Math.max(0, Math.min(0.05, t - (this._tcT ?? t))); this._tcT = t;
+      // Momentum: the trail is born from the first spins, then stays. Replaying the opening resets it.
+      if (S.seek) { const pf = Hs && Hs.perf, pl = pf && pf.plan; this._tcg = pl && pl.nF ? C.c01((t - pf.t0 - pl.tF0) / 0.6) : 1; }
+      else this._tcg = Math.min(1, (this._tcg || 0) + dtc * 2.2 * C.ss(150, 1200, Math.abs(om)));
+      const chg = C.EASE.out(this._tcg || 0), ta = on ? chg * C.c01(P.trailIntensity * (HR.trailRest + (1 - HR.trailRest) * C.ss(300, 1800, Math.abs(om)))) : 0, tas = ta.toFixed(3);
+      if (tr._o !== tas) { tr.setAttribute('opacity', tas); tr._o = tas; }
+      if (ta > 0.002) {
+        let li = 0, ri = 0, bi = 0;
+        for (let i = 1; i < 6; i++) { if (px[i] < px[li]) li = i; if (px[i] > px[ri]) ri = i; if (py[i] > py[bi]) bi = i; }
+        // Physics: the tail end has inertia. It stretches when Limi rises fast, compresses when it drops, and swings behind turns, via an underdamped spring.
+        const dtt = Math.max(0, Math.min(0.05, t - (this._trT ?? t))), vy = dtt > 0 ? (S.Ytot - (this._trY ?? S.Ytot)) / dtt : 0; this._trT = t; this._trY = S.Ytot;
+        const tq = this._tq || (this._tq = { l: 0, lv: 0, s: 0, sv: 0 }), wq = 9, zq = 0.45;
+        const tl = Math.max(-0.35, Math.min(0.6, vy * 3.2 + S.Ytot * HR.trailRise * 0.4)), ts = -Math.max(-1, Math.min(1, om / 900)) * HR.trailSwing;
+        tq.lv += (wq * wq * (tl - tq.l) - 2 * zq * wq * tq.lv) * dtt; tq.l += tq.lv * dtt;
+        tq.sv += (wq * wq * (ts - tq.s) - 2 * zq * wq * tq.sv) * dtt; tq.s += tq.sv * dtt;
+        const Lh = Math.min(P.trailLength * G.H * (0.2 + 0.8 * chg) * (1 + tq.l) * (1 + 0.03 * Math.sin(t * 17)), Math.max(0, HR.trailFloor - py[bi]));
+        const cx = (px[li] + px[ri]) / 2, tp = HR.trailTaper, sw = tq.s * Lh;
+        const pts = [[px[li], py[li]], [px[ri], py[ri]], [px[ri] - (px[ri] - cx) * tp + sw * 0.8, Math.max(py[ri], py[bi]) + Lh * 0.85], [px[bi] + sw, py[bi] + Lh], [px[li] + (cx - px[li]) * tp + sw * 0.8, Math.max(py[li], py[bi]) + Lh * 0.85]];
+        tr.setAttribute('points', pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '));
+      }
+    }
+    // Hero flight: faint specks stream down past Limi and the background glow streams downward, faster during spins.
+    const heroOn = !!S.hero && !red, flyK = 1 + 2.5 * C.ss(300, 1800, Math.abs(om)), dtf = Math.max(0, Math.min(0.05, t - (this._flyT ?? t))); this._flyT = t;
+    if (this.flyEls) for (const f of this.flyEls) {
+      if (!heroOn) { if (f._o !== 0) { f.el.setAttribute('opacity', '0'); f._o = 0; } continue; }
+      f.y += dtf * C.HERO.flySpeed * f.sp * flyK / 1900; if (f.y > 1) { f.y -= 1; f.x = (Math.random() * 2 - 1) * 520; }
+      const op = C.HERO.flyOpacity * Math.sin(Math.PI * f.y);
+      f.el.setAttribute('transform', 'translate(' + (G.C[0] + f.x).toFixed(1) + ' ' + (-250 + f.y * 1900).toFixed(1) + ') scale(1 ' + (1 + 0.8 * (flyK - 1)).toFixed(2) + ')');
+      f.el.setAttribute('opacity', op.toFixed(3)); f._o = op;
+    }
+    const stm = this.streamRef.current;
+    if (stm) {
+      const on = heroOn && this.flag('atmosphere', false), so = on ? (0.5 * P.atmosphere).toFixed(3) : '0';
+      if (stm._o !== so) { stm.style.opacity = so; stm._o = so; }
+      if (on) { this._stY = ((this._stY || 0) + dtf * C.HERO.streamSpeed * flyK) % 90; stm.style.backgroundPosition = '0 ' + this._stY.toFixed(1) + 'px'; }
+    }
+    const hull = this.hullRef.current;
+    if (hull) {
+      const on = beta > 0.02;
+      if (hull._on !== on) { hull.style.visibility = on ? 'visible' : 'hidden'; hull._on = on; }
+      if (on) { let s = ''; for (const i of this.hullIdx(px, py)) s += px[i].toFixed(1) + ',' + py[i].toFixed(1) + ' '; hull.setAttribute('points', s); }
+    }
+
+    const H = G.H, ty = -S.Ytot * H, tx = S.Xl * H, th = (red ? 0 : S.TL.x + S.tiltF + S.BK.x) * D2R;
+    const sq = S.SQ.x * (red ? 0.25 : 1), sc = S.SC.x * dS, syy = sc * (1 + sq), sxx = sc * (1 - 0.55 * sq + (red ? 0 : S.SX.x));
+    const pv = red ? G.C : G.PIVOT, c = Math.cos(th), s = Math.sin(th), wx = pv[0] * (1 - sxx) - C0, wy = pv[1] * (1 - syy) - C1;
+    body.setAttribute('transform', 'matrix(' + (c * sxx).toFixed(5) + ' ' + (s * sxx).toFixed(5) + ' ' + (-s * syy).toFixed(5) + ' ' + (c * syy).toFixed(5) + ' '
+      + (c * wx - s * wy + C0 + tx).toFixed(2) + ' ' + (s * wx + c * wy + C1 + ty).toFixed(2) + ')');
+    const op = (S.op * (red && S.think.x > 0.5 ? 0.9 : 1)).toFixed(3);
+    if (body._o !== op) { body.style.opacity = op; body._o = op; }
+    this.renderEyes(P, red, M, beta, Dd);
+
+    const o = this.o, sh = this.shadowRef.current;
+    if (sh) {
+      const kS = red ? 0 : Math.max(-0.6, Math.min(1.6, S.shH / 0.1)), field = this.props.surface === 'field';
+      const base = P.shadowScale * sc * (1 + o.shSc) * (1 + 0.12 * spinB);
+      sh.style.transform = 'translateX(' + (tx / G.VB * 100 / 0.4231).toFixed(2) + '%) scale(' + (base * (1 - 0.32 * kS)).toFixed(4) + ',' + (base * (1 - 0.2 * kS)).toFixed(4) + ')';
+      sh.style.opacity = (S.hero ? 0 : 1) * C.c01(P.shadowOpacity * (1 - 0.45 * kS) * (1 + o.shOp) * (1 - 0.35 * spinB) * (field ? 1.9 : 1) * S.op).toFixed(3);
+      if (sh._f !== field) { sh.style.background = field ? PAL.shField : PAL.shPaper; sh._f = field; }
+    }
+    const atm = this.atmRef.current;
+    if (atm) {
+      const on = this.flag('atmosphere', false), a = on ? C.c01(((S.hero ? C.HERO.atmBase + C.HERO.atmGain * spinB : 0.16 + 0.35 * spinB) + o.atm) * (red ? 0.7 : 1) * P.atmosphere) : 0, as = a.toFixed(3);
+      if (atm._o !== as) { atm.style.opacity = as; atm._o = as; }
+      if (on) atm.style.transform = 'translateY(' + (ty / G.VB * 100 / 1.16 * 0.4).toFixed(2) + '%) scale(' + (1 - 0.12 * spinB).toFixed(3) + ',' + (1 + 0.35 * spinB).toFixed(3) + ')';
+    }
+    for (let i = 0; i < 6; i++) {
+      const el = this.partEls && this.partEls[i]; if (!el) continue;
+      const pt = S.parts[i]; let po = 0;
+      if (pt) {
+        const x = (t - pt.t0) / pt.dur;
+        if (x > 1) S.parts[i] = null;
+        else if (x >= 0) {
+          const e = 1 - Math.pow(1 - x, 3), rr = pt.r0 + pt.dist * e, scl = x < 0.18 ? 1.1 * C.EASE.out(x / 0.18) : 1.1 - 0.7 * (x - 0.18) / 0.82;
+          po = x < 0.5 ? 1 : 1 - C.ss(0.5, 1, x);
+          el.setAttribute('transform', 'translate(' + (C0 + pt.ox + Math.cos(pt.ang) * rr).toFixed(1) + ' ' + (C1 + pt.oy + Math.sin(pt.ang) * rr * 1.05).toFixed(1) + ') rotate(' + (pt.rot * e).toFixed(1) + ') scale(' + Math.max(0.001, scl).toFixed(3) + ')');
+        }
+      }
+      const pos = po.toFixed(3); if (el._o !== pos) { el.setAttribute('opacity', pos); el._o = pos; }
+    }
+    const tk = C.c01(S.think.x), T = C.TIMING;
+    for (let i = 0; i < 5; i++) {
+      const el = this.fragEls && this.fragEls[i]; if (!el) continue;
+      const fr = S.frags[i]; let fo = 0;
+      if (fr) {
+        const x = (t - fr.t0) / T.fragLife;
+        if (x > 1) S.frags[i] = null;
+        else if (x >= 0) {
+          const spc = P.fragmentSpacing, bx = C0 + fr.side * (300 + i * 80 * spc) + tx, by = C1 - 430 - i * 92 * spc + ty;
+          const rise = red ? 0 : -75 * this.disp * C.EASE.out2(x), rot = red ? 0 : fr.side * (6 + 16 * x), ap = C.EASE.out(Math.min(1, x / 0.16));
+          fo = Math.min(1, x / 0.16) * (1 - C.ss(0.68, 1, x)) * C.c01(tk * 1.4);
+          el.setAttribute('transform', 'translate(' + bx.toFixed(1) + ' ' + (by + rise).toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(' + (red ? 1 : 0.55 + 0.45 * ap).toFixed(3) + ')');
+        }
+      }
+      const fos = fo.toFixed(3); if (el._o !== fos) { el.setAttribute('opacity', fos); el._o = fos; }
+    }
+    const hit = this.hitRef.current, cur = this.flag('interactive', true) ? 'pointer' : 'default';
+    if (hit && hit._c !== cur) { hit.style.cursor = cur; hit._c = cur; }
+  }
+
+  // EyeController: floating face layer anchored to the body; foreshortens, fades as its facet turns away, smears at high spin.
+  renderEyes(P, red, M, beta, Dd) {
+    const C = Component, G = C.GEO, S = this.S, E = this.er, root = E.eyeG.current; if (!root) return;
+    const dsp = P.eyes ? '' : 'none';
+    if (root._d !== dsp) { root.style.display = dsp; root._d = dsp; }
+    if (!P.eyes) return;
+    const A = G.A, B = G.B, V = G.V, VW = G.VIEW, Ji = this.J0i;
+    const rot3 = v => [M[0][0] * v[0] + M[0][1] * v[1] + M[0][2] * v[2], M[1][0] * v[0] + M[1][1] * v[1] + M[1][2] * v[2], M[2][0] * v[0] + M[2][1] * v[1] + M[2][2] * v[2]];
+    const proj = v => [A[0] * v[0] + B[0] * v[1] + V[0] * v[2], A[1] * v[0] + B[1] * v[1] + V[1] * v[2]];
+    const rotS = v => rot3([Dd[0] * v[0], Dd[1] * v[1], Dd[2] * v[2]]);
+    const j1 = proj(rotS([0, 1, 0])), j2 = proj(rotS(G.PLATE_T2));
+    let D00 = j1[0] * Ji[0] + j2[0] * Ji[2], D01 = j1[0] * Ji[1] + j2[0] * Ji[3], D10 = j1[1] * Ji[0] + j2[1] * Ji[2], D11 = j1[1] * Ji[1] + j2[1] * Ji[3];
+    const gr = Math.max(1, Math.sqrt(Math.abs(D00 * D11 - D01 * D10)));
+    D00 /= gr; D01 /= gr; D10 /= gr; D11 /= gr;
+    const blink = this.blinkAmt(S.t, P.blinkD), arc = C.c01(S.arc.x), sqz = red ? 0 : Math.max(0, S.sqz.x), wor = C.c01(S.wor.x), I = P.expressionIntensity;
+    const pX = S.pupX.x * 37, pY = -S.pupY.x * 51, off = G.EYE_OFF * P.eyeSpacing, smear = 1 + 0.45 * beta;
+    for (const [n, side, lid, nf, f0] of [['L', -1, S.oL, [1, -1, 1], 0.588], ['R', 1, S.oR, [1, 1, 1], 0.843]]) {
+      const grp = E['eye' + n].current; if (!grp) continue;
+      const ii = side < 0 ? 0 : 1, EpAll = S.eP, Ep = this._tiny ? null : EpAll;
+      const c0 = [G.EYE_MID[0], side * off, G.EYE_MID[2]], sgn = v => v[0] + side * v[1] + v[2];
+      const lam = (sgn(c0) - (1 + G.EYE_FLOAT)) / sgn(VW), ce = [c0[0] - lam * VW[0], c0[1] - lam * VW[1], c0[2] - lam * VW[2]];
+      const cr = rotS(ce), pc = proj(cr), ns = [nf[0] / Dd[0], nf[1] / Dd[1], nf[2] / Dd[2]], nr = rot3(ns), facing = (nr[0] * VW[0] + nr[1] * VW[1] + nr[2] * VW[2]) / Math.hypot(ns[0], ns[1], ns[2]);
+      const edgeW = C.c01(facing / f0), vis = edgeW > 0.05 ? 1 : 0;
+      if (vis < 0.01) { if (grp._h !== 1) { grp.style.visibility = 'hidden'; grp._h = 1; } continue; }
+      if (grp._h !== 0) { grp.style.visibility = 'visible'; grp._h = 0; }
+      const depth = (cr[0] - ce[0]) * VW[0] + (cr[1] - ce[1]) * VW[1] + (cr[2] - ce[2]) * VW[2];
+      const edge = Math.pow(edgeW, 0.7), sc = P.eyeSize * (1 + 0.45 * depth), ex = sc * smear * edge * (Ep ? Ep.sx[ii] : 1), ey = sc * (Ep ? Ep.sy[ii] : 1);
+      const rr = (2.95 - side * 9 * I * sqz + side * 8 * I * wor) * Math.PI / 180, cs = Math.cos(rr), sn = Math.sin(rr);
+      const ma = D00 * cs * ex + D01 * sn * ex, mb = D10 * cs * ex + D11 * sn * ex, mc = -D00 * sn * ey + D01 * cs * ey, md = -D10 * sn * ey + D11 * cs * ey;
+      grp.setAttribute('transform', 'matrix(' + ma.toFixed(4) + ' ' + mb.toFixed(4) + ' ' + mc.toFixed(4) + ' ' + md.toFixed(4) + ' ' + (G.C[0] + pc[0] + mc * (Ep ? Ep.lift[ii] : 0)).toFixed(1) + ' ' + (G.C[1] + pc[1] + md * (Ep ? Ep.lift[ii] : 0)).toFixed(1) + ')');
+      if (grp._op !== 1) { grp.setAttribute('opacity', '1'); grp._op = 1; }
+      const open = Math.max(0, Math.min(1.4, lid.x)) * (1 - blink) * (1 - (EpAll ? Component.c01(EpAll.wink[ii]) : 0)) * (1 - C.c01(arc * 2));
+      const ry = Math.max(7, 106 * open), rx = 92 * (1 + 0.3 * Math.max(0, open - 1)), cyl = (106 - Math.min(106, ry)) * 0.3;
+      for (const r of [E['fill' + n], E['line' + n], E['clip' + n + 'E']]) {
+        const el = r.current; if (!el) continue;
+        el.setAttribute('rx', rx.toFixed(1)); el.setAttribute('ry', ry.toFixed(1)); el.setAttribute('cy', cyl.toFixed(1));
+      }
+      const cover = Ep ? Component.c01(Ep.lid[ii]) : 0, top = cyl - ry, yL = top + cover * 2 * ry, sl = Math.tan((Ep ? Ep.tilt[ii] : 0) * Math.PI / 180) * -side * Component.c01(cover * 4);
+      const lp = E['lidPoly' + n].current;
+      if (lp) { lp.setAttribute('rx', (rx + 9).toFixed(1)); lp.setAttribute('ry', (ry + 9).toFixed(1)); lp.setAttribute('cy', cyl.toFixed(1)); }
+      const le = E['lidEdge' + n].current;
+      if (le) {
+        const on = !this._tiny && cover > 0.01 && ry > 20;
+        if (le._on !== on) { le.style.display = on ? '' : 'none'; le._on = on; }
+        if (on) {
+          const fc = this.fr[ii === 0 ? 1 : 0].current;
+          if (fc && fc._c && le._fc !== fc._c) { le.style.fill = fc._c; le._fc = fc._c; }
+          le.setAttribute('d', 'M-400,-700 L400,-700 L400,' + (yL + 400 * sl).toFixed(1) + ' L-400,' + (yL - 400 * sl).toFixed(1) + ' Z');
+        }
+      }
+      const pu = E['pup' + n].current;
+      if (pu) {
+        const X = Component.EXPR, dz = Ep ? Ep.dz : 0, ang = EpAll ? EpAll.dzA : 0, conv = (this._tiny ? 0 : S.hov.x) * X.converge * P.pupilTravel * -side, ps = Ep ? Ep.pupil : 1;
+        const qx = pX + conv + Math.cos(ang) * X.dizzy.radius * dz, qy = pY + cyl * 0.5 + Math.sin(ang) * X.dizzy.radius * dz;
+        pu.setAttribute('transform', 'translate(' + qx.toFixed(1) + ' ' + qy.toFixed(1) + ') scale(' + ps.toFixed(3) + ')');
+        const hl = pu._hl || (pu._hl = pu.querySelector('[data-hl]'));
+        if (hl) { hl.setAttribute('cx', (-15 - pX * 0.14).toFixed(1)); hl.setAttribute('cy', (-17 - pY * 0.14).toFixed(1)); }
+      }
+      const og = E['open' + n].current, shut = arc > 0.5 ? '0' : '1'; if (og && og._s !== shut) { og.setAttribute('opacity', shut); og._s = shut; }
+      const ar = E['arc' + n].current;
+      if (ar) { const ac = C.c01((arc - 0.5) * 2), ao = arc > 0.5 ? '1' : '0'; if (ar._s !== ao) { ar.setAttribute('opacity', ao); ar._s = ao; } if (arc > 0.5) ar.setAttribute('d', 'M-80,22 Q0,' + (22 - 88 * ac * Math.min(1.3, 0.5 + 0.5 * I) * (1 - 0.45 * (EpAll ? EpAll.soft : 0))).toFixed(1) + ' 80,22'); }
+    }
+  }
+}
+</script>
+</body>
+</html>

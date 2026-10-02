@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liminal Math — Versions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville:ital@1&family=Figtree:wght@400;500;600&family=Instrument+Sans:wght@500&display=swap">
+<style>
+:root{--bg:#fff;--card:#fff;--bd:#E2E5EA;--fg:#121418;--mu:#4B4F58;--fa:#6B7280;--blue:#1A76C9;--soft:#E8F2FC;--softfg:#1667B0}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#0B0D11;--bd:#242831;--fg:#ECE8DF;--mu:#A7AAB2;--fa:#7E828C;--blue:#4C98F0;--soft:rgba(59,148,230,.16);--softfg:#8CC0F2}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Figtree,"Helvetica Neue",Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{max-width:960px;margin:0 auto;padding:clamp(48px,9vw,96px) 20px}
+h1{margin:0 0 8px;font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:clamp(32px,5vw,48px);line-height:1.08;letter-spacing:-.025em}
+h1 em{font-family:Baskervville,Georgia,serif;font-weight:400;color:var(--blue)}
+.lead{margin:0 0 40px;color:var(--mu);font-size:17px;max-width:56ch}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+a.card{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--bd);border-radius:16px;background:var(--card);color:inherit;text-decoration:none;transition:border-color .2s,transform .2s}
+a.card:hover{border-color:var(--blue);transform:translateY(-2px)}
+a.card:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--softfg)}
+.v{font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:28px;letter-spacing:-.02em}
+.d{color:var(--mu);font-size:15px;flex:1}
+.go{font-weight:600;color:var(--blue);font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Every version of <em>Liminal.</em></h1>
+  <p class="lead">Pick a version to browse it. The site root (<code>/</code>) currently serves Version&nbsp;2.</p>
+  <div class="grid">
+    <a class="card" href="/v1"><span class="tag">First version</span><span class="v">Version 1</span><span class="d">The original homepage concept: hero, Problem of the Day, community and programmes.</span><span class="go">Open Version 1 →</span></a>
+    <a class="card" href="/v2"><span class="tag">Live at /</span><span class="v">Version 2</span><span class="d">The current live site: refreshed homepage and the unified app with sign-in, Learn, Problem of the Day and Community.</span><span class="go">Open Version 2 →</span></a>
+    <a class="card" href="/v3"><span class="tag">Latest</span><span class="v">Version 3</span><span class="d">Homepage v18 with the Chapter Zero page and its registration flow, linked from every “Take Chapter Zero” button.</span><span class="go">Open Version 3 →</span></a>
+  </div>
+</main>
+</body>
+</html>
