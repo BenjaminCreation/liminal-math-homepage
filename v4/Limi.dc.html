@@ -382,7 +382,7 @@ class Component extends DCLogic {
     };
   }
   componentWillUnmount() {
-    cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect(); if (this.ro) this.ro.disconnect(); clearTimeout(this.dblT);
+    (this._afterT || []).forEach(clearTimeout); cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect(); if (this.ro) this.ro.disconnect(); clearTimeout(this.dblT);
     window.removeEventListener('scroll', this.onScroll, true); window.removeEventListener('resize', this.onResize);
   }
   componentDidUpdate(prev) {
@@ -769,6 +769,7 @@ class Component extends DCLogic {
     if (pl.nF) ev.push({ at: pl.tF0, fn: () => sp.start(this.S.t, pl.nF, dir, C.HERO.fastShape, 0, pl.TF) }, { at: pl.tF1 - 0.05, fn: () => { this.emit(Math.round(5 * P.particleIntensity), 1); this.glint(1); } });
     return { dur: pl.total, plan: pl, ev, out: (t, o, w) => C.heroOut(pl, P, t, o, w, dir, this.disp || 1) };
   }
+  after(sec, fn) { const id = setTimeout(() => { this._afterT = (this._afterT || []).filter(x => x !== id); fn(); }, sec * 1000); (this._afterT = this._afterT || []).push(id); return id; }
   heroSchedule(t, P) {
     const H = Component.HERO, Hd = this.S.hero, pause = Math.max(2, P.pauseInterval + (Math.random() * 2 - 1) * H.pauseJitter);
     Hd.next = t + pause; Hd.blinked = false; Hd.lookedUp = Math.random() > H.headlineChance;

@@ -482,7 +482,7 @@ class Component extends DCLogic {
   heroWinRef = el => { this._heroWin = el; };
   curRef = el => {
     if (this._cur === el) return; this._cur = el; if (this._curOff) { this._curOff(); this._curOff = null; }
-    if (!el || typeof matchMedia === 'undefined' || !matchMedia('(pointer: fine)').matches) return;
+    if (el) el.style.display = 'none'; return; // custom cursor disabled: keep the native pointer
     const ring = el.querySelector('[data-c="ring"]'), dot = el.querySelector('[data-c="dot"]'), st = document.createElement('style');
     st.textContent = 'html,body,a,button,input,label,[role=button],[role=tab],textarea,select{cursor:none!important}'; document.head.appendChild(st);
     let x = -100, y = -100, rx = -100, ry = -100, raf = 0, hot = false;
