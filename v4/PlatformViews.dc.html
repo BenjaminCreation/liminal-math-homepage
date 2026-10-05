@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<div ref="{{ rootRef }}" style="display:flex;flex-direction:column;gap:18px;color:var(--fg,#121418);font-family:'Figtree','Helvetica Neue',Arial,sans-serif">
+  <div role="tablist" aria-label="Platform features" style="display:flex;flex-wrap:{{ tabWrap }};justify-content:{{ tabJust }};gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 4px;scroll-snap-type:x mandatory">
+    <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+      <button type="button" role="tab" aria-selected="{{ tb.sel }}" onClick="{{ tb.pick }}" style="flex:0 0 auto;scroll-snap-align:start;white-space:nowrap;height:44px;padding:0 16px;border-radius:10px;border:1px solid {{ tb.bd }};border-bottom-width:4px;background:{{ tb.bg }};color:{{ tb.fg }};font:600 14.5px 'Figtree',sans-serif;cursor:pointer;transition:all 200ms cubic-bezier(.2,0,0,1)">{{ tb.t }}</button>
+    </sc-for>
+  </div>
+  <p style="margin:0 auto;max-width:60ch;text-align:center;font-size:16px;line-height:1.5;color:var(--mu,#4B4F58)">{{ desc }}</p>
+
+  <div style="border:1px solid var(--bd,#E2E5EA);border-radius:22px;background:var(--card,#FFFFFF);box-shadow:var(--shadow);overflow:hidden;min-height:{{ winH }}">
+
+    <sc-if value="{{ isLive }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;min-height:{{ winH }}">
+        <div style="min-height:54px;padding:8px 18px;border-bottom:1px solid var(--bd,#E2E5EA);display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px">
+          <span style="height:26px;padding:0 10px;border-radius:6px;background:#D93A57;color:#FFFFFF;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.06em"><i style="width:7px;height:7px;border-radius:999px;background:#FFFFFF;opacity:{{ blink }}"></i>LIVE</span>
+          <b style="font-size:14.5px">Olympiad batch · Combinatorics, class 14</b>
+          <span style="font-family:'CM Typewriter',monospace;font-size:12.5px;color:var(--mu,#4B4F58)">{{ clock }}</span>
+          <span style="margin-left:auto;font-size:13px;color:var(--mu,#4B4F58)">24 in class</span>
+        </div>
+        <div style="flex:1;display:flex;flex-wrap:wrap">
+          <div style="position:relative;flex:2 1 440px;min-width:0;min-height:360px;margin:14px;border-radius:14px;border:1px solid var(--bd,#E2E5EA);background-color:#FDFDFB;background-image:linear-gradient(#EEF1F5 1px,transparent 1px),linear-gradient(90deg,#EEF1F5 1px,transparent 1px);background-size:26px 26px;padding:{{ boardPad }};color:#121418;display:flex;flex-direction:column;gap:8px">
+            <span aria-hidden="true" style="display:block;position:absolute;left:{{ limiL }};right:{{ limiR }};bottom:8px;width:{{ limiW }};height:{{ limiW }}"><dc-import name="LimiPose" pose="teach" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span>
+            <span style="position:absolute;left:18px;top:18px;padding:5px 10px;border-radius:8px;background:#121418;color:#FFFFFF;font-size:12px;font-weight:600">Limi · teaching</span>
+            <span style="font-family:'Moret',Georgia,serif;font-weight:600;font-size:26px;line-height:1.1">The pigeonhole principle</span>
+            <sc-for list="{{ board }}" as="b" hint-placeholder-count="4"><span style="font-family:'CM Roman',serif;font-size:18px;line-height:1.45;color:{{ b.c }}">{{ b.t }}<i style="display:{{ b.cur }};width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:#0B5BC4"></i></span></sc-for>
+          </div>
+          <aside style="flex:1 1 240px;min-width:0;padding:14px 16px 16px;border-left:1px solid var(--bd,#E2E5EA);display:flex;flex-direction:column;gap:10px">
+            <div style="display:grid;grid-template-columns:repeat({{ tileCols }},1fr);gap:6px"><sc-for list="{{ tiles }}" as="p" hint-placeholder-count="6"><span style="aspect-ratio:{{ tileAR }};border-radius:{{ tileR }};background:{{ p.bg }};display:grid;place-items:center;font-size:12px;font-weight:600;color:#2A2E36;box-shadow:{{ p.ring }};transition:box-shadow 250ms">{{ p.i }}</span></sc-for></div>
+            <span style="font-size:12px;font-weight:600;color:var(--fa,#6B7280)">Class chat</span>
+            <sc-for list="{{ lchat }}" as="c" hint-placeholder-count="3"><span style="font-size:13.5px;line-height:1.4;opacity:{{ c.op }};transform:translateY({{ c.y }});transition:all 400ms"><b>{{ c.n }}</b> {{ c.t }}</span></sc-for>
+            <span style="margin-top:auto;height:40px;border-radius:10px;border:1px solid var(--bd2,#D2D7DE);border-bottom-width:3px;display:grid;place-items:center;font-weight:600;font-size:14px">Raise hand</span>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPractice }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ winH }}">
+        <aside style="flex:0 1 230px;min-width:0;padding:20px 18px;border-right:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--fa,#6B7280)">YOUR SKILLS</span>
+          <sc-for list="{{ skills }}" as="s" hint-placeholder-count="4"><span style="display:flex;flex-direction:column;gap:5px"><span style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:{{ s.fw }}"><span>{{ s.t }}</span><span style="color:var(--fa,#6B7280)">{{ s.v }}</span></span><span style="height:6px;border-radius:999px;background:var(--bg3,#E6E9EE);overflow:hidden"><i style="display:block;height:100%;width:{{ s.w }};background:var(--blue,#1A76C9);transition:width 700ms cubic-bezier(.2,0,0,1)"></i></span></span></sc-for>
+        </aside>
+        <div style="flex:2 1 380px;min-width:0;padding:22px clamp(18px,2.4vw,28px);display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">NUMBER THEORY · LEVEL 3 · Q 4 OF 10</span>
+          <span style="font-family:'CM Roman',serif;font-size:21px;line-height:1.35">How many positive divisors does 360 have?</span>
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:6px;opacity:{{ st.op }};transform:translateY({{ st.y }});transition:all 400ms cubic-bezier(.2,0,0,1)">
+              <span style="padding:10px 14px;border-radius:10px;border:1px solid {{ st.bd }};background:var(--card,#FFFFFF);font-family:'CM Roman',serif;font-size:17px">{{ st.t }}</span>
+              <span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:{{ st.c }};opacity:{{ st.fop }};transition:opacity 300ms"><i style="width:8px;height:8px;border-radius:999px;background:{{ st.c }}"></i>{{ st.fb }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <aside style="flex:1 1 220px;min-width:0;padding:22px 18px;border-left:1px solid var(--bd,#E2E5EA);display:flex;flex-direction:column;gap:10px">
+          <span aria-hidden="true" style="display:block;width:78px;height:78px"><dc-import name="LimiPose" pose="{{ pPose }}" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span>
+          <span style="font-size:14px;line-height:1.5">{{ pTip }}</span>
+          <span style="margin-top:auto;display:flex;justify-content:space-between;padding:10px 12px;border-radius:12px;background:var(--bg2,#F6F7F9);font-size:13px"><span>Session</span><b>{{ xp }} XP</b></span>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMock }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;min-height:{{ winH }}">
+        <div style="min-height:54px;padding:8px 18px;border-bottom:1px solid var(--bd,#E2E5EA);display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px">
+          <b style="font-size:14.5px">IOQM Mock 04</b><span style="font-size:13px;color:var(--mu,#4B4F58)">30 questions · integer answers 00–99</span>
+          <span style="margin-left:auto;display:flex;gap:6px"><span style="height:26px;padding:0 10px;border-radius:999px;background:rgba(18,122,80,.1);color:var(--green,#127A50);display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><i style="width:6px;height:6px;border-radius:999px;background:var(--green,#127A50)"></i>Camera</span><span style="height:26px;padding:0 10px;border-radius:999px;background:rgba(18,122,80,.1);color:var(--green,#127A50);display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><i style="width:6px;height:6px;border-radius:999px;background:var(--green,#127A50)"></i>Screen</span></span>
+          <span style="height:34px;padding:0 12px;border-radius:8px;background:#121418;color:#FFFFFF;display:flex;align-items:center;font-family:'CM Typewriter',monospace;font-size:14px">{{ left }}</span>
+        </div>
+        <div style="flex:1;display:flex;flex-wrap:wrap">
+          <div style="flex:2 1 400px;min-width:0;padding:24px clamp(18px,2.6vw,30px);display:flex;flex-direction:column;gap:16px">
+            <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">QUESTION {{ qn }} · 5 MARKS</span>
+            <span style="font-family:'CM Roman',serif;font-size:20px;line-height:1.45">{{ qt }}</span>
+            <span style="display:flex;align-items:center;gap:12px"><span style="display:flex;gap:6px"><span style="width:52px;height:60px;border-radius:10px;border:1px solid var(--bd2,#D2D7DE);border-bottom-width:4px;display:grid;place-items:center;font-family:'CM Roman',serif;font-size:28px">{{ d1 }}</span><span style="width:52px;height:60px;border-radius:10px;border:1px solid var(--bd2,#D2D7DE);border-bottom-width:4px;display:grid;place-items:center;font-family:'CM Roman',serif;font-size:28px">{{ d2 }}</span></span><span style="font-size:13px;color:var(--fa,#6B7280)">Your answer</span></span>
+            <span style="margin-top:auto;display:flex;gap:10px;flex-wrap:wrap"><span style="height:42px;padding:0 16px;border-radius:10px;border:1px solid var(--bd2,#D2D7DE);border-bottom-width:3px;display:flex;align-items:center;font-weight:600;font-size:14px">Mark for review</span><span style="height:42px;padding:0 18px;border-radius:10px;background:var(--blue,#1A76C9);box-shadow:0 3px 0 #0F4F8C;color:#FFFFFF;display:flex;align-items:center;font-weight:600;font-size:14px">Save &amp; next</span></span>
+          </div>
+          <aside style="flex:1 1 240px;min-width:0;padding:20px 18px;border-left:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:12.5px;font-weight:600;color:var(--fa,#6B7280)">Question palette</span>
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px"><sc-for list="{{ pal }}" as="q" hint-placeholder-count="30"><span style="aspect-ratio:1;border-radius:7px;background:{{ q.bg }};color:{{ q.fg }};border:1px solid {{ q.bd }};display:grid;place-items:center;font-size:11.5px;font-weight:600;transition:all 250ms">{{ q.n }}</span></sc-for></div>
+            <span style="display:flex;flex-wrap:wrap;gap:6px 12px;font-size:11.5px;color:var(--mu,#4B4F58)"><span style="display:flex;align-items:center;gap:5px"><i style="width:10px;height:10px;border-radius:3px;background:var(--green,#127A50)"></i>Answered</span><span style="display:flex;align-items:center;gap:5px"><i style="width:10px;height:10px;border-radius:3px;background:var(--lilac,#6B4FD6)"></i>Review</span><span style="display:flex;align-items:center;gap:5px"><i style="width:10px;height:10px;border-radius:3px;border:1px solid var(--bd2,#D2D7DE)"></i>Not visited</span></span>
+            <span style="margin-top:auto;display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="display:block;flex:0 0 auto;width:52px;height:52px"><dc-import name="LimiPose" pose="stopwatch" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span><span style="font-size:12.5px;line-height:1.4;color:var(--mu,#4B4F58)">Limi will walk you through every miss after you submit.</span></span>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPotd }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ winH }}">
+        <div style="flex:2 1 420px;min-width:0;padding:24px clamp(18px,2.6vw,30px);display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:6px"><sc-for list="{{ week }}" as="d" hint-placeholder-count="7"><span style="flex:1;min-width:0;padding:8px 0;border-radius:10px;border:1px solid {{ d.bd }};border-bottom-width:3px;background:{{ d.bg }};display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600;color:{{ d.fg }}">{{ d.t }}<i style="width:8px;height:8px;border-radius:999px;background:{{ d.dot }}"></i></span></sc-for></div>
+          <span style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--sky,#0B5BC4)">PROBLEM OF THE DAY · #213</span><span style="font-size:12.5px;color:var(--fa,#6B7280)">Combinatorics · medium</span></span>
+          <span style="font-family:'CM Roman',serif;font-size:21px;line-height:1.45">In how many ways can you climb 10 stairs taking 1 or 2 steps at a time?</span>
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="height:46px;min-width:120px;padding:0 14px;border-radius:10px;border:1px solid {{ aBd }};border-bottom-width:4px;display:flex;align-items:center;font-family:'CM Roman',serif;font-size:20px;transition:border-color 300ms">{{ aTxt }}</span><span style="height:46px;padding:0 18px;border-radius:10px;background:var(--blue,#1A76C9);box-shadow:0 3px 0 #0F4F8C;color:#FFFFFF;display:flex;align-items:center;font-weight:600;font-size:14.5px">Submit</span><span style="font-size:14px;font-weight:600;color:{{ aC }};opacity:{{ aOp }};transition:opacity 300ms">{{ aFb }}</span></span>
+          <span style="padding:12px 14px;border-radius:12px;background:var(--bg2,#F6F7F9);font-size:13.5px;line-height:1.5;color:var(--mu,#4B4F58);opacity:{{ hOp }};transition:opacity 400ms">Hint unlocked: how could you reach stair 10? Only from stair 9 or stair 8.</span>
+        </div>
+        <aside style="flex:1 1 240px;min-width:0;padding:22px 18px;border-left:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:flex;flex-direction:column;gap:10px">
+          <span style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="display:block;flex:0 0 auto;width:58px;height:58px"><dc-import name="LimiPose" pose="{{ potdPose }}" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span><span style="display:flex;flex-direction:column;line-height:1.25"><b style="font-size:20px">{{ solvers }}</b><span style="font-size:12px;color:var(--fa,#6B7280)">solved today · median 11 min</span></span></span>
+          <span style="font-size:12.5px;font-weight:600;color:var(--fa,#6B7280)">First to solve</span>
+          <span style="display:flex;justify-content:space-between;font-size:13.5px"><span>1 · Ishaan, Pune</span><span style="color:var(--fa,#6B7280)">2:41</span></span>
+          <span style="display:flex;justify-content:space-between;font-size:13.5px"><span>2 · Diya, Kochi</span><span style="color:var(--fa,#6B7280)">3:05</span></span>
+          <span style="display:flex;justify-content:space-between;font-size:13.5px"><span>3 · Arjun, Jaipur</span><span style="color:var(--fa,#6B7280)">3:58</span></span>
+          <span style="margin-top:auto;font-size:12.5px;color:var(--mu,#4B4F58)">Solution and discussion open at midnight.</span>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isComm }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ winH }}">
+        <div style="flex:1.4 1 380px;min-width:0;padding:22px clamp(18px,2.4vw,28px);display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">FROM THE BLOG</span>
+          <div style="border-radius:16px;border:1px solid var(--bd,#E2E5EA);border-bottom-width:4px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="height:120px;background:#000000;position:relative;overflow:hidden"><span style="position:absolute;left:20px;top:22px;font-family:'CM Roman',serif;font-size:30px;color:#ECE8DF">1 + ½ + ⅓ + ¼ + ⋯ = ∞</span><span style="position:absolute;right:20px;bottom:14px;font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:#7E828C">ESSAY · 7 MIN</span></div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:4px"><b style="font-family:'Moret',Georgia,serif;font-weight:600;font-size:20px;line-height:1.15">Why the harmonic series diverges, even though it feels like it shouldn’t</b><span style="font-size:13px;color:var(--fa,#6B7280)">Written by a Liminal mentor · 214 reads this week</span></div>
+          </div>
+          <span style="display:flex;gap:8px;flex-wrap:wrap"><span style="height:30px;padding:0 12px;border-radius:999px;background:var(--bg2,#F6F7F9);display:flex;align-items:center;font-size:12.5px;font-weight:500">Student essays</span><span style="height:30px;padding:0 12px;border-radius:999px;background:var(--bg2,#F6F7F9);display:flex;align-items:center;font-size:12.5px;font-weight:500">Olympiad diaries</span><span style="height:30px;padding:0 12px;border-radius:999px;background:var(--bg2,#F6F7F9);display:flex;align-items:center;font-size:12.5px;font-weight:500">Careers in maths</span></span>
+        </div>
+        <aside style="flex:1 1 300px;min-width:0;padding:22px 18px;border-left:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:flex;flex-direction:column;gap:8px">
+          <span style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">DISCUSSIONS</span><span style="height:30px;padding:0 12px;border-radius:8px;background:var(--blue,#1A76C9);color:#FFFFFF;display:flex;align-items:center;font-size:12.5px;font-weight:600">New post</span></span>
+          <sc-for list="{{ threads }}" as="th" hint-placeholder-count="4"><div style="padding:10px 12px;border-radius:12px;background:var(--card,#FFFFFF);border:1px solid {{ th.bd }};display:flex;flex-direction:column;gap:3px;opacity:{{ th.op }};transform:translateY({{ th.y }});transition:all 450ms cubic-bezier(.2,0,0,1)"><span style="font-size:14px;font-weight:600;line-height:1.3">{{ th.t }}</span><span style="font-size:12px;color:var(--fa,#6B7280)">{{ th.m }}</span></div></sc-for>
+        </aside>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:640}}">
+class Component extends DCLogic {
+  state = { t: 0, a: 0, w: typeof innerWidth === 'number' ? innerWidth : 1200 };
+  TABS = [['Live classes', 'Small live classes, taught the Socratic way: questions first, answers earned.'], ['Sharpen your skills', 'Practice that answers back. Every step gets feedback while you work.'], ['Mock tests', 'Full-length mocks under real exam conditions, with a review of every miss.'], ['Problem of the Day', 'One good problem every morning. Free, forever.'], ['Community & blog', 'Essays, Olympiad diaries and discussions from students and mentors.']];
+  rootRef = el => { this._el = el; };
+  componentDidMount() {
+    this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; this.t0 = performance.now();
+    this.onR = () => this.setState({ w: innerWidth }); addEventListener('resize', this.onR);
+    this.iv = setInterval(() => { if (this._el) { const r = this._el.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) { this.t0 += 120; return; } } this.setState({ t: this.reduce ? 1e6 : performance.now() - this.t0 }); }, 120);
+  }
+  componentWillUnmount() { clearInterval(this.iv); removeEventListener('resize', this.onR); }
+  go(i) { this.t0 = performance.now(); this.setState({ a: i, t: this.reduce ? 1e6 : 0 }); }
+  type(s, t, a, b) { if (t <= a) return ''; if (t >= b) return s; return s.slice(0, Math.round(s.length * (t - a) / (b - a))); }
+  live(t) {
+    const L = ['10 pigeons, 9 holes ⇒ some hole has 2 pigeons.', 'Claim: among any 5 points in a unit square,', 'two are within √2⁄2 of each other.', 'Hint: what are the “holes” here?'];
+    let s = 600; const board = L.map((x, i) => { const a = s, b = s + x.length * 55; s = b + 500; const txt = this.type(x, t % 16000, a, b); return { t: txt, c: i === 3 ? '#0B5BC4' : '#121418', cur: t % 16000 > a && t % 16000 < b + 200 ? 'inline-block' : 'none' }; });
+    const sec = 42 * 60 + 17 + Math.floor(t / 1000);
+    const sp = Math.floor(t / 2400) % 6;
+    const C = [['Diya', 'four small squares!', 7200], ['Arjun', 'oh, each half-square is a hole', 9600], ['Ishaan', 'can we do 10 points in a triangle?', 12400]];
+    return { board, clock: '00:' + String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'), blink: Math.floor(t / 600) % 2 ? .4 : 1,
+      tiles: [['AR', '#E3EEFB'], ['DY', '#E6F4EC'], ['IS', '#FBEFD9'], ['AJ', '#F4E6F3'], ['ME', '#E8F2FC'], ['+18', '#EEF1F4']].map(([i, bg], k) => ({ i, bg, ring: k === sp && k < 5 ? 'inset 0 0 0 2px #0B5BC4' : 'none' })),
+      lchat: C.map(([n, x, at]) => ({ n, t: x, op: t % 16000 >= at ? 1 : 0, y: t % 16000 >= at ? '0px' : '6px' })) };
+  }
+  practice(t) {
+    const T = t % 11000;
+    const S = [['360 = 2³ · 3² · 5', 'Clean factorisation.', 'var(--green,#127A50)', 600], ['3 · 2 · 1 = 6', 'Not quite. Each prime can appear 0 to k times.', 'var(--red,#C23B56)', 3200], ['(3+1)(2+1)(1+1) = 24', 'Correct. 24 divisors.', 'var(--green,#127A50)', 6400]];
+    const steps = S.map(([x, fb, c, at]) => ({ t: x, fb, c, op: T >= at ? 1 : 0, y: T >= at ? '0px' : '8px', fop: T >= at + 900 ? 1 : 0, bd: T >= at + 900 ? c : 'var(--bd2,#D2D7DE)' }));
+    const ok = T >= 7300, wrong = T >= 4100 && !ok;
+    return { steps, pPose: ok ? 'star' : wrong ? 'sweat' : 'write', pTip: ok ? 'You fixed it yourself. That’s the skill we’re building.' : wrong ? 'Try 12 = 2² · 3. List its divisors. How many choices for the power of 2?' : 'Start by breaking 360 into primes.', xp: 140 + (ok ? 20 : 0),
+      skills: [['Number theory', 62, 1], ['Algebra', 48, 0], ['Combinatorics', 35, 0], ['Geometry', 41, 0]].map(([n, v, cur]) => { const vv = cur && ok ? v + 4 : v; return { t: n, v: vv + '%', w: vv + '%', fw: cur ? 600 : 400 }; }) };
+  }
+  mock(t) {
+    const left = 2 * 3600 + 14 * 60 + 33 - Math.floor(t / 1000);
+    const cur = 7 + Math.floor(t / 3500) % 4;
+    const Q = ['Find the remainder when 7¹⁰⁰ is divided by 25.', 'How many integers n ≤ 100 make n² + n + 1 divisible by 7?', 'The sides of a triangle are 13, 14, 15. Find its inradius.', 'Find the sum of digits of the smallest n with n! ending in exactly 12 zeros.'];
+    const A = ['01', '28', '04', '05'];
+    const qi = cur - 7, prog = (t % 3500) / 3500;
+    const ans = prog > .55 ? A[qi] : prog > .4 ? A[qi][0] : '';
+    const pal = Array.from({ length: 30 }, (_, i) => { const n = i + 1; const done = n < cur && n !== 4; const rev = n === 4 || n === 12; const c = n === cur; return { n, bg: c ? 'var(--blue,#1A76C9)' : done ? 'var(--green,#127A50)' : rev ? 'var(--lilac,#6B4FD6)' : 'var(--card,#FFFFFF)', fg: c || done || rev ? '#FFFFFF' : 'var(--mu,#4B4F58)', bd: c ? '#0F4F8C' : done || rev ? 'transparent' : 'var(--bd2,#D2D7DE)' }; });
+    const h = Math.floor(left / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
+    return { left: `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`, qn: cur, qt: Q[qi], d1: ans[0] || '', d2: ans[1] || '', pal };
+  }
+  potd(t) {
+    const T = t % 12000;
+    const first = T > 1200 && T < 5200, second = T >= 6400;
+    const aTxt = second ? this.type('89', T, 6400, 6900) : first ? this.type('55', T, 1200, 1700) : '';
+    const wrongShown = T >= 2400 && T < 5200, right = T >= 7600;
+    return { aTxt, aBd: right ? 'var(--green,#127A50)' : wrongShown ? 'var(--red,#C23B56)' : 'var(--bd2,#D2D7DE)', aFb: right ? 'Solved. Day 8 of your streak.' : 'Not yet. Try a hint?', aC: right ? 'var(--green,#127A50)' : 'var(--red,#C23B56)', aOp: right || wrongShown ? 1 : 0, hOp: T >= 3600 ? 1 : 0, potdPose: right ? 'medal' : 'coffee', solvers: (1284 + Math.floor(t / 900)).toLocaleString('en-IN'),
+      week: ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => { const today = i === 6, done = i < 6 || (today && right); return { t: d, bd: today ? 'var(--blue,#1A76C9)' : 'var(--bd,#E2E5EA)', bg: today ? 'var(--turnBg,rgba(11,91,196,.08))' : 'var(--card,#FFFFFF)', fg: today ? 'var(--sky,#0B5BC4)' : 'var(--mu,#4B4F58)', dot: done ? 'var(--blue,#1A76C9)' : 'var(--bd2,#D2D7DE)' }; }) };
+  }
+  comm(t) {
+    const T = t % 10000;
+    const H = [['Is there a geometric proof of AM–GM?', 'Geometry · 14 replies · mentor answered', 2400], ['My INMO 2026 diary: what I’d do differently', 'Olympiad diaries · 41 replies', 0], ['Stuck on a functional equation from RMO 2019', 'Algebra · 9 replies', 0], ['Which is better for ISI prep: analysis or combinatorics first?', 'UG entrances · 22 replies', 0]];
+    return { threads: H.map(([x, m, at], i) => ({ t: x, m, op: T >= at ? 1 : 0, y: T >= at ? '0px' : '-10px', bd: i === 0 && T >= at && T < at + 2500 ? 'var(--sky,#0B5BC4)' : 'var(--bd,#E2E5EA)' })) };
+  }
+  renderVals() {
+    const { t, a } = this.state, w = this.props.mobile ? 390 : this.state.w;
+    const fx = [this.live, this.practice, this.mock, this.potd, this.comm][a].call(this, t);
+    return { rootRef: this.rootRef, tileCols: w < 600 ? 6 : 3, tileAR: w < 600 ? '1' : '4/3', tileR: w < 600 ? '999px' : '10px', boardPad: w < 600 ? '64px 18px 120px' : '22px 24px 22px clamp(24px,26%,170px)', limiL: w < 600 ? 'auto' : '10px', limiR: w < 600 ? '14px' : 'auto', limiW: w < 600 ? '96px' : 'clamp(96px,22%,150px)', tabWrap: w < 600 ? 'nowrap' : 'wrap', tabJust: w < 600 ? 'flex-start' : 'center', winH: w >= 900 ? '470px' : 'auto', desc: this.TABS[a][1],
+      tabs: this.TABS.map(([x], i) => ({ t: x, sel: i === a ? 'true' : 'false', pick: () => this.go(i), bd: i === a ? 'var(--blue,#1A76C9)' : 'var(--bd,#E2E5EA)', bg: i === a ? 'var(--turnBg,rgba(11,91,196,.08))' : 'var(--card,#FFFFFF)', fg: i === a ? 'var(--sky,#0B5BC4)' : 'var(--fg,#121418)' })),
+      isLive: a === 0, isPractice: a === 1, isMock: a === 2, isPotd: a === 3, isComm: a === 4, ...fx };
+  }
+}
+</script>
+</body>
+</html>

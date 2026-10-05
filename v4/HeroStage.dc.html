@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<div ref="{{ rootRef }}" style="position:relative;border:1px solid var(--bd,#E2E5EA);border-radius:24px;background:var(--card,#FFFFFF);box-shadow:var(--shadow);overflow:hidden;text-align:left;color:var(--fg,#121418);font-family:'Figtree','Helvetica Neue',Arial,sans-serif">
+  <div style="min-height:64px;padding:10px clamp(12px,2vw,20px);display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--bd,#E2E5EA)">
+    <span style="display:flex;align-items:center;gap:10px;flex:0 0 auto"><svg viewBox="0 0 133 128" width="22" height="21" aria-hidden="true"><path d="M78 2L93 74L99 125L55 60Z" fill="#4ECCFC"></path><path d="M78 2L2 88L55 60Z" fill="#00A8FC"></path><path d="M2 88L55 60L99 125Z" fill="#0666D8"></path><path d="M93 74L129 69L98 108Z" fill="#2A4EAE"></path><path d="M129 69L99 125L98 108Z" fill="#0666D8"></path></svg><span style="font-family:'CM Typewriter','Courier New',monospace;font-size:11.5px;letter-spacing:.28em;display:{{ deskD }}">LIMINAL</span></span>
+    <div role="tablist" aria-label="Product views" style="flex:1;min-width:0;display:flex;justify-content:{{ tabJust }};gap:4px;overflow-x:auto;scrollbar-width:none">
+      <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+        <button type="button" role="tab" aria-selected="{{ tb.sel }}" onClick="{{ tb.pick }}" style="position:relative;flex:0 0 auto;height:{{ tabH }};padding:0 14px;border-radius:10px;border:1px solid {{ tb.bd }};border-bottom-width:{{ tb.bw }};background:{{ tb.bg }};color:{{ tb.fg }};font:600 14px 'Figtree',sans-serif;cursor:pointer;overflow:hidden;transition:background 200ms,color 200ms">{{ tb.t }}<i aria-hidden="true" style="position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--sky,#0B5BC4);transform-origin:left;transform:scaleX({{ tb.prog }});opacity:.5"></i></button>
+      </sc-for>
+    </div>
+    <span style="flex:0 0 auto;display:{{ deskD }};align-items:center;gap:10px"><span style="height:32px;padding:0 12px;border-radius:999px;background:var(--bg2,#F6F7F9);display:flex;align-items:center;font-weight:600;font-size:13px">7-day streak</span><span style="width:34px;height:34px;border-radius:999px;background:#E3EEFB;display:grid;place-items:center;font-size:12px;font-weight:600;color:#2A2E36">AR</span></span>
+  </div>
+
+  <div style="position:relative;min-height:{{ bodyH }};height:{{ bodyFix }};overflow:hidden">
+
+    <sc-if value="{{ isLearn }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ bodyH }}">
+        <aside style="flex:0 1 220px;min-width:0;padding:22px 18px;border-right:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:{{ deskD }};flex-direction:column;gap:6px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--fa,#6B7280)">UNIT 2 · PATTERNS &amp; PROOF</span>
+          <span style="margin-bottom:8px;height:6px;border-radius:999px;background:var(--bg3,#E6E9EE);overflow:hidden"><i style="display:block;height:100%;width:40%;background:var(--blue,#1A76C9)"></i></span>
+          <span style="display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;font-size:13.5px;color:var(--mu,#4B4F58)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--green,#127A50)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Counting with pictures</span>
+          <span style="display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;font-size:13.5px;font-weight:600;background:var(--card,#FFFFFF);border:1px solid var(--bd,#E2E5EA);border-bottom-width:3px"><i style="width:16px;height:16px;border-radius:999px;border:2px solid var(--blue,#1A76C9);flex:0 0 auto"></i>Odd numbers &amp; squares</span>
+          <span style="display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;font-size:13.5px;color:var(--fa,#6B7280)"><i style="width:16px;height:16px;border-radius:999px;border:2px solid var(--bd2,#D2D7DE);flex:0 0 auto"></i>Induction, informally</span>
+          <span style="display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;font-size:13.5px;color:var(--fa,#6B7280)"><i style="width:16px;height:16px;border-radius:999px;border:2px solid var(--bd2,#D2D7DE);flex:0 0 auto"></i>Proof by contradiction</span>
+        </aside>
+        <div style="flex:1.4 1 340px;min-width:0;padding:clamp(20px,2.6vw,30px);background-image:linear-gradient(var(--grid,#EEF1F5) 1px,transparent 1px),linear-gradient(90deg,var(--grid,#EEF1F5) 1px,transparent 1px);background-size:28px 28px;display:flex;flex-direction:column;gap:18px">
+          <span style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">LESSON 2.2 · SEE IT FIRST</span><span style="font-family:'Moret',Georgia,serif;font-weight:600;font-size:clamp(24px,2.4vw,30px);line-height:1.05;letter-spacing:-.015em">Why odd numbers build <em style="font-style:italic;font-weight:400;color:var(--sky,#0B5BC4)">squares</em></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px">
+            <div aria-label="Dot grid growing one L-shape at a time" style="display:grid;grid-template-columns:repeat(5,30px);gap:8px">
+              <sc-for list="{{ dots }}" as="d" hint-placeholder-count="25"><i style="width:30px;height:30px;border-radius:999px;background:{{ d.bg }};opacity:{{ d.op }};transform:scale({{ d.s }});transition:opacity 400ms cubic-bezier(.2,0,0,1),transform 500ms cubic-bezier(.34,1.56,.64,1)"></i></sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="display:flex;flex-wrap:wrap;gap:4px;font-family:'CM Roman',serif;font-size:26px;line-height:1.1"><sc-for list="{{ terms }}" as="tm" hint-placeholder-count="5"><span style="opacity:{{ tm.op }};color:{{ tm.c }};transition:opacity 300ms">{{ tm.t }}</span></sc-for></span>
+              <span style="font-family:'CM Roman',serif;font-size:30px;line-height:1">= {{ sq }} = {{ side }}<sup style="font-size:.6em">2</sup></span>
+              <span style="font-size:13px;color:var(--mu,#4B4F58)">Layer {{ side }} of 5</span>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1 1 280px;min-width:0;padding:22px 20px;border-left:1px solid var(--bd,#E2E5EA);display:{{ sideD }};flex-direction:column;gap:10px">
+          <span style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="display:block;flex:0 0 auto;width:52px;height:52px"><dc-import name="LimiPose" pose="point" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span><span style="display:flex;flex-direction:column;line-height:1.2"><b style="font-size:14px">Limi</b><span style="font-size:12px;color:var(--fa,#6B7280)">Your guide · asks, never tells</span></span></span>
+          <sc-for list="{{ chat }}" as="m" hint-placeholder-count="4">
+            <div style="align-self:{{ m.al }};max-width:92%;padding:10px 13px;border-radius:14px;background:{{ m.bg }};color:{{ m.fg }};border:1px solid {{ m.bd }};font-size:14px;line-height:1.45;opacity:{{ m.op }};transform:translateY({{ m.y }});transition:opacity 400ms cubic-bezier(.2,0,0,1),transform 400ms cubic-bezier(.2,0,0,1)">{{ m.t }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isExplore }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ bodyH }}">
+        <div style="position:relative;flex:2 1 420px;min-width:0;min-height:380px;background:radial-gradient(60% 60% at 50% 50%,var(--turnBg,rgba(11,91,196,.08)),transparent 70%)">
+          <span style="position:absolute;left:20px;top:16px;font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">CONCEPT MAP · NUMBER THEORY</span>
+          <div style="position:absolute;inset:48px 28px 28px">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+              <sc-for list="{{ edges }}" as="e" hint-placeholder-count="11"><line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" vector-effect="non-scaling-stroke" style="stroke:{{ e.c }};stroke-width:{{ e.w }};opacity:{{ e.op }};transition:opacity 600ms cubic-bezier(.2,0,0,1),stroke 300ms"></line></sc-for>
+            </svg>
+            <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="8">
+              <span style="position:absolute;left:{{ n.x }};top:{{ n.y }};transform:translate(-50%,-50%) scale({{ n.s }});opacity:{{ n.op }};padding:{{ n.pad }};border-radius:999px;background:{{ n.bg }};color:{{ n.fg }};border:1px solid {{ n.bd }};border-bottom-width:3px;font-weight:600;font-size:{{ n.fs }};white-space:nowrap;box-shadow:{{ n.sh }};transition:all 450ms cubic-bezier(.2,0,0,1)">{{ n.t }}</span>
+            </sc-for>
+          </div>
+        </div>
+        <aside style="flex:1 1 260px;min-width:0;padding:24px 22px;border-left:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:{{ sideD }};flex-direction:column;gap:12px">
+          <span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--sky,#0B5BC4)">FOCUSED</span>
+          <span style="font-family:'Moret',Georgia,serif;font-weight:600;font-size:26px;line-height:1.05;letter-spacing:-.015em">{{ fName }}</span>
+          <span style="font-size:14px;line-height:1.5;color:var(--mu,#4B4F58)">{{ fBlurb }}</span>
+          <span style="font-size:12.5px;font-weight:600;color:var(--fa,#6B7280)">Connected to</span>
+          <span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ fLinks }}" as="l" hint-placeholder-count="3"><span style="height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--bd2,#D2D7DE);background:var(--card,#FFFFFF);display:flex;align-items:center;font-size:12.5px;font-weight:500">{{ l }}</span></sc-for></span>
+          <div style="margin-top:auto;display:flex;gap:8px"><span style="flex:1;padding:10px 12px;border-radius:12px;background:var(--card,#FFFFFF);border:1px solid var(--bd,#E2E5EA);display:flex;flex-direction:column"><b style="font-size:18px">{{ fLessons }}</b><span style="font-size:12px;color:var(--fa,#6B7280)">lessons</span></span><span style="flex:1;padding:10px 12px;border-radius:12px;background:var(--card,#FFFFFF);border:1px solid var(--bd,#E2E5EA);display:flex;flex-direction:column"><b style="font-size:18px">{{ fProbs }}</b><span style="font-size:12px;color:var(--fa,#6B7280)">problems</span></span></div>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isChallenge }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ bodyH }}">
+        <div style="flex:1.3 1 380px;min-width:0;padding:22px clamp(18px,2.4vw,28px);display:{{ proofD }};flex-direction:column;gap:12px">
+          <span style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:11px;letter-spacing:.14em;color:var(--fa,#6B7280)">PROOF · THERE ARE INFINITELY MANY PRIMES</span><span style="height:26px;padding:0 10px;border-radius:999px;background:{{ stBg }};color:{{ stFg }};display:flex;align-items:center;font-size:12px;font-weight:600;transition:all 300ms">{{ stTxt }}</span></span>
+          <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px">
+            <sc-for list="{{ proof }}" as="ln" hint-placeholder-count="5">
+              <li style="display:{{ ln.d }};grid-template-columns:28px 1fr;gap:8px;align-items:baseline;padding:7px 10px;border-radius:8px;background:{{ ln.bg }};box-shadow:{{ ln.ring }};opacity:{{ ln.op }};transition:background 300ms,box-shadow 300ms,opacity 300ms"><span style="font-family:'CM Typewriter',monospace;font-size:11px;color:{{ ln.nc }}">{{ ln.n }}</span><span style="font-family:'CM Roman',serif;font-size:16.5px;line-height:1.4;color:{{ ln.c }}">{{ ln.t }}<i style="display:{{ ln.cur }};width:2px;height:1.05em;margin-left:2px;vertical-align:-2px;background:var(--sky,#0B5BC4)"></i></span></li>
+            </sc-for>
+          </ol>
+        </div>
+        <aside style="flex:1 1 300px;min-width:0;padding:22px 20px;border-left:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:{{ chAsideD }};flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span aria-hidden="true" style="display:block;flex:0 0 auto;width:64px;height:64px"><dc-import name="LimiPose" pose="{{ chPose }}" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span><div style="position:relative;flex:1;padding:10px 12px;border-radius:12px;background:{{ bubBg }};color:{{ bubFg }};border:1px solid {{ bubBd }};font-size:14px;font-weight:600;line-height:1.35;opacity:{{ bubOp }};transition:all 400ms">{{ bubTxt }}</div>
+          </div>
+          <div style="padding:14px;border-radius:14px;background:var(--card,#FFFFFF);border:1px solid var(--bd,#E2E5EA);display:flex;flex-direction:column;gap:6px;opacity:{{ exOp }};transform:translateY({{ exY }});transition:all 500ms cubic-bezier(.2,0,0,1)">
+            <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--red,#C23B56)">WHAT WENT WRONG · LOGICAL LEAP</span>
+            <span style="font-size:13.5px;line-height:1.5">No pᵢ divides N. That only tells us N’s prime factors are <b>new</b>. It doesn’t make N itself prime.</span>
+            <span style="font-size:13px;line-height:1.45;color:var(--mu,#4B4F58)">Check: 2·3·5·7·11·13 + 1 = <span style="font-family:'CM Roman',serif">30031 = 59 × 509</span>. Not prime, but both factors are new primes.</span>
+          </div>
+          <div style="padding:14px;border-radius:14px;background:var(--card,#FFFFFF);border:1px solid var(--green,#127A50);border-bottom-width:3px;display:flex;flex-direction:column;gap:6px;opacity:{{ fxOp }};transform:translateY({{ fxY }});transition:all 500ms cubic-bezier(.2,0,0,1)">
+            <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--green,#127A50)">SUGGESTED FIX</span>
+            <span style="font-family:'CM Roman',serif;font-size:14.5px;line-height:1.4"><b style="font-family:'Figtree',sans-serif;font-size:12px">Step 5</b> Therefore, N must have a prime factor that is not in the list p₁, …, pₙ.</span>
+            <span style="font-family:'CM Roman',serif;font-size:14.5px;line-height:1.4"><b style="font-family:'Figtree',sans-serif;font-size:12px">Step 6</b> This new prime factor contradicts the assumption that p₁, …, pₙ are all the primes.</span>
+          </div>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDiscuss }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;min-height:{{ bodyH }}">
+        <aside style="flex:0 1 200px;min-width:0;padding:20px 14px;border-right:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:{{ deskD }};flex-direction:column;gap:4px">
+          <span style="padding:0 8px 8px;font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--fa,#6B7280)">CIRCLES</span>
+          <span style="height:34px;padding:0 10px;border-radius:8px;background:var(--card,#FFFFFF);border:1px solid var(--bd,#E2E5EA);display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:600">Number theory<b style="height:20px;min-width:20px;padding:0 6px;border-radius:999px;background:var(--blue,#1A76C9);color:#FFFFFF;font-size:11px;display:grid;place-items:center">{{ unread }}</b></span>
+          <span style="height:34px;padding:0 10px;display:flex;align-items:center;font-size:13.5px;color:var(--mu,#4B4F58)">Geometry</span>
+          <span style="height:34px;padding:0 10px;display:flex;align-items:center;font-size:13.5px;color:var(--mu,#4B4F58)">Combinatorics</span>
+          <span style="height:34px;padding:0 10px;display:flex;align-items:center;font-size:13.5px;color:var(--mu,#4B4F58)">RMO prep</span>
+          <span style="height:34px;padding:0 10px;display:flex;align-items:center;font-size:13.5px;color:var(--mu,#4B4F58)">Ask a mentor</span>
+        </aside>
+        <div style="flex:2 1 420px;min-width:0;padding:22px clamp(18px,2.4vw,28px);display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px">
+            <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:2px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--sky,#0B5BC4)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg><b style="font-size:14px">{{ votes }}</b></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+              <span style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fa,#6B7280)"><span style="width:24px;height:24px;border-radius:999px;background:#FBEFD9;display:grid;place-items:center;font-size:10px;font-weight:600;color:#2A2E36">AN</span><b style="color:var(--fg,#121418)">Ananya</b>Class 10 · just now</span>
+              <span style="font-weight:600;font-size:17px;line-height:1.3">Why does every odd square leave remainder 1 mod 8?</span>
+              <span style="min-height:44px;font-size:14.5px;line-height:1.5;color:var(--mu,#4B4F58)">{{ postTxt }}<i style="display:{{ postCur }};width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:var(--sky,#0B5BC4)"></i></span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding-left:34px">
+            <sc-for list="{{ replies }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;padding:10px 12px;border-radius:12px;background:{{ r.bg }};border:1px solid {{ r.bd }};opacity:{{ r.op }};transform:translateY({{ r.y }});transition:all 450ms cubic-bezier(.2,0,0,1)"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:{{ r.av }};display:grid;place-items:center;font-size:10px;font-weight:600;color:#2A2E36">{{ r.i }}</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:12.5px"><b>{{ r.n }}</b> <span style="color:{{ r.tc }};font-weight:600">{{ r.tag }}</span></span><span style="font-size:14px;line-height:1.45">{{ r.t }}</span></span></div>
+            </sc-for>
+            <span style="height:20px;font-size:12.5px;color:var(--fa,#6B7280);opacity:{{ typOp }};transition:opacity 300ms">{{ typTxt }}</span>
+          </div>
+        </div>
+        <aside style="flex:1 1 220px;min-width:0;padding:22px 18px;border-left:1px solid var(--bd,#E2E5EA);display:{{ sideD }};flex-direction:column;gap:10px">
+          <span style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="display:block;flex:0 0 auto;width:52px;height:52px"><dc-import name="LimiPose" pose="chat" hint-size="100%,100%" style="display:block;width:100%;height:100%"></dc-import></span><b style="font-size:14px">Limi’s summary</b></span>
+          <span style="font-size:13.5px;line-height:1.5;color:var(--mu,#4B4F58);opacity:{{ sumOp }};transition:opacity 500ms">Two approaches so far: factor k(k+1), or check the four odd residues mod 8. Both work.</span>
+          <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:var(--fa,#6B7280)">In this circle now</span>
+          <span style="display:flex"><span style="width:28px;height:28px;border-radius:999px;border:2px solid var(--card,#FFFFFF);background:#E3EEFB;display:grid;place-items:center;font-size:10px;font-weight:600;color:#2A2E36">KB</span><span style="width:28px;height:28px;margin-left:-8px;border-radius:999px;border:2px solid var(--card,#FFFFFF);background:#E6F4EC;display:grid;place-items:center;font-size:10px;font-weight:600;color:#2A2E36">ME</span><span style="width:28px;height:28px;margin-left:-8px;border-radius:999px;border:2px solid var(--card,#FFFFFF);background:#F4E6F3;display:grid;place-items:center;font-size:10px;font-weight:600;color:#2A2E36">RO</span><span style="width:28px;height:28px;margin-left:-8px;border-radius:999px;border:2px solid var(--card,#FFFFFF);background:var(--bg3,#E6E9EE);display:grid;place-items:center;font-size:10px;font-weight:600;color:var(--mu,#4B4F58)">+18</span></span>
+        </aside>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isResearch }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;min-height:{{ bodyH }}">
+        <div style="flex:1;display:flex;flex-wrap:wrap">
+          <aside style="flex:1 1 240px;min-width:0;padding:20px 18px;border-right:1px solid var(--bd,#E2E5EA);background:var(--bg2,#F6F7F9);display:{{ sideD }};flex-direction:column;gap:8px">
+            <span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--fa,#6B7280)">READING ROOM</span>
+            <sc-for list="{{ papers }}" as="pp" hint-placeholder-count="3">
+              <div style="padding:10px 12px;border-radius:12px;background:var(--card,#FFFFFF);border:1px solid {{ pp.bd }};border-bottom-width:3px;display:flex;flex-direction:column;gap:6px;transition:border-color 300ms"><span style="font-size:13.5px;font-weight:600;line-height:1.3">{{ pp.t }}</span><span style="font-size:11.5px;color:var(--fa,#6B7280)">{{ pp.m }}</span><span style="height:4px;border-radius:999px;background:var(--bg3,#E6E9EE);overflow:hidden"><i style="display:block;height:100%;width:{{ pp.w }};background:var(--blue,#1A76C9);transition:width 600ms"></i></span></div>
+            </sc-for>
+          </aside>
+          <div style="flex:2 1 400px;min-width:0;padding:20px clamp(18px,2.4vw,26px);background-image:linear-gradient(var(--grid,#EEF1F5) 1px,transparent 1px),linear-gradient(90deg,var(--grid,#EEF1F5) 1px,transparent 1px);background-size:28px 28px;display:flex;flex-direction:column;gap:10px">
+            <span style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:'CM Typewriter',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--fa,#6B7280)">SHARED NOTEBOOK · HAPPY ENDING PROBLEM</span><span style="font-size:12px;color:var(--fa,#6B7280)">4 editing</span></span>
+            <sc-for list="{{ notes }}" as="nt" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:baseline;opacity:{{ nt.op }};transform:translateX({{ nt.x }});transition:all 450ms cubic-bezier(.2,0,0,1)"><span style="font-size:11.5px;font-weight:600;color:{{ nt.c }}">{{ nt.who }}</span><span style="font-family:'CM Roman',serif;font-size:16px;line-height:1.4">{{ nt.t }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:12px clamp(14px,2vw,22px);border-top:1px solid var(--bd,#E2E5EA);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px">
+          <span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><i style="width:8px;height:8px;border-radius:999px;background:var(--red,#C23B56);opacity:{{ liveOp }}"></i>Research circle · voice</span>
+          <span style="display:flex;gap:10px"><sc-for list="{{ voices }}" as="v" hint-placeholder-count="4"><span title="{{ v.n }}" style="position:relative;width:36px;height:36px;border-radius:999px;background:{{ v.bg }};display:grid;place-items:center;font-size:11px;font-weight:600;color:#2A2E36;box-shadow:{{ v.ring }};transition:box-shadow 250ms">{{ v.i }}</span></sc-for></span>
+          <span style="display:flex;align-items:center;gap:2px;height:24px"><sc-for list="{{ wave }}" as="wv" hint-placeholder-count="14"><i style="width:3px;height:{{ wv }};border-radius:2px;background:var(--sky,#0B5BC4);transition:height 120ms"></i></sc-for></span>
+          <span style="flex:1 1 260px;min-width:0;font-size:13.5px;line-height:1.4;color:var(--mu,#4B4F58)"><b style="color:var(--fg,#121418)">{{ capWho }}:</b> {{ capTxt }}</span>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:560},&quot;active&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(i:number)=&gt;void&quot;}}">
+class Component extends DCLogic {
+  state = { t: 0, a: 0, w: typeof innerWidth === 'number' ? innerWidth : 1200 };
+  TABS = ['Learn', 'Explore', 'Challenge', 'Discuss', 'Research'];
+  DUR = [10500, 10000, 15000, 11500, 11000];
+  rootRef = el => { this._el = el; };
+  componentDidMount() {
+    this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.t0 = performance.now();
+    this.onR = () => this.setState({ w: innerWidth }); addEventListener('resize', this.onR);
+    this.iv = setInterval(() => {
+      if (this._el) { const r = this._el.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) { this.t0 += 90; return; } }
+      const t = performance.now() - this.t0;
+      if (!this.reduce && this.props.autoplay !== false && t > this.DUR[this.state.a]) return this.go((this.state.a + 1) % 5);
+      this.setState({ t: this.reduce ? 1e6 : t });
+    }, 90);
+  }
+  componentWillUnmount() { clearInterval(this.iv); removeEventListener('resize', this.onR); }
+  go(i) { this.t0 = performance.now(); this.setState({ a: i, t: this.reduce ? 1e6 : 0 }); this.props.onChange && this.props.onChange(i); }
+  componentDidUpdate(pp) { if (this.props.active != null && this.props.active !== pp.active && this.props.active !== this.state.a) this.go(this.props.active); }
+  type(s, t, t0, t1) { if (t <= t0) return ''; if (t >= t1) return s; return s.slice(0, Math.round(s.length * (t - t0) / (t1 - t0))); }
+  show(t, at) { return t >= at; }
+  learn(t) {
+    const C = ['#0666D8', '#00A8FC', '#2A4EAE', '#4ECCFC', '#1A76C9'];
+    const k = Math.max(0, Math.min(4, Math.floor((t - 500) / 1000)));
+    const dots = []; for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) { const L = Math.max(r, c), on = t > 500 + L * 1000; dots.push({ bg: C[L], op: on ? 1 : .12, s: on ? 1 : .6 }); }
+    const terms = ['1', '+ 3', '+ 5', '+ 7', '+ 9'].map((x, i) => ({ t: x, op: i <= k ? 1 : .15, c: C[i] }));
+    const ans = this.type('n²', t, 6400, 6900);
+    const M = [
+      { t: 'Each new L-shape wraps the square. Count the dots it adds.', me: 0, at: 800 },
+      { t: 'They’re the odd numbers! 1, 3, 5, 7…', me: 1, at: 3400 },
+      { t: 'So 1 + 3 + … + (2n − 1) = ?', me: 0, at: 5200 },
+      { t: ans || '…', me: 1, at: 6200 },
+      { t: 'Exactly. You saw it before I said it. Now: can you prove it?', me: 0, at: 7600 }
+    ];
+    return { dots, terms, sq: (k + 1) * (k + 1), side: k + 1, chat: M.map(m => ({ t: m.t, op: t >= m.at ? 1 : 0, y: t >= m.at ? '0px' : '8px', al: m.me ? 'flex-end' : 'flex-start', bg: m.me ? 'var(--blue,#1A76C9)' : 'var(--bg2,#F6F7F9)', fg: m.me ? '#FFFFFF' : 'var(--fg,#121418)', bd: m.me ? 'transparent' : 'var(--bd,#E2E5EA)' })) };
+  }
+  explore(t) {
+    const N = [['Primes', 50, 48, 'The atoms of arithmetic. Almost every road in number theory passes through here.', 3, 42], ['Divisibility', 22, 18], ['GCD & Euclid', 10, 52], ['Modular arithmetic', 76, 14, 'Arithmetic on a clock. Turns huge questions into small, checkable ones.', 4, 36], ['Fermat’s little theorem', 86, 50, 'aᵖ ≡ a (mod p). A one-line fact that powers modern cryptography.', 2, 18], ['RSA cryptography', 74, 88, 'Primes and modular powers, keeping your messages private.', 1, 9], ['Diophantine equations', 24, 86], ['Polynomials', 50, 92]];
+    const E = [[0, 1], [0, 3], [0, 4], [1, 2], [2, 6], [3, 4], [4, 5], [0, 6], [0, 7], [3, 5], [1, 3]];
+    const seq = [0, 3, 4, 5]; const f = t < 2600 ? -1 : seq[Math.floor((t - 2600) / 2000) % 4];
+    const nb = new Set(); E.forEach(([a, b]) => { if (a === f) nb.add(b); if (b === f) nb.add(a); });
+    const fi = f < 0 ? 0 : f;
+    return {
+      nodes: N.map((n, i) => { const mob = this.props.mobile || this.state.w < 600; const nx = mob ? Math.min(78, Math.max(22, n[1])) : n[1]; const on = t > 150 + i * 140, isF = i === f, isN = nb.has(i), dim = f >= 0 && !isF && !isN; return { t: mob && n[0] === 'Fermat’s little theorem' ? 'Fermat’s theorem' : mob && n[0] === 'Diophantine equations' ? 'Diophantine eqns' : n[0], x: nx + '%', y: n[2] + '%', op: on ? (dim ? .45 : 1) : 0, s: on ? (isF ? 1.08 : 1) : .6, bg: isF ? 'var(--blue,#1A76C9)' : 'var(--card,#FFFFFF)', fg: isF ? '#FFFFFF' : 'var(--fg,#121418)', bd: isF ? '#0F4F8C' : isN ? 'var(--sky,#0B5BC4)' : 'var(--bd2,#D2D7DE)', pad: i === 0 ? '10px 18px' : '7px 13px', fs: i === 0 ? '15px' : (mob ? '12px' : '13px'), sh: isF ? '0 10px 24px -10px rgba(11,91,196,.6)' : 'none' }; }),
+      edges: E.map(([a, b], i) => { const hot = a === f || b === f, mob = this.props.mobile || this.state.w < 600, cx = v => mob ? Math.min(78, Math.max(22, v)) : v; return { x1: cx(N[a][1]), y1: N[a][2], x2: cx(N[b][1]), y2: N[b][2], op: t > 1300 + i * 110 ? 1 : 0, c: hot ? 'var(--sky,#0B5BC4)' : 'var(--bd2,#D2D7DE)', w: hot ? 2 : 1.2 }; }),
+      fName: N[fi][0], fBlurb: N[fi][3], fLessons: N[fi][4], fProbs: N[fi][5],
+      fLinks: E.filter(([a, b]) => a === fi || b === fi).map(([a, b]) => N[a === fi ? b : a][0])
+    };
+  }
+  challenge(t) {
+    const W = ['Suppose there are only finitely many primes p₁, p₂, …, pₙ.', 'Let N = p₁p₂⋯pₙ + 1.', 'Since N > 1, N has at least one prime factor.', 'Dividing N by any pᵢ leaves remainder 1.', 'Therefore, N must be a prime number.'];
+    const F = ['Therefore, N must have a prime factor that is not in the list p₁, …, pₙ.', 'This new prime factor contradicts the assumption that p₁, …, pₙ are all the primes.', 'Hence there are infinitely many primes. ∎'];
+    const tot = W.join('').length; let acc = 0; const T0 = 300, T1 = 5600;
+    const err = t >= 6000, fixed = t >= 10600;
+    const lines = W.map((s, i) => { const a = T0 + (T1 - T0) * acc / tot; acc += s.length; const b = T0 + (T1 - T0) * acc / tot; const txt = this.type(s, t, a, b); return { s, txt, typing: t > a && t < b + 300 && !err }; });
+    const proof = [];
+    lines.forEach((l, i) => {
+      const bad = i === 4;
+      if (bad && fixed) proof.push({ n: '05', t: this.type(F[0], t, 10600, 11600), c: 'var(--fg,#121418)', nc: 'var(--green,#127A50)', bg: 'rgba(18,122,80,.08)', ring: 'inset 3px 0 0 var(--green,#127A50)', op: 1, d: 'grid', cur: 'none' });
+      else proof.push({ n: '0' + (i + 1), t: l.txt, c: bad && err ? 'var(--red,#C23B56)' : 'var(--fg,#121418)', nc: bad && err ? 'var(--red,#C23B56)' : 'var(--fa,#6B7280)', bg: bad && err ? 'rgba(194,59,86,.08)' : 'transparent', ring: bad && err ? 'inset 3px 0 0 var(--red,#C23B56)' : 'none', op: l.txt ? 1 : 0, d: l.txt ? 'grid' : 'none', cur: l.typing ? 'inline-block' : 'none' });
+    });
+    if (fixed) { proof.push({ n: '06', t: this.type(F[1], t, 11800, 12900), c: 'var(--fg,#121418)', nc: 'var(--green,#127A50)', bg: 'rgba(18,122,80,.08)', ring: 'inset 3px 0 0 var(--green,#127A50)', op: t >= 11800 ? 1 : 0, d: t >= 11800 ? 'grid' : 'none', cur: 'none' }); proof.push({ n: '07', t: this.type(F[2], t, 13000, 13600), c: 'var(--fg,#121418)', nc: 'var(--fa,#6B7280)', bg: 'transparent', ring: 'none', op: t >= 13000 ? 1 : 0, d: t >= 13000 ? 'grid' : 'none', cur: 'none' }); }
+    const done = t >= 13700;
+    return {
+      proof,
+      stTxt: done ? 'Proof verified' : fixed ? 'Applying fix' : err ? '1 issue found' : 'Checking as you write', stBg: done ? 'rgba(18,122,80,.12)' : err && !fixed ? 'rgba(194,59,86,.12)' : 'var(--bg3,#E6E9EE)', stFg: done ? 'var(--green,#127A50)' : err && !fixed ? 'var(--red,#C23B56)' : 'var(--mu,#4B4F58)',
+      chPose: err && !fixed ? 'oops' : done ? 'proud' : 'magnify',
+      bubOp: t > 1200 ? 1 : 0, bubTxt: done ? 'Now every step follows. Nice work.' : fixed ? 'Rewriting Step 5…' : err ? 'Error in argument detected at Step 5!' : 'Reading each step as you write…',
+      bubBg: err && !fixed ? 'rgba(194,59,86,.1)' : 'var(--card,#FFFFFF)', bubFg: err && !fixed ? 'var(--red,#C23B56)' : 'var(--fg,#121418)', bubBd: err && !fixed ? 'var(--red,#C23B56)' : 'var(--bd,#E2E5EA)',
+      exOp: t >= 7000 ? 1 : 0, exY: t >= 7000 ? '0px' : '10px', fxOp: t >= 8800 ? 1 : 0, fxY: t >= 8800 ? '0px' : '10px'
+    };
+  }
+  discuss(t) {
+    const P = 'Tried 1, 9, 25, 49, 81… all give 1 mod 8. Is there a clean reason, or is it a coincidence?';
+    const postTxt = this.type(P, t, 500, 3800);
+    const R = [
+      { i: 'KB', n: 'Kabir', tag: 'Class 11', t: 'Write it as (2k+1)² = 4k(k+1) + 1.', at: 4600, av: '#E3EEFB' },
+      { i: 'ME', n: 'Meera', tag: 'Class 10', t: 'And k(k+1) is always even, so 4k(k+1) is a multiple of 8!', at: 6600, av: '#E6F4EC' },
+      { i: 'SI', n: 'Dr. S. Iyer', tag: 'Mentor', t: 'Lovely. Now push it: what do odd squares leave mod 16?', at: 8600, av: '#F4E6F3', m: 1 }
+    ];
+    const typer = t > 3900 && t < 4600 ? 'Kabir is typing…' : t > 5300 && t < 6600 ? 'Meera is typing…' : t > 7400 && t < 8600 ? 'Dr. S. Iyer is typing…' : '';
+    return {
+      postTxt, postCur: t > 400 && t < 4000 ? 'inline-block' : 'none', votes: 12 + (t > 5000 ? 3 : 0) + (t > 7200 ? 4 : 0), unread: t > 8600 ? 3 : t > 6600 ? 2 : 1,
+      replies: R.map(r => ({ ...r, op: t >= r.at ? 1 : 0, y: t >= r.at ? '0px' : '10px', bg: r.m ? 'var(--turnBg,rgba(11,91,196,.08))' : 'var(--bg2,#F6F7F9)', bd: r.m ? 'var(--sky,#0B5BC4)' : 'var(--bd,#E2E5EA)', tc: r.m ? 'var(--sky,#0B5BC4)' : 'var(--fa,#6B7280)' })),
+      typOp: typer ? 1 : 0, typTxt: typer || ' ', sumOp: t > 7400 ? 1 : .0
+    };
+  }
+  research(t) {
+    const V = [['AR', 'Aarav', '#E3EEFB', 'Five points in general position always contain a convex quadrilateral. That’s our base case.'], ['PK', 'Priya', '#E6F4EC', 'For pentagons the bound is nine points. Can we see why eight fails?'], ['SN', 'Sana', '#FBEFD9', 'I drew an eight-point set with no convex pentagon. Sharing it now.'], ['VJ', 'Vivek', '#F4E6F3', 'So the conjecture is 2ⁿ⁻² + 1 points for an n-gon. Still open in general!']];
+    const sp = Math.floor(t / 2600) % 4;
+    const notes = [['Aarav', 'n = 4: any 5 points ⇒ convex quadrilateral ✓', 400], ['Priya', 'n = 5: 9 points suffice; 8 do not ✓', 2400], ['Sana', 'n = 6: 17 points (computer-assisted, 2006)', 5000], ['Vivek', 'Conjecture: N(n) = 2ⁿ⁻² + 1. Open.', 7600]];
+    const cols = ['#1667B0', '#127A50', '#9A6B12', '#6B4FD6'];
+    return {
+      papers: [['Erdős & Szekeres, 1935', 'A combinatorial problem in geometry', 1], ['Szekeres & Peters, 2006', 'Computer solution to the 17-point problem', 2], ['Suk, 2017', 'On the Erdős–Szekeres convex polygon problem', 3]].map(([t2, m], i) => ({ t: m, m: t2, w: Math.min(100, Math.max(8, (t - i * 1500) / 70)) + '%', bd: i === Math.min(2, Math.floor(t / 3500)) ? 'var(--sky,#0B5BC4)' : 'var(--bd,#E2E5EA)' })),
+      notes: notes.map(([who, tx, at], i) => ({ who, t: tx, op: t >= at ? 1 : 0, x: t >= at ? '0px' : '-8px', c: cols[i] })),
+      voices: V.map((v, i) => ({ i: v[0], n: v[1], bg: v[2], ring: i === sp ? '0 0 0 3px var(--card,#FFFFFF),0 0 0 5px var(--sky,#0B5BC4)' : 'none' })),
+      wave: Array.from({ length: 14 }, (_, i) => (4 + Math.abs(Math.sin(t / 140 + i * 1.3)) * 18).toFixed(0) + 'px'),
+      capWho: V[sp][1], capTxt: V[sp][3], liveOp: Math.floor(t / 600) % 2 ? .35 : 1
+    };
+  }
+  renderVals() {
+    const { t, a } = this.state, w = this.props.mobile ? 390 : this.state.w; const prog = Math.min(1, t / this.DUR[a]);
+    const base = {
+      rootRef: this.rootRef, sideD: w < 600 ? 'none' : 'flex', bodyFix: w < 600 ? '440px' : 'auto', proofD: w < 600 && t >= 6800 && t < 10600 ? 'none' : 'flex', chAsideD: w >= 600 || (t >= 6000 && t < 10600) ? 'flex' : 'none', tabH: w < 600 ? '44px' : '38px', tabJust: w < 600 ? 'flex-start' : 'center', deskD: w >= 900 ? 'flex' : 'none', bodyH: w >= 900 ? '470px' : 'auto',
+      tabs: this.TABS.map((x, i) => ({ t: x, sel: i === a ? 'true' : 'false', pick: () => this.go(i), bd: i === a ? 'var(--blue,#1A76C9)' : 'transparent', bw: i === a ? '4px' : '1px', bg: i === a ? 'var(--turnBg,rgba(11,91,196,.08))' : 'transparent', fg: i === a ? 'var(--sky,#0B5BC4)' : 'var(--mu,#4B4F58)', prog: i === a && !this.reduce ? prog : 0 })),
+      isLearn: a === 0, isExplore: a === 1, isChallenge: a === 2, isDiscuss: a === 3, isResearch: a === 4
+    };
+    const fx = [this.learn, this.explore, this.challenge, this.discuss, this.research][a].call(this, t);
+    return { ...base, ...fx };
+  }
+}
+</script>
+</body>
+</html>
