@@ -19,6 +19,7 @@ Static, self-contained pages for the Liminal Math site: homepage, product app, L
 | `/versions` | Index of all versions | `versions.html` |
 | `/v1` | Version 1: first homepage concept | `Liminal Home v1.dc.html` |
 | `/v2` | Version 2: previous live site (still served at `/`) | `Liminal Home v2.dc.html` |
+| `/v5` | Version 5: redesigned home (Home / Careers / Community nav, notebook sections), self-contained | `v5/` |
 | `/v4` | Version 4: homepage v19 (desktop + mobile) and Chapter Zero v2, self-contained | `v4/` |
 | `/v3` | Version 3: homepage v18 + Chapter Zero + registration flow | `Liminal Home v3.dc.html`, `Chapter Zero.dc.html`, `Limi.dc.html` |
 

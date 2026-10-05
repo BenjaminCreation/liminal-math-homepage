@@ -28,6 +28,11 @@
       "source": "/v4",
       "destination": "/v4/start.html",
       "permanent": false
+    },
+    {
+      "source": "/v5",
+      "destination": "/v5/start.html",
+      "permanent": false
     }
   ]
 }
