@@ -31,7 +31,7 @@ input::placeholder{color:var(--fa)}
 @keyframes lmFade{from{opacity:0}to{opacity:1}}
 @keyframes lmGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes lmPulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
-@keyframes lmBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+#boards::before,#programs::before,#philosophy::before,#stories::before,#quote::before,#faq::before,#join::before{content:"";position:absolute;left:0;right:0;top:0;height:34px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(18,20,24,.11),rgba(18,20,24,.04) 45%,transparent)}[data-theme="dark"] #boards::before,[data-theme="dark"] #programs::before,[data-theme="dark"] #philosophy::before,[data-theme="dark"] #stories::before,[data-theme="dark"] #quote::before,[data-theme="dark"] #faq::before,[data-theme="dark"] #join::before{background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,.2) 45%,transparent)}@keyframes lmBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
 @keyframes lmLive{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes lmMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 html,body{overflow-x:clip}
