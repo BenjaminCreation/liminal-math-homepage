@@ -179,7 +179,7 @@ class Component extends DCLogic {
     this.onR = () => this.setState({ w: innerWidth }); addEventListener('resize', this.onR);
     this.iv = setInterval(() => {
       if (this._el) { const r = this._el.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) { this.t0 += 90; return; } }
-      const t = performance.now() - this.t0;
+      const t = (performance.now() - this.t0) * 1.75;
       if (!this.reduce && this.props.autoplay !== false && t > this.DUR[this.state.a]) return this.go((this.state.a + 1) % 5);
       this.setState({ t: this.reduce ? 1e6 : t });
     }, 90);
