@@ -12,7 +12,7 @@
 
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:240,&quot;height&quot;:240},&quot;pose&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;wave&quot;,&quot;telescope&quot;,&quot;idea&quot;,&quot;think&quot;,&quot;cheer&quot;,&quot;trophy&quot;,&quot;read&quot;,&quot;wink&quot;,&quot;laptop&quot;,&quot;confused&quot;,&quot;point&quot;,&quot;oops&quot;,&quot;proud&quot;,&quot;magnify&quot;,&quot;chat&quot;,&quot;teach&quot;,&quot;write&quot;,&quot;sweat&quot;,&quot;star&quot;,&quot;stopwatch&quot;,&quot;coffee&quot;,&quot;medal&quot;,&quot;shades&quot;,&quot;sleepy&quot;,&quot;headset&quot;,&quot;flag&quot;],&quot;default&quot;:&quot;wave&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  static MAP = {"wave": 20, "telescope": 7, "idea": 3, "think": 5, "cheer": 6, "trophy": 8, "read": 4, "wink": 19, "laptop": 2, "confused": 17, "point": 1, "oops": 22, "proud": 12, "magnify": 21, "chat": 11, "teach": 15, "write": 10, "sweat": 22, "star": 9, "stopwatch": 16, "coffee": 18, "medal": 14, "shades": 1, "sleepy": 18, "headset": 2, "flag": 7};
+  static MAP = {"wave": 3, "telescope": 7, "idea": 3, "think": 5, "cheer": 6, "trophy": 8, "read": 4, "wink": 19, "laptop": 2, "confused": 17, "point": 1, "oops": 22, "proud": 12, "magnify": 21, "chat": 11, "teach": 15, "write": 10, "sweat": 22, "star": 9, "stopwatch": 16, "coffee": 18, "medal": 14, "shades": 1, "sleepy": 18, "headset": 2, "flag": 7};
   renderVals() {
     const n = Component.MAP[this.props.pose] || 1;
     return { src: 'assets/mascot/s' + String(n).padStart(2, '0') + '.png', label: 'Liminal mascot' };
