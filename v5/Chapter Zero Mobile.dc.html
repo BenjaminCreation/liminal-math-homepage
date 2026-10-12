@@ -336,7 +336,7 @@ class Component extends DCLogic {
   toggleTheme = () => { const t = this.theme() === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('liminal-theme', t); } catch (e) {} this.setState({ theme: t }); };
   footMove = ev => { const el = this._word; if (!el) return; const e = ev.touches && ev.touches[0] ? ev.touches[0] : ev; const r = el.getBoundingClientRect(); el.style.setProperty('--fx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); el.style.setProperty('--fy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%'); };
   startQs = () => { (this.it || []).forEach(clearTimeout); this.setState({ introOut: true }); this.it = [setTimeout(() => this.setState({ intro: false, introOut: false }), 400)]; };
-  openReg = () => { (this.it || []).forEach(clearTimeout); this.setState({ reg: true, step: 0, board: this.initBoard(), moves: 0, rev: 0, intro: true, introOut: false, hi: 0 }); this.it = [setTimeout(() => this.setState({ hi: 1 }), this.reduce ? 0 : 900), setTimeout(() => this.setState({ hi: 2 }), this.reduce ? 0 : 1500)]; document.body.style.overflow = 'hidden'; try { history.replaceState(null, '', '#register'); } catch (e) {} };
+  openReg = () => { (this.it || []).forEach(clearTimeout); this.setState({ reg: true, step: 0, board: this.initBoard(), moves: 0, rev: 0, intro: false, introOut: false, hi: 0 }); document.body.style.overflow = 'hidden'; try { history.replaceState(null, '', '#register'); } catch (e) {} };
   closeReg = () => { (this.lt || []).forEach(clearTimeout); (this.it || []).forEach(clearTimeout); this.setState({ reg: false }); document.body.style.overflow = ''; try { history.replaceState(null, '', location.pathname); } catch (e) {} };
 
   componentDidMount() {
