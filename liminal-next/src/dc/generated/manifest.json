@@ -1,0 +1,102 @@
+{
+  "HomeDesktop": {
+    "compName": "HomeDesktop",
+    "title": "Liminal Math — Home v20",
+    "defaults": {
+      "theme": "Light",
+      "cycleHighlight": true,
+      "playIntro": true
+    }
+  },
+  "HomeMobile": {
+    "compName": "HomeMobile",
+    "title": "Liminal Math — Home (mobile)",
+    "defaults": {
+      "theme": "Light",
+      "cycleHighlight": true,
+      "playIntro": true
+    }
+  },
+  "ChapterZeroDesktop": {
+    "compName": "ChapterZeroDesktop",
+    "title": "Chapter Zero — Liminal Math",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "ChapterZeroMobile": {
+    "compName": "ChapterZeroMobile",
+    "title": "Chapter Zero (mobile)",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "Careers": {
+    "compName": "Careers",
+    "title": "Careers in mathematics — Liminal Math",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "Community": {
+    "compName": "Community",
+    "title": "Community — Liminal Math",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "ProblemOfTheDay": {
+    "compName": "ProblemOfTheDay",
+    "title": "Problem of the Day — Liminal Math",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "Programs": {
+    "compName": "Programs",
+    "title": "Programs — Liminal Math",
+    "defaults": {
+      "theme": "Light"
+    }
+  },
+  "HeroStage": {
+    "compName": "HeroStage",
+    "title": "",
+    "defaults": {
+      "active": 0,
+      "autoplay": true
+    }
+  },
+  "Limi": {
+    "compName": "Limi",
+    "title": "",
+    "defaults": {
+      "mode": "states",
+      "state": "idle",
+      "loop": false,
+      "atmosphere": false,
+      "eyes": true,
+      "interactive": true,
+      "reducedMotion": "auto",
+      "displacement": "auto",
+      "surface": "paper",
+      "timeScale": 1,
+      "paused": false,
+      "turnDuration": 1.25,
+      "pauseInterval": 5.5,
+      "edgeWidth": 50,
+      "bank": 20,
+      "maxVelocity": 900,
+      "floatAmplitude": 2.6,
+      "squashAmount": 2.2,
+      "eyeSize": 1
+    }
+  },
+  "LimiPose": {
+    "compName": "LimiPose",
+    "title": "",
+    "defaults": {
+      "pose": "wave"
+    }
+  }
+}
